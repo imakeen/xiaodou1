@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/Imge"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp230"
+            android:src="@mipmap/banner" />
+
+        <RelativeLayout
+            android:id="@+id/Seventer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp180"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@drawable/shape_corner_down"
+            android:paddingTop="@dimen/dp30"
+            android:paddingBottom="@dimen/dp30">
+
+            <ImageView
+                android:id="@+id/Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp5"
+                android:src="@mipmap/rounded" />
+
+            <TextView
+                android:id="@+id/Collection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp15"
+
+                android:layout_toEndOf="@+id/Rounded"
+                android:text="@string/collection_time"
+                android:textSize="@dimen/sp12" />
+
+            <TextView
+                android:id="@+id/Pick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp40"
+
+                android:layout_toEndOf="@+id/Collection"
+                android:text="@string/Pick_up_location"
+                android:textSize="@dimen/sp12" />
+
+            <TextView
+                android:id="@+id/Long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp80"
+
+                android:layout_toEndOf="@+id/Pick"
+                android:text="@string/Long_distance_car"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/Maps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Pick"
+                android:layout_toEndOf="@+id/Rounded"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp14"
+                android:ellipsize="end"
+                android:maxEms="4"
+                android:maxLines="1"
+                android:text="请输入"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp15" />
+
+            <TextView
+                android:id="@+id/Mapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Pick"
+                android:layout_marginLeft="@dimen/dp130"
+                android:layout_marginTop="@dimen/dp14"
+                android:ellipsize="end"
+                android:maxEms="6"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/Mapsey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Long"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp12"
+                android:layout_toEndOf="@+id/Mapse"
+                android:src="@mipmap/switchs"
+                android:visibility="invisible" />
+
+            <View
+                android:id="@+id/Views"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/Mapsey"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp15"
+
+                android:layout_marginRight="@dimen/dp10"
+
+                android:background=" #CCCCCC " />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Views"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp25"
+                android:src="@mipmap/rounded1"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/RE_turn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Views"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/Rounded"
+                android:text="@string/return_thes"
+                android:textSize="10dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/Th_esrv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Views"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/Collection"
+                android:text="@string/return_th"
+                android:textSize="10dp"
+                android:visibility="invisible" />
+
+
+            <TextView
+                android:id="@+id/Shi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RE_turn"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp15"
+                android:layout_toEndOf="@+id/Rounded"
+                android:text="@string/Shijz"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp15"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/Huan_tucher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Th_esrv"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp15"
+                android:layout_toEndOf="@+id/Maps"
+                android:text="@string/Mapss"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp15"
+                android:visibility="invisible" />
+
+
+            <View
+                android:id="@+id/Mapest"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/Huan_tucher"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:background=" #CCCCCC "
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/Ri_Qu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Mapsey"
+                android:layout_marginLeft="@dimen/dp25"
+                android:layout_marginTop="@dimen/dp40"
+                android:text="@string/Times"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp15" />
+
+            <TextView
+                android:id="@+id/Tian_Shu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Mapsey"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp60"
+                android:text="共2天"
+                android:textColor="#8470FF" />
+
+            <TextView
+                android:id="@+id/Ri_qi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Mapsey"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp25"
+                android:text="输入还车时间"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp15" />
+
+            <TextView
+                android:id="@+id/Zhou_ri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Ri_Qu"
+                android:layout_marginLeft="@dimen/dp23"
+                android:layout_marginTop="@dimen/dp15" />
+
+            <TextView
+                android:id="@+id/Zhao_ris"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Ri_qi"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp25" />
+
+            <Button
+                android:id="@+id/Lease_immediately"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Zhao_ris"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp10"
+                android:background="@drawable/course_details_checked"
+                android:text="立即租车"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/sp15" />
+        </RelativeLayout>
+    </FrameLayout>
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/mapty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

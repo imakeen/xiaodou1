@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="external_storage_root_yzb"
+        path="." />
+    <!-- /storage/emulated/0/Download/${applicationId}/.beta/apk-->
+    <external-path
+        name="beta_external_path_yzb"
+        path="Download/" />
+    <!--/storage/emulated/0/Android/data/${applicationId}/files/apk/-->
+    <external-path
+        name="beta_external_files_path_yzb"
+        path="Android/data/" />
+    <root-path
+        name="root_path_yzb"
+        path="." />
+
+    <external-file-path
+        name="images_yzb"
+        path="Pictures" />
+    <external-path
+        name="camera_photos_yzb"
+        path="." />
+    <external-path
+        name="external_files_yzb"
+        path="." />
+    <external-path
+        name="deim_camera"
+        path="DCIM/Camera" />
+    <external-file-path
+        name="deim_camera_file"
+        path="DCIM/Camera" />
+</paths>

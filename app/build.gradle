@@ -1,0 +1,138 @@
+apply plugin: 'com.android.application'
+
+android {
+//    signingConfigs {
+//        config {
+//            storeFile file('F:\\XDapp.jks')
+//            storePassword "123456"
+//            keyAlias "XDapp"
+//            keyPassword "123456"
+//        }
+//    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.xinzu.xiaodou"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0-alpha1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // 基本功能依赖库
+    implementation project(':baselibrary')
+    implementation project(':framelibrary')
+
+    //分包
+    implementation('com.android.support:multidex:1.0.3') {
+        force = true
+    }
+
+    // 用Gson解析json的转换器
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //rxjava2
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+
+    //retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+
+    //dagger2
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.21'
+    implementation 'com.google.dagger:dagger-android:2.21'
+    implementation 'com.google.dagger:dagger-android-support:2.21'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.21'
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+
+    //autodispose 优化RxJava造成的内存泄漏
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
+
+    //PersistentCookieJar Cookie传递
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+    //recyclerview
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //butterknife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+
+    //状态栏工具
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
+
+    //RecyclerView 的强大的 BaseAdapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
+
+    //下拉刷新 上拉加载  github开源控件
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-16'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-16'
+
+    //没有使用特殊Header，可以不加这行
+    implementation 'com.nineoldandroids:library:2.4.0'
+
+    //工具
+    implementation 'com.blankj:utilcode:1.22.0'
+
+    //加载框
+    implementation 'com.kaopiz:kprogresshud:1.2.0'
+
+
+    //glide图片加载
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    // 支付宝
+    implementation files('libs/alipaySdk-20180601.jar')
+
+    //微信支付sdk
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.1.6'
+
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.0.0'
+
+    //高德地图定位
+    implementation 'com.amap.api:location:latest.integration'
+
+
+    //时间
+    implementation 'com.contrarywind:Android-PickerView:4.1.8'
+    implementation 'com.wx.wheelview:wheelview:1.3.3'
+    //高德地图
+    implementation files('libs/AMap_Search_V7.1.0_20191030.jar')
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+
+
+    //Base64加包
+    implementation files('libs/tomcat-embed-core-9.0.14.jar')
+
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    //拼音
+    implementation 'com.belerweb:pinyin4j:2.5.0'
+    //城市列表
+    //implementation 'me.yokeyword:indexablerecyclerview:1.3.0'
+}

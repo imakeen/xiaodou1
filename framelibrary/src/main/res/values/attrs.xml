@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--BannerView轮播图-->
+    <declare-styleable name="BannerView">
+        <!--点的选中颜色值-->
+        <attr name="indicatorPointFocus" format="color|reference" />
+
+        <!--点的未选中颜色值-->
+        <attr name="indicatorPointNormal" format="color|reference" />
+
+        <!--点的大小-->
+        <attr name="pointWidth" format="dimension" />
+        <attr name="pointHeight" format="dimension" />
+
+        <!--点的间距-->
+        <attr name="pointMargin" format="dimension" />
+
+        <!--点的位置-->
+        <attr name="pointGravity" format="enum">
+            <enum name="left" value="9" />
+            <enum name="center" value="13" />
+            <enum name="right" value="11" />
+        </attr>
+
+        <!--指示器颜色-->
+        <attr name="indicatorBackground" format="color|reference" />
+        <!--指示器位置-->
+        <attr name="indicatorGravity" format="enum">
+            <enum name="top" value="10" />
+            <enum name="center" value="13" />
+            <enum name="bottom" value="12" />
+        </attr>
+
+        <!--标题颜色-->
+        <attr name="titleColor" format="color" />
+        <!--标题大小-->
+        <attr name="titleSize" format="dimension" />
+        <!--标题位置-->
+        <attr name="titleGravity" format="enum">
+            <enum name="left" value="9" />
+            <enum name="center" value="13" />
+            <enum name="right" value="11" />
+        </attr>
+
+        <!--宽高比-->
+        <attr name="widthScale" format="float" />
+        <attr name="heightScale" format="float" />
+
+    </declare-styleable>
+
+    <!--Indicator Tab设置-->
+    <declare-styleable name="ColorTrackTextView">
+        <attr name="originColorTrack" format="color" />
+        <attr name="changeColorTrack" format="color" />
+        <attr name="originSizeTrack" format="dimension" />
+        <attr name="changeSizeTrack" format="dimension" />
+    </declare-styleable>
+
+    <!--Indicator viewPager万能指示器-->
+    <declare-styleable name="TrackIndicatorView">
+        <!--当前屏幕可见的条目数 -->
+        <attr name="TabVisibleNum" format="integer" />
+        <attr name="originColor" format="color" />
+        <attr name="changeColor" format="color" />
+        <attr name="originSize" format="dimension" />
+        <attr name="changeSize" format="dimension" />
+
+    </declare-styleable>
+
+</resources>

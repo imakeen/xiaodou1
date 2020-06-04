@@ -1,0 +1,194 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/Imge"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp230"
+        android:src="@mipmap/banner" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp190"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@drawable/shape_corner_down"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp30"
+        android:paddingBottom="@dimen/dp30">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp20"
+            tools:ignore="RtlSymmetry">
+
+            <ImageView
+                android:id="@+id/Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:src="@mipmap/rounded" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp15"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/Collection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/collection_time"
+                    android:textSize="@dimen/sp12" />
+
+                <TextView
+                    android:id="@+id/Maps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp14"
+                    android:ellipsize="end"
+                    android:maxEms="4"
+                    android:maxLines="1"
+                    android:text="请输入"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp40"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/Pick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Pick_up_location"
+                    android:textSize="@dimen/sp12" />
+
+                <TextView
+                    android:id="@+id/Mapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp14"
+                    android:ellipsize="end"
+                    android:maxEms="6"
+                    android:maxLines="1"
+                    android:text="请选择"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/Views"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp10"
+            android:background=" #CCCCCC " />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp25"
+            android:orientation="horizontal"
+            tools:ignore="RtlSymmetry">
+
+            <LinearLayout
+                android:id="@+id/ll_qu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp20"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/Ri_Qu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Times"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp15" />
+
+                <TextView
+                    android:id="@+id/Zhou_ri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="19:20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/Tian_Shu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="共2天"
+                    android:textColor="#8470FF" />
+
+                <View
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp1"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:background="#8470FF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp20"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/Ri_qi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="输入还车时间"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp15" />
+
+                <TextView
+                    android:id="@+id/Zhao_ris"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp15" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/Lease_immediately"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@drawable/course_details_checked"
+            android:text="立即租车"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/sp15" />
+    </LinearLayout>
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/mapty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</FrameLayout>
+

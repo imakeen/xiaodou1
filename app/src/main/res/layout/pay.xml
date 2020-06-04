@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+	
+    <TextView
+        android:id="@+id/myte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下单支付!"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Payst1"
+        android:text="订单支付"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/myte"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        />
+
+</RelativeLayout>

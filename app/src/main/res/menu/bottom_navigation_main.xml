@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:icon="@drawable/bt_tab_one_selector"
+        android:title="首页"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_order"
+        android:enabled="true"
+        android:icon="@drawable/bt_tab_two_selector"
+        android:title="订单"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_mine"
+        android:enabled="true"
+        android:icon="@drawable/bt_tab_three_selector"
+        android:title="我的"
+        app:showAsAction="ifRoom" />
+
+
+</menu>
