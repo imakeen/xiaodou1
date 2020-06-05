@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10">
+
+        <Button
+            android:id="@+id/bt_all"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_weight="1"
+            android:background="@drawable/order_bt"
+            android:text="全部" />
+
+        <Button
+            android:id="@+id/bt_yuyue"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_weight="1"
+            android:background="@drawable/order_bt"
+            android:text="预约中" />
+
+        <Button
+            android:id="@+id/bt_xingcheng"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_weight="1"
+            android:background="@drawable/order_bt"
+            android:text="行程中" />
+
+        <Button
+            android:id="@+id/bt_yiwancheng"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp30"
+            android:layout_weight="1"
+            android:background="@drawable/order_bt"
+            android:text="已完成" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

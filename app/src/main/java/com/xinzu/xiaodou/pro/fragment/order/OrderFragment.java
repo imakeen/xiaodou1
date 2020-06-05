@@ -29,8 +29,15 @@ import butterknife.Unbinder;
  * <pre>  *     author : radish  *     e-mail : 15703379121@163.com  *     time   : 2019/4/16  *     desc   :  * </pre>
  */
 public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements OrderContract.View {
-
     private String title = "";
+    @BindView(R.id.bt_all)
+    Button bt_all;
+    @BindView(R.id.bt_yuyue)
+    Button bt_yeyue;
+    @BindView(R.id.bt_xingcheng)
+    Button bt_xc;
+    @BindView(R.id.bt_yiwancheng)
+    Button bt_ywc;
 
     public static OrderFragment newInstance(String title) {
 
@@ -53,16 +60,17 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
     @Override
     protected void initBundle() {
 
+
     }
 
     @Override
     protected int initLayout() {
-        return R.layout.theorders;
+        return R.layout.fragment_orders;
     }
 
     @Override
     protected void initView() {
-
+        bt_all.setSelected(true);
     }
 
     @Override
@@ -79,11 +87,6 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
         LogUtils.e("更新UI" + body);
 
     }
-
-
-    /**
-     * 轮播图
-     */
 
 
 }

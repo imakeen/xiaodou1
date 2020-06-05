@@ -149,6 +149,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_huan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp20"

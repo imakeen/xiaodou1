@@ -43,7 +43,7 @@ public class PickerDailog extends Dialog {
     private TextView mQuStatuTv;
 
     private String[] mDateDisplayValues = new String[60];
-    private boolean isSelectQuCar = true;
+
     String[] hours = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
     String[] mini = {"00", "30"};
     String[] day;
@@ -51,8 +51,11 @@ public class PickerDailog extends Dialog {
     private TextView tv_huan_day;
     private TextView tv_qu_day;
     private StringBuffer qu_day = new StringBuffer();
-
+    private StringBuffer huan_day = new StringBuffer();
     private String start_day;
+
+    private boolean start_end = true;
+    private String minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +69,9 @@ public class PickerDailog extends Dialog {
 
     }
 
-    public PickerDailog(@NonNull Context context, backTimeBean timeBean, Activity activity) {
+    public PickerDailog(Boolean start_end, @NonNull Context context, backTimeBean timeBean, Activity activity) {
         super(context, R.style.DialogTheme);
-
+        this.start_end = start_end;
         this.activity = activity;
         this.timeBean = timeBean;
 
@@ -110,30 +113,39 @@ public class PickerDailog extends Dialog {
         mHourSpinner.setDisplayedValues(hours);
         mHourSpinner.setMaxValue(hours.length - 1);
         mHourSpinner.setMinValue(0);
+        mHourSpinner.setWrapSelectorWheel(false);
 
 
         mMinuteSpinner.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         mMinuteSpinner.setDisplayedValues(mini);
         mMinuteSpinner.setMinValue(0);
         mMinuteSpinner.setMaxValue(mini.length - 1);
-        mMinuteSpinner.setValue(0);
+        //判断start_end  如果为ture 实现选中取车时间样式  false选中还车样式
+        if (start_end) {
+            mQuLy.setSelected(true);
+            mHuanLy.setSelected(false);
+            selet_qu();
+        } else {
+            mHuanLy.setSelected(true);
+            mQuLy.setSelected(false);
+            setlet_back();
+        }
         initData();
-
         LiseningButton();
     }
 
     private void initData() {
-        String day = timeBean.getQu_day().substring(8, 10);
-        String month = timeBean.getQu_day().substring(5, 7);
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(Calendar.MONTH, Integer.parseInt(month) - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+        //取车时间
+        String qu_day = timeBean.getQu_day().substring(8, 10);
+        String qu_month = timeBean.getQu_day().substring(5, 7);
+        tv_qu_day.setText(Day.dialog_start(qu_month, qu_day));
+        mQuTimeTv.setText(Integer.parseInt(timeBean.getQu_week_time().substring(3, 5)) + ":00");
 
-        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("MM月dd日");
-        String format = simpleDateFormat1.format(calendar.getTime());
-        tv_qu_day.setText(format);
-        mQuTimeTv.setText(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)) + ":00");
+        //还车时间
+        String huan_day = timeBean.getBack_day().substring(8, 10);
+        String huan_month = timeBean.getBack_day().substring(5, 7);
+        tv_huan_day.setText(Day.dialog_start(huan_month, huan_day));
+        mHuanTimeTv.setText(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)) + ":00");
         updateQuDateControl();
     }
 
@@ -147,25 +159,73 @@ public class PickerDailog extends Dialog {
         mDateSpinner.invalidate();
         mDateSpinner.setWrapSelectorWheel(false);
 
+        if (start_end) {
+            qu_value();
+        } else {
+            huan_value();
+        }
 
+
+        mDateSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> {
+            LogUtils.e("===================>" + newVal);
+            start_day = day[newVal].substring(0, day[newVal].length() - 4);
+            if (start_end) {
+                tv_qu_day.setText(start_day);
+                qu_day.setLength(0);
+                qu_day.append(day[newVal] + mQuTimeTv.getText().toString());
+            } else {
+                tv_huan_day.setText(start_day);
+                huan_day.setLength(0);
+                huan_day.append(day[newVal] + mQuTimeTv.getText().toString());
+            }
+        });
+
+        mHourSpinner.setOnValueChangedListener(((picker, oldVal, newVal) -> {
+            String hour = hours[newVal];
+            if (start_end) {
+                mQuTimeTv.setText(Day.dialog_start_hour(hour, mQuTimeTv.getText().toString()));
+            } else {
+                mHuanTimeTv.setText(Day.dialog_start_hour(hour, mHuanTimeTv.getText().toString()));
+            }
+        }));
+        mMinuteSpinner.setOnValueChangedListener(((picker, oldVal, newVal) -> {
+            if (start_end) {
+                String mMinute = mQuTimeTv.getText().toString();
+                mMinute = mMinute.substring(0, mMinute.length() - 3);
+                mQuTimeTv.setText(mMinute + ":" + mini[newVal]);
+                mMinute = "";
+            } else {
+                String mMinute = mHuanTimeTv.getText().toString();
+                mMinute = mMinute.substring(0, mMinute.length() - 3);
+                mHuanTimeTv.setText(mMinute + ":" + mini[newVal]);
+                mMinute = "";
+            }
+        }));
+    }
+
+    private void qu_value() {
         for (int i = 0; i < day.length; i++) {
             if (tv_qu_day.getText().toString().equals(day[i].substring(0, day[i].length() - 4))) {
                 mDateSpinner.setValue(i);
             }
         }
-
-        mHourSpinner.setValue(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)));
-
+        mHourSpinner.setValue(Integer.parseInt(timeBean.getQu_week_time().substring(3, 5)));
+        minute = timeBean.getQu_week_time();
+        mMinuteSpinner.setValue(Integer.parseInt(minute.substring(minute.length() - 2, minute.length())));
         qu_day.append(tv_qu_day.getText().toString() + mQuTimeTv.getText().toString());
-        mDateSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            LogUtils.e("===================>" + newVal);
-            start_day = day[newVal].substring(0, day[newVal].length() - 4);
-            tv_qu_day.setText(start_day);
-            qu_day.setLength(0);
-            qu_day.append(day[newVal] + mQuTimeTv.getText().toString());
-        });
     }
 
+    private void huan_value() {
+        for (int i = 0; i < day.length; i++) {
+            if (tv_huan_day.getText().toString().equals(day[i].substring(0, day[i].length() - 4))) {
+                mDateSpinner.setValue(i);
+            }
+        }
+        mHourSpinner.setValue(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)));
+        minute = timeBean.getBack_week_time();
+        mMinuteSpinner.setValue(Integer.parseInt(minute.substring(minute.length() - 2, minute.length())));
+        huan_day.append(tv_huan_day.getText().toString() + mHuanTimeTv.getText().toString());
+    }
 
     /**
      * 设置picker之间的间距
@@ -220,16 +280,7 @@ public class PickerDailog extends Dialog {
         mDailogOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String day = qu_day.substring(3, 5);
-                String month = qu_day.substring(0, 2);
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.MONTH, Integer.parseInt(month) - 1);
-                calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-
-                SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-                String format = simpleDateFormat1.format(calendar.getTime());
-                callback.getTime(format, null, null, null);
+                //  callback.getTime(format, null, format_huan, null);
                 dismiss();
             }
         });
@@ -245,19 +296,59 @@ public class PickerDailog extends Dialog {
         mHuanLy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mHuanLy.setSelected(true);
+                mQuLy.setSelected(false);
+                setlet_back();
+                start_end = false;
+                for (int i = 0; i < day.length; i++) {
+                    if (tv_huan_day.getText().toString().equals(day[i].substring(0, day[i].length() - 4))) {
+                        mDateSpinner.setValue(i);
+                    }
+                }
+                String hour = mHuanTimeTv.getText().toString();
 
-
+                mHourSpinner.setValue(Integer.parseInt(hour.substring(0, 2)));
+                mMinuteSpinner.setValue(Integer.parseInt(hour.substring(hour.length() - 2, hour.length())));
             }
         });
         mQuLy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isSelectQuCar = true;
-                //  updateQuDateControl();
-
-
+                mQuLy.setSelected(true);
+                mHuanLy.setSelected(false);
+                selet_qu();
+                start_end = true;
+                for (int i = 0; i < day.length; i++) {
+                    if (tv_qu_day.getText().toString().equals(day[i].substring(0, day[i].length() - 4))) {
+                        mDateSpinner.setValue(i);
+                    }
+                }
+                String hour = mQuTimeTv.getText().toString();
+                mHourSpinner.setValue(Integer.parseInt(hour.substring(0, 2)));
+                mMinuteSpinner.setValue(Integer.parseInt(hour.substring(hour.length() - 2, hour.length())));
             }
         });
+    }
+
+    private void selet_qu() {
+        mQuStatuTv.setTextColor(0xffffffff);
+        tv_qu_day.setTextColor(0xffffffff);
+        mQuTimeTv.setTextColor(0xffffffff);
+
+        mHuanStatuTv.setTextColor(0xff343434);
+        tv_huan_day.setTextColor(0xff343434);
+        mHuanTimeTv.setTextColor(0xff343434);
+    }
+
+    private void setlet_back() {
+        mQuStatuTv.setTextColor(0xff343434);
+        tv_qu_day.setTextColor(0xff343434);
+        mQuTimeTv.setTextColor(0xff343434);
+
+        mHuanStatuTv.setTextColor(0xffffffff);
+        tv_huan_day.setTextColor(0xffffffff);
+        mHuanTimeTv.setTextColor(0xffffffff);
+
     }
 
     public void setOnDateSelectFinished(callback callback) {

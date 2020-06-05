@@ -31,17 +31,16 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
+import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.pro.activity.getcity.CityPickerActivity;
 import com.xinzu.xiaodou.pro.activity.getcity.EnterPriseMapActivity;
 import com.xinzu.xiaodou.pro.fragment.home.utils.Day;
 import com.xinzu.xiaodou.pro.fragment.home.utils.PickerDailog;
-import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.util.SharedPreUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -156,17 +155,19 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
 
     @OnClick({R.id.Lease_immediately, R.id.Mapse, R.id.Ri_Qu,
-            R.id.ll_qu, R.id.Maps})
+            R.id.ll_qu, R.id.ll_huan, R.id.Maps})
     public void onClieck(View view) {
         switch (view.getId()) {
             case R.id.Maps:
                 ActivityUtils.startActivity(CityPickerActivity.class);
                 break;
-            case R.id.Ri_Qu:
-                //取车时间
+
             case R.id.ll_qu:
-                //还车时间
-                startPickDailog();
+                startPickDailog(true);
+
+                break;
+            case R.id.ll_huan:
+                startPickDailog(false);
                 break;
             case R.id.Mapse:
                 if (!mMaps.equals("请选择")) {
@@ -181,7 +182,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     /**
      * 点击启动时间选择器
      */
-    private void startPickDailog() {
+    private void startPickDailog(Boolean qu_or_back) {
         backTimeBean timeBean = new backTimeBean();
 
         timeBean.setQu_day(mRi_qu.getText().toString());
@@ -190,7 +191,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         timeBean.setBack_day(ri_qi.getText().toString());
         timeBean.setBack_week_time(zhao_ris.getText().toString());
 
-        pickerDailog = new PickerDailog(getContext(), timeBean, getActivity());
+        pickerDailog = new PickerDailog(qu_or_back, getContext(), timeBean, getActivity());
         if (!pickerDailog.isShowing()) {
             pickerDailog.show();
         }
@@ -207,7 +208,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
      */
     public void banner() {
         List<String> list;
-
         String[] images = new String[2];
         images[0] = ApiService.image1;
         images[1] = ApiService.image2;

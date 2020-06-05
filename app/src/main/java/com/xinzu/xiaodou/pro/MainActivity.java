@@ -35,6 +35,7 @@ public class MainActivity extends BaseGActivity {
         if (mVpMain != null && (mVpMain.getCurrentItem() == 2 || mVpMain.getCurrentItem() == 3)) {
             mVpMain.setCurrentItem(0);
         }
+
     }
 
     @Override

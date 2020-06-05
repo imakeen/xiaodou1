@@ -9,21 +9,21 @@ import java.util.TimeZone;
 import java.text.SimpleDateFormat;
 
 public class Day {
+    static Calendar calendar;
 
     public static String pickcar_date(String dayofweek, boolean b_r) {
-        Calendar c1 = Calendar.getInstance();
 
-
+        calendar = Calendar.getInstance();
         if (b_r) {
-            c1.set(Calendar.MINUTE, 0);
-            c1.add(Calendar.HOUR, 3); //减填负数
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.add(Calendar.HOUR, 3); //减填负数
         } else {
-            c1.add(Calendar.DAY_OF_MONTH, +2);
-            c1.set(Calendar.MINUTE, 0);
-            c1.add(Calendar.HOUR, 3);
+            calendar.add(Calendar.DAY_OF_MONTH, +2);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.add(Calendar.HOUR, 3);
         }
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE");
-        String format = simpleDateFormat1.format(c1.getTime());
+        String format = simpleDateFormat1.format(calendar.getTime());
         String subst = format.substring(0, 10);
         String sub = format.substring(10);
         String subs2 = sub.substring(1, 6);
@@ -100,4 +100,27 @@ public class Day {
         return titles;
     }
 
+
+    public static String dialog_start(String month, String day) {
+
+        calendar.clear();
+        calendar.set(Calendar.MONTH, Integer.parseInt(month) - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+        SimpleDateFormat simpleDateFormatday = new SimpleDateFormat("MM月dd日");
+        String format = simpleDateFormatday.format(calendar.getTime());
+
+
+        return format;
+
+
+    }
+
+    public static String dialog_start_hour(String hour, String fen) {
+        String minlun = fen.substring(fen.length() - 3, fen.length());
+        calendar.clear();
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+        SimpleDateFormat simpleDateFormatday = new SimpleDateFormat("HH");
+        String format = simpleDateFormatday.format(calendar.getTime()) + minlun;
+        return format;
+    }
 }
