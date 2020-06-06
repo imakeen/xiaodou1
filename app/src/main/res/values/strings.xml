@@ -2,7 +2,7 @@
 
     <string name="app_name">小豆租车</string>
     <string name="collection_time">取车城市</string>
-    <string name="Pick_up_location">取车地点</string>
+    <string name="Pick_up_location">取还地点</string>
     <string name="Long_distance_car">异地还车</string>
     <string name="Shijz">请输入</string>
     <string name="Mapss">请输入</string>

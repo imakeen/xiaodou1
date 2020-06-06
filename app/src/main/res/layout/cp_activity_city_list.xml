@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white">
+        android:background="@color/colororange">
 
         <ImageView
             android:id="@+id/back"
@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="@dimen/dp_10"
-            android:src="@mipmap/ic_back" />
+            android:src="@mipmap/ic_back"
+            android:tint="@color/white" />
 
         <TextView
             android:id="@+id/title"
@@ -26,7 +27,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="城市选择"
-            android:textColor="#383838"
+
+            android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
 
     </RelativeLayout>

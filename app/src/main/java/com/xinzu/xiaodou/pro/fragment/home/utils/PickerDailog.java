@@ -19,10 +19,14 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.bean.backTimeBean;
+import com.xinzu.xiaodou.util.BetweenUtil;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import static com.amap.api.mapcore2d.q.i;
 
 public class PickerDailog extends Dialog {
     String TAG = "PickerDailog";
@@ -56,6 +60,7 @@ public class PickerDailog extends Dialog {
 
     private boolean start_end = true;
     private String minute;
+    private int now_hour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,9 +115,11 @@ public class PickerDailog extends Dialog {
 
 
         mHourSpinner.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
         mHourSpinner.setDisplayedValues(hours);
         mHourSpinner.setMaxValue(hours.length - 1);
         mHourSpinner.setMinValue(0);
+
         mHourSpinner.setWrapSelectorWheel(false);
 
 
@@ -140,13 +147,17 @@ public class PickerDailog extends Dialog {
         String qu_month = timeBean.getQu_day().substring(5, 7);
         tv_qu_day.setText(Day.dialog_start(qu_month, qu_day));
         mQuTimeTv.setText(Integer.parseInt(timeBean.getQu_week_time().substring(3, 5)) + ":00");
-
         //还车时间
         String huan_day = timeBean.getBack_day().substring(8, 10);
         String huan_month = timeBean.getBack_day().substring(5, 7);
         tv_huan_day.setText(Day.dialog_start(huan_month, huan_day));
         mHuanTimeTv.setText(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)) + ":00");
         updateQuDateControl();
+        try {
+            tianshu();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateQuDateControl() {
@@ -160,12 +171,14 @@ public class PickerDailog extends Dialog {
         mDateSpinner.setWrapSelectorWheel(false);
 
         if (start_end) {
+
             qu_value();
+            yincang();
         } else {
             huan_value();
         }
 
-
+        //监听滑动日期
         mDateSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> {
             LogUtils.e("===================>" + newVal);
             start_day = day[newVal].substring(0, day[newVal].length() - 4);
@@ -178,16 +191,29 @@ public class PickerDailog extends Dialog {
                 huan_day.setLength(0);
                 huan_day.append(day[newVal] + mQuTimeTv.getText().toString());
             }
+            try {
+                tianshu();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
-
+        //监听滑动时间
         mHourSpinner.setOnValueChangedListener(((picker, oldVal, newVal) -> {
             String hour = hours[newVal];
             if (start_end) {
+
                 mQuTimeTv.setText(Day.dialog_start_hour(hour, mQuTimeTv.getText().toString()));
+                yincang();
             } else {
                 mHuanTimeTv.setText(Day.dialog_start_hour(hour, mHuanTimeTv.getText().toString()));
             }
+            try {
+                tianshu();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }));
+        //监听滑动分钟
         mMinuteSpinner.setOnValueChangedListener(((picker, oldVal, newVal) -> {
             if (start_end) {
                 String mMinute = mQuTimeTv.getText().toString();
@@ -201,8 +227,18 @@ public class PickerDailog extends Dialog {
                 mMinute = "";
             }
         }));
+        //取消按钮
+        mDailogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
+
     }
 
+    //设置取车的时间
     private void qu_value() {
         for (int i = 0; i < day.length; i++) {
             if (tv_qu_day.getText().toString().equals(day[i].substring(0, day[i].length() - 4))) {
@@ -215,6 +251,7 @@ public class PickerDailog extends Dialog {
         qu_day.append(tv_qu_day.getText().toString() + mQuTimeTv.getText().toString());
     }
 
+    //设置还车的时间
     private void huan_value() {
         for (int i = 0; i < day.length; i++) {
             if (tv_huan_day.getText().toString().equals(day[i].substring(0, day[i].length() - 4))) {
@@ -222,9 +259,39 @@ public class PickerDailog extends Dialog {
             }
         }
         mHourSpinner.setValue(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)));
+
         minute = timeBean.getBack_week_time();
         mMinuteSpinner.setValue(Integer.parseInt(minute.substring(minute.length() - 2, minute.length())));
         huan_day.append(tv_huan_day.getText().toString() + mHuanTimeTv.getText().toString());
+    }
+
+    //实现不能选择已过的时间
+    private void yincang() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, 3); //减填负数
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("MM月dd日HH");
+
+        String format = simpleDateFormat1.format(calendar.getTime());
+        now_hour = Integer.parseInt(format.substring(format.length() - 2, format.length()));
+        if (tv_qu_day.getText().toString().equals(format.substring(0, format.length() - 2))) {
+            if (mHourSpinner.getValue() < now_hour)
+                mHourSpinner.setValue(now_hour);
+            mQuTimeTv.setText(Day.dialog_start_hour(now_hour + "", mQuTimeTv.getText().toString()));
+        }
+
+    }
+
+    /**
+     * 实现天数
+     *
+     * @return
+     * @parm
+     */
+    private void tianshu() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日HH:mm");
+        String qutime = tv_qu_day.getText().toString() + mQuTimeTv.getText().toString();
+        String huantime = tv_huan_day.getText().toString() + mQuTimeTv.getText().toString();
+        mSelectTv.setText(BetweenUtil.getDatePoor(simpleDateFormat.parse(huantime), simpleDateFormat.parse(qutime)));
     }
 
     /**
@@ -284,15 +351,6 @@ public class PickerDailog extends Dialog {
                 dismiss();
             }
         });
-
-
-        mDailogCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
-
         mHuanLy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -328,7 +386,9 @@ public class PickerDailog extends Dialog {
                 mMinuteSpinner.setValue(Integer.parseInt(hour.substring(hour.length() - 2, hour.length())));
             }
         });
+
     }
+
 
     private void selet_qu() {
         mQuStatuTv.setTextColor(0xffffffff);

@@ -108,8 +108,6 @@ public class Day {
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
         SimpleDateFormat simpleDateFormatday = new SimpleDateFormat("MM月dd日");
         String format = simpleDateFormatday.format(calendar.getTime());
-
-
         return format;
 
 
@@ -121,6 +119,7 @@ public class Day {
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
         SimpleDateFormat simpleDateFormatday = new SimpleDateFormat("HH");
         String format = simpleDateFormatday.format(calendar.getTime()) + minlun;
+
         return format;
     }
 }

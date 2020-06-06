@@ -46,7 +46,8 @@ public class MainActivity extends BaseGActivity {
     @Override
     protected void initView() {
         mVpMain.setNoScroll(true);
-
+        isUseImmersionBar = false;
+        setStatusBar();
         fragments.add(HomeFragment.newInstance("首页"));
         fragments.add(OrderFragment.newInstance("订单"));
         fragments.add(MineFragment.newInstance("我的"));
@@ -54,8 +55,6 @@ public class MainActivity extends BaseGActivity {
 
         //除去自带效果
         bottomNavigation.setItemIconTintList(null);
-        setImmersionBar();
-
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         mVpMain.setAdapter(mViewPagerAdapter);
     }
@@ -70,11 +69,6 @@ public class MainActivity extends BaseGActivity {
 
     }
 
-    @Override
-    protected void initLayoutBefore() {
-        super.initLayoutBefore();
-        isUseImmersionBar = true;
-    }
 
     @Override
     protected void initListener() {
@@ -83,14 +77,15 @@ public class MainActivity extends BaseGActivity {
                 case R.id.action_home:
                     isUseImmersionBar = false;
                     naviTab(0);
-                    setImmersionBar();
+                    setStatusBar();
                     break;
                 case R.id.action_order:
+                    setStatusBar();
                     isUseImmersionBar = false;
                     naviTab(1);
                     break;
                 case R.id.action_mine:
-                    isUseImmersionBar = false;
+                    isUseImmersionBar = true;
                     setImmersionBar();
                     naviTab(2);
                     break;

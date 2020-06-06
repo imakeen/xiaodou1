@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="取消"
-            android:textColor="#0D6DD3" />
+            android:textColor="@color/colororange" />
 
         <TextView
             android:id="@+id/dailog_ok"
@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:text="确定"
-            android:textColor="#0D6DD3" />
+            android:textColor="@color/colororange" />
     </RelativeLayout>
 
     <LinearLayout

@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp44"
+    android:background="@color/colororange"
+
+   >
+
+    <TextView
+        android:layout_gravity="center"
+        android:text="小豆租车"
+        android:gravity="center"
+        android:textColor="#ffffffff"
+        android:textSize="17sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

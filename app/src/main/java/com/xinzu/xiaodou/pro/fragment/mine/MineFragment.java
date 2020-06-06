@@ -52,7 +52,7 @@ import butterknife.OnClick;
 /**
  * <pre>  *     author : radish  *     e-mail : 15703379121@163.com  *     time   : 2019/4/16  *     desc   :  * </pre>
  */
-public class MineFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View {
+public class MineFragment extends BaseMvpFragment<MinePresenter> implements MineContract.View {
     private String title = "";
 
     public static MineFragment newInstance(String title) {
@@ -97,10 +97,5 @@ public class MineFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     }
 
-
-    @Override
-    public void updateUI(String body) {
-
-    }
 
 }
