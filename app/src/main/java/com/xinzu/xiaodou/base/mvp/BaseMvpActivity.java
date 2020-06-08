@@ -1,13 +1,10 @@
 package com.xinzu.xiaodou.base.mvp;
 
 
-
-import com.xinzu.xiaodou.dragger.component.ActivityComponent;
-import com.xinzu.xiaodou.dragger.component.DaggerActivityComponent;
-import com.xinzu.xiaodou.dragger.module.ActivityModule;
 import com.xinzu.xiaodou.MyApp;
 import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.dragger.component.ActivityComponent;
+import com.xinzu.xiaodou.dragger.component.DaggerActivityComponent;
 import com.xinzu.xiaodou.dragger.module.ActivityModule;
 
 import javax.inject.Inject;

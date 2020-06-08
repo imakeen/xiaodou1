@@ -10,13 +10,15 @@ import com.xinzu.xiaodou.R;
 import java.util.List;
 
 public class CityAddapter extends BaseQuickAdapter<PoiItem, BaseViewHolder> {
-    public CityAddapter(@Nullable List<PoiItem> data) {
-        super(R.layout.location_item, data);
+    public CityAddapter() {
+        super(R.layout.location_item);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, PoiItem item) {
-        helper.setText(R.id.name, item.getTitle()).setText(R.id.sub, item.getSnippet());
+        helper.setText(R.id.name, item.getTitle()).
+                setText(R.id.sub, item.getSnippet());
+        helper.addOnClickListener(R.id.ll_diqu);
     }
 
 }

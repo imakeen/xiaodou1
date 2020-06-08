@@ -125,35 +125,11 @@ public class CityListAdapter extends BaseAdapter {
                 ViewGroup container = (ViewGroup) view.findViewById(R.id.layout_locate);
                 TextView state = (TextView) view.findViewById(R.id.tv_located_city);
                 switch (locateState) {
-                    case LocateState.LOCATING:
-                        state.setText("正在定位…");
-                        break;
-                    case LocateState.FAILED:
-                        state.setText("定位失败");
-                        break;
                     case LocateState.SUCCESS:
                         state.setText(locatedCity);
                         break;
-                    case LocateState.INIT:
-                        state.setText("定位");
-                        break;
                 }
-                container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (locateState == LocateState.FAILED) {
-                            //重新定位
-                            if (onCityClickListener != null) {
-                                onCityClickListener.onLocateClick();
-                            }
-                        } else if (locateState == LocateState.SUCCESS) {
-                            //返回定位城市
-                            if (onCityClickListener != null) {
-                                onCityClickListener.onCityClick(locatedCity);
-                            }
-                        }
-                    }
-                });
+
                 break;
             case 1:     //热门
                 view = inflater.inflate(R.layout.cp_view_hot_city, parent, false);

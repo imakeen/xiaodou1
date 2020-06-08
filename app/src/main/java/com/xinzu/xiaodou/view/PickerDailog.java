@@ -1,4 +1,4 @@
-package com.xinzu.xiaodou.pro.fragment.home.utils;
+package com.xinzu.xiaodou.view;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.util.BetweenUtil;
+import com.xinzu.xiaodou.util.Day;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -173,7 +174,7 @@ public class PickerDailog extends Dialog {
         if (start_end) {
 
             qu_value();
-            yincang();
+
         } else {
             huan_value();
         }
@@ -201,9 +202,8 @@ public class PickerDailog extends Dialog {
         mHourSpinner.setOnValueChangedListener(((picker, oldVal, newVal) -> {
             String hour = hours[newVal];
             if (start_end) {
+                yincang(hour);
 
-                mQuTimeTv.setText(Day.dialog_start_hour(hour, mQuTimeTv.getText().toString()));
-                yincang();
             } else {
                 mHuanTimeTv.setText(Day.dialog_start_hour(hour, mHuanTimeTv.getText().toString()));
             }
@@ -266,17 +266,23 @@ public class PickerDailog extends Dialog {
     }
 
     //实现不能选择已过的时间
-    private void yincang() {
+    private void yincang(String hour) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, 3); //减填负数
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("MM月dd日HH");
 
         String format = simpleDateFormat1.format(calendar.getTime());
         now_hour = Integer.parseInt(format.substring(format.length() - 2, format.length()));
+        String qu_hour = mQuTimeTv.getText().toString();
         if (tv_qu_day.getText().toString().equals(format.substring(0, format.length() - 2))) {
-            if (mHourSpinner.getValue() < now_hour)
+            if (Integer.parseInt(qu_hour.substring(0, qu_hour.length() - 3)) < now_hour) {
                 mHourSpinner.setValue(now_hour);
-            mQuTimeTv.setText(Day.dialog_start_hour(now_hour + "", mQuTimeTv.getText().toString()));
+                mQuTimeTv.setText(Day.dialog_start_hour(now_hour + "", qu_hour));
+            } else {
+                mQuTimeTv.setText(Day.dialog_start_hour(hour, qu_hour));
+            }
+        } else {
+            mQuTimeTv.setText(Day.dialog_start_hour(hour, qu_hour));
         }
 
     }

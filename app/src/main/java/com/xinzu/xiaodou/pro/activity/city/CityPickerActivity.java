@@ -1,26 +1,28 @@
-package com.xinzu.xiaodou.pro.activity.getcity;
+package com.xinzu.xiaodou.pro.activity.city;
 
-import android.util.Log;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.adapter.CityListAdapter;
 import com.xinzu.xiaodou.base.BaseGActivity;
+import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
 import com.xinzu.xiaodou.bean.AreasBean;
 import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.CityPickerBean;
 import com.xinzu.xiaodou.bean.LocateState;
+import com.xinzu.xiaodou.http.ApiService;
+import com.xinzu.xiaodou.ui.EnterPriseMapActivity;
 import com.xinzu.xiaodou.util.GsonUtil;
 import com.xinzu.xiaodou.util.PinyinUtils;
 import com.xinzu.xiaodou.util.ReadAssetsFileUtil;
 import com.xinzu.xiaodou.util.SharedPreUtils;
+import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.view.SideLetterBar;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import java.util.HashSet;
 
 import butterknife.OnClick;
 
-public class CityPickerActivity extends BaseGActivity {
+public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> implements CityPickContract.View {
     private ListView mListView;
     private SideLetterBar mLetterBar;
     private CityListAdapter mCityAdapter;
@@ -40,9 +42,14 @@ public class CityPickerActivity extends BaseGActivity {
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
 
+    @Override
+    protected void initInject() {
+     getActivityComponent().inject(this);
+    }
 
     @Override
     protected void initBundle() {
+
 
     }
 
@@ -65,7 +72,7 @@ public class CityPickerActivity extends BaseGActivity {
         });
         mCityAdapter = new CityListAdapter(this);
         mListView.setAdapter(mCityAdapter);
-        getLocation();
+//        mCityAdapter.updateLocateState();
     }
 
     @Override
@@ -94,11 +101,12 @@ public class CityPickerActivity extends BaseGActivity {
             }
         });
         mCityAdapter.setData(cities);
+        mCityAdapter.updateLocateState(LocateState.SUCCESS, SharedPreUtils.getInstance().getString("city", ""));
     }
 
     @OnClick(R.id.back)
     public void onClick(View view) {
-          finish();
+        finish();
     }
 
     protected void initData() {
@@ -107,72 +115,27 @@ public class CityPickerActivity extends BaseGActivity {
             @Override
             public void onCityClick(String name) {//选择城市
                 Toast.makeText(CityPickerActivity.this, name, Toast.LENGTH_SHORT).show();
-                SharedPreUtils.getInstance().putString("city", name);
+//                SharedPreUtils.getInstance().putString("city", name);
+                Intent intent = new Intent(CityPickerActivity.this, EnterPriseMapActivity.class);
+                intent.putExtra("city", name);
+                startActivity(intent);
                 finish();
             }
 
             @Override
             public void onLocateClick() {//点击定位按钮
                 mCityAdapter.updateLocateState(LocateState.LOCATING, null);
-                getLocation();//重新定位
+
             }
         });
+        String sign = SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp());
+        mPresenter.getCity(ApiService.appKey, SignUtils.temp(), sign);
+
     }
 
     @Override
     protected void initListener() {
 
-    }
-
-
-    /**
-     * 得到位置信息(高德地图)
-     */
-    private void getLocation() {
-        //初始化定位
-        mLocationClient = new AMapLocationClient(this);
-        //设置定位回调监听
-        mLocationClient.setLocationListener(mAMapLocationListener);
-        //初始化AMapLocationClientOption对象
-        mLocationOption = new AMapLocationClientOption();
-        //获取一次定位结果：
-        mLocationOption.setOnceLocation(true);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
-    }
-
-    //声明定位回调监听器
-    private AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
-        @Override
-        public void onLocationChanged(AMapLocation amapLocation) {
-            if (amapLocation != null) {
-                if (amapLocation.getErrorCode() == 0) {
-                    if (amapLocation.getCity() != null && !amapLocation.getCity().equals("")) {
-                        mCityAdapter.updateLocateState(LocateState.SUCCESS, amapLocation.getCity().replace("市", ""));
-                    } else {
-                        mCityAdapter.updateLocateState(LocateState.FAILED, null);
-                    }
-                    mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
-                } else {
-                    mCityAdapter.updateLocateState(LocateState.FAILED, null);
-                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                    Log.e("高德地图", "location Error, ErrCode:"
-                            + amapLocation.getErrorCode() + ", errInfo:"
-                            + amapLocation.getErrorInfo());
-                }
-            }
-        }
-    };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mLocationClient != null) {
-            //销毁定位客户端之后，若要重新开启定位请重新New一个AMapLocationClient对象。
-            mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
-        }
     }
 
 

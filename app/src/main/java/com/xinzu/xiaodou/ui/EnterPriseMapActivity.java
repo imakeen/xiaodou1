@@ -1,4 +1,4 @@
-package com.xinzu.xiaodou.pro.activity.getcity;
+package com.xinzu.xiaodou.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdate;
@@ -26,6 +30,8 @@ import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.blankj.utilcode.util.ActivityUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.adapter.CityAddapter;
 import com.xinzu.xiaodou.base.BaseGActivity;
@@ -36,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.OnPoiSearchListener, GeocodeSearch.OnGeocodeSearchListener {
     @BindView(R.id.mapView)
@@ -51,9 +58,11 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
     private double mCurrentLng;
     Map<String, String> currentInfo = new HashMap<>();
     List<PoiItem> poiItemArrayList = new ArrayList<>();
-    ;
-    private MyHandler myHandler;
+
     CityAddapter cityAddapter;
+    @BindView(R.id.et_seach)
+    EditText et_serch;
+    private String cityExtra;
 
     @Override
     protected void initBundle() {
@@ -68,12 +77,21 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
     @Override
     protected void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        cityAddapter = new CityAddapter();
+        recyclerView.setAdapter(cityAddapter);
         initAMap();
         Intent intent = getIntent();
-        String city = intent.getStringExtra("city");
-        myHandler = new MyHandler();
-        searchPoi(city, 0, currentInfo.get("cityCode"), false);
-        GeocodeSearch(city);
+
+        String city_title = intent.getStringExtra("city_title");
+        cityExtra = intent.getStringExtra("city");
+        if (city_title != null) {
+            searchPoi(city_title, 0, currentInfo.get("cityCode"), false);
+            GeocodeSearch(city_title);
+        }
+        if (cityExtra != null) {
+            searchPoi(cityExtra, 0, currentInfo.get("cityCode"), false);
+            GeocodeSearch(cityExtra);
+        }
     }
 
     @Override
@@ -86,17 +104,41 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
 
     }
 
+    @OnClick({R.id.back})
+    public void onClick(View view) {
+        finish();
+    }
+
     @Override
     protected void initListener() {
-
+        et_serch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Intent intent = new Intent(EnterPriseMapActivity.this, SearchActivity.class);
+                    intent.putExtra("city", cityExtra);
+                    ActivityUtils.startActivity(intent);
+                    finish();
+                }
+            }
+        });
+        cityAddapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                String city = poiItemArrayList.get(position).getTitle();
+                Intent intent = new Intent(EnterPriseMapActivity.this, SearchActivity.class);
+                intent.putExtra("citytitle", city);
+                intent.putExtra("city", cityExtra);
+                ActivityUtils.startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void GeocodeSearch(String city) {
         //构造 GeocodeSearch 对象，并设置监听。
         GeocodeSearch geocodeSearch = new GeocodeSearch(this);
         geocodeSearch.setOnGeocodeSearchListener(this);
-//通过GeocodeQuery设置查询参数,调用getFromLocationNameAsyn(GeocodeQuery geocodeQuery) 方法发起请求。
-//address表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode都ok
         GeocodeQuery query = new GeocodeQuery(city, city);
         geocodeSearch.getFromLocationNameAsyn(query);
     }
@@ -113,10 +155,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
             if (geocodeResult != null && geocodeResult.getGeocodeAddressList() != null
                     && geocodeResult.getGeocodeAddressList().size() > 0) {
                 GeocodeAddress address = geocodeResult.getGeocodeAddressList().get(0);
-
-                //获取到的经纬度
                 LatLonPoint latLongPoint = address.getLatLonPoint();
-
                 MarkerOptions mk = new MarkerOptions();
                 mk.icon(BitmapDescriptorFactory.defaultMarker());
                 LatLng ll = new LatLng(latLongPoint.getLatitude(), latLongPoint.getLongitude());
@@ -145,13 +184,6 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
     void searchPoi(String key, int pageNum, String cityCode, boolean nearby) {
         isPoiSearched = true;
         query = new PoiSearch.Query(key, "", cityCode);
-        //keyWord表示搜索字符串，
-        //第二个参数表示POI搜索类型，二者选填其一，
-        //POI搜索类型共分为以下20种：汽车服务|汽车销售|
-        //汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|
-        //住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|
-        //金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施
-        //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
         query.setPageSize(50);// 设置每页最多返回多少条poiitem
         query.setPageNum(pageNum);//设置查询页码
         poiSearch = new PoiSearch(this, query);
@@ -170,26 +202,13 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
             if (result.size() > 0) {
                 poiItemArrayList.clear();
                 poiItemArrayList.addAll(result);
-                cityAddapter = new CityAddapter(poiItemArrayList);
-                recyclerView.setAdapter(cityAddapter);
-                myHandler.sendEmptyMessage(0x001);
+                cityAddapter.addData(poiItemArrayList);
+
+                cityAddapter.notifyDataSetChanged();
             }
         }
     }
 
-
-    class MyHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0x001:
-                    //加载listview中数据
-                    cityAddapter.notifyDataSetChanged();
-                    break;
-            }
-        }
-    }
 
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
@@ -206,6 +225,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
     protected void onResume() {
         super.onResume();
         mapView.onResume();
+        et_serch.clearFocus();
     }
 
     @Override

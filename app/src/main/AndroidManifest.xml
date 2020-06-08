@@ -72,9 +72,9 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".pro.activity.getcity.CityPickerActivity" />
-        <activity android:name=".pro.activity.getcity.EnterPriseMapActivity" />
-
+        <activity android:name=".pro.activity.city.CityPickerActivity" />
+        <activity android:name=".ui.EnterPriseMapActivity" />
+        <activity android:name=".ui.SearchActivity" />
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService"></service>

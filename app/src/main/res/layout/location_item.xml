@@ -6,10 +6,12 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_diqu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp10"
-
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginBottom="@dimen/dp10"
         android:orientation="vertical">
 
         <TextView
@@ -17,22 +19,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="saasdasd"
-            android:textColor="#000"
-            android:textSize="@dimen/sp20" />
+            android:textColor="#DB5414"
+            android:textSize="@dimen/sp14" />
 
         <TextView
             android:id="@+id/sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
             android:text="saasdasd"
-            android:textColor="#808080"
-            android:textSize="@dimen/sp15" />
+            android:textColor="#ff666666"
+            android:textSize="@dimen/sp12" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
-
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
         android:background="@color/grayc" />
+
 </LinearLayout>

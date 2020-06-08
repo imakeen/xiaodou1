@@ -41,19 +41,22 @@ public abstract class SuccessfulConsumer implements Consumer<ResponseBody> {
         String json = responseBody.string();
         LogUtils.e("获取网络数据:  " + url + "   " + json);
         JSONObject jsonObject = new JSONObject(json);
-        String code = jsonObject.getString("code");
-        if ("0".equals(code)) {
-            success(json);
-        } else if ("402".equals(code) || "401".equals(code)) {
-            Activity activity = ActivityCollector.getActivity(MainActivity.class);
-            if (activity != null && activity instanceof MainActivity) {
-                ((MainActivity) activity).startLogin();
-            }
-            CommentUtil.startLogin();
-        } else {
-            LogUtils.e("code:" + code);
-            showMessage(json);
-        }
+        success(json);
+//        String code = jsonObject.getString("code");
+//        if ("0".equals(code)) {
+//            success(json);
+//        }
+//        else if ("402".equals(code) || "401".equals(code)) {
+//            Activity activity = ActivityCollector.getActivity(MainActivity.class);
+//            if (activity != null && activity instanceof MainActivity) {
+//                ((MainActivity) activity).startLogin();
+//            }
+//            CommentUtil.startLogin();
+        //}
+//        else {
+//            LogUtils.e("code:" + code);
+//            showMessage(json);
+//        }
 
 
     }

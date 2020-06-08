@@ -1,4 +1,4 @@
-package com.xinzu.xiaodou.pro.fragment.home.utils;
+package com.xinzu.xiaodou.util;
 
 import com.radish.baselibrary.utils.LogUtils;
 import com.xinzu.xiaodou.bean.backTimeBean;

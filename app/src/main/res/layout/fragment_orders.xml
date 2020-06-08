@@ -4,12 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colororange"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp10"
+        android:paddingBottom="@dimen/dp10"
+        android:text="订单"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp17" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp10"
-        android:paddingRight="@dimen/dp10">
+        android:paddingLeft="@dimen/dp13"
+        android:paddingRight="@dimen/dp13">
 
         <Button
             android:id="@+id/bt_all"
@@ -18,7 +30,9 @@
             android:layout_marginRight="@dimen/dp10"
             android:layout_weight="1"
             android:background="@drawable/order_bt"
-            android:text="全部" />
+            android:text="全部"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
 
         <Button
             android:id="@+id/bt_yuyue"
@@ -27,7 +41,9 @@
             android:layout_marginRight="@dimen/dp10"
             android:layout_weight="1"
             android:background="@drawable/order_bt"
-            android:text="预约中" />
+            android:text="预约中"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
 
         <Button
             android:id="@+id/bt_xingcheng"
@@ -36,7 +52,9 @@
             android:layout_marginRight="@dimen/dp10"
             android:layout_weight="1"
             android:background="@drawable/order_bt"
-            android:text="行程中" />
+            android:text="行程中"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
 
         <Button
             android:id="@+id/bt_yiwancheng"
@@ -44,10 +62,19 @@
             android:layout_height="@dimen/dp30"
             android:layout_weight="1"
             android:background="@drawable/order_bt"
-            android:text="已完成" />
+            android:text="已完成"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/dp20"
+        android:background="#999999" />
+
     <android.support.v7.widget.RecyclerView
+        
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

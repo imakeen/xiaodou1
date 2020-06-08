@@ -33,10 +33,11 @@ import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
 import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.http.ApiService;
-import com.xinzu.xiaodou.pro.activity.getcity.CityPickerActivity;
-import com.xinzu.xiaodou.pro.activity.getcity.EnterPriseMapActivity;
-import com.xinzu.xiaodou.pro.fragment.home.utils.Day;
-import com.xinzu.xiaodou.pro.fragment.home.utils.PickerDailog;
+import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
+import com.xinzu.xiaodou.ui.EnterPriseMapActivity;
+import com.xinzu.xiaodou.ui.SearchActivity;
+import com.xinzu.xiaodou.util.Day;
+import com.xinzu.xiaodou.view.PickerDailog;
 import com.xinzu.xiaodou.util.SharedPreUtils;
 
 import java.util.ArrayList;
@@ -137,7 +138,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         lat = SharedPreUtils.getInstance().getString("lat", "");
         lng = SharedPreUtils.getInstance().getString("lng", "");
         nn = SharedPreUtils.getInstance().getString("nn", "");
-        Log.e("asdlkjhlk", names);
 
 
         mRi_qu.setText(Day.pickcar_date("day", true));
@@ -151,6 +151,14 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     @Override
     protected void initListener() {
 
+        SearchActivity searchActivity = new SearchActivity();
+        searchActivity.setselect(new SearchActivity.Slelect() {
+            @Override
+            public void select(String city_title, String city) {
+                Mapse.setText(city_title);
+                mMaps.setText(city);
+            }
+        });
     }
 
 
@@ -159,7 +167,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public void onClieck(View view) {
         switch (view.getId()) {
             case R.id.Maps:
-                ActivityUtils.startActivity(CityPickerActivity.class);
+                Intent intent = new Intent(getContext(), CityPickerActivity.class);
+
+                Bundle bundle = new Bundle();
+                intent.putExtra("bundle", bundle);
+                bundle.putString("city", mMaps.getText().toString());
+                ActivityUtils.startActivity(intent);
                 break;
 
             case R.id.ll_qu:
@@ -171,9 +184,9 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 break;
             case R.id.Mapse:
                 if (!mMaps.equals("请选择")) {
-                    Intent intent = new Intent(getContext(), EnterPriseMapActivity.class);
-                    intent.putExtra("city", mMaps.getText().toString());
-                    startActivity(intent);
+                    Intent intent1 = new Intent(getContext(), EnterPriseMapActivity.class);
+                    intent1.putExtra("city_title", mMaps.getText().toString());
+                    startActivity(intent1);
                 }
                 break;
         }
@@ -282,6 +295,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 if (rCode == 1000) {
                     String aoiName = result.getRegeocodeAddress().getAois().get(context).getAoiName();
                     citys = result.getRegeocodeAddress().getCity();
+                    SharedPreUtils.getInstance().putString("city", citys);
                     mMaps.setText(citys);
                     Mapse.setText(aoiName);
                     if (names.equals("")) {
@@ -385,10 +399,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     @Override
     public void onResume() {
         super.onResume();
-        if (!SharedPreUtils.getInstance().getString("city", "").isEmpty()) {
-            mMaps.setText(SharedPreUtils.getInstance().getString("city", ""));
-            Mapse.setText("请选择");
-        }
     }
 
     @Override
