@@ -8,19 +8,16 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
+import com.google.gson.Gson;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.adapter.CityListAdapter;
-import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
-import com.xinzu.xiaodou.bean.AreasBean;
 import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.CityPickerBean;
 import com.xinzu.xiaodou.bean.LocateState;
 import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.ui.EnterPriseMapActivity;
-import com.xinzu.xiaodou.util.GsonUtil;
 import com.xinzu.xiaodou.util.PinyinUtils;
-import com.xinzu.xiaodou.util.ReadAssetsFileUtil;
 import com.xinzu.xiaodou.util.SharedPreUtils;
 import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.view.SideLetterBar;
@@ -44,7 +41,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
 
     @Override
     protected void initInject() {
-     getActivityComponent().inject(this);
+        getActivityComponent().inject(this);
     }
 
     @Override
@@ -80,29 +77,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
 
     }
 
-    public void getCityData() {
-        String json = ReadAssetsFileUtil.getJson(this, "city.json");
-        CityPickerBean bean = GsonUtil.getBean(json, CityPickerBean.class);
-        HashSet<City> citys = new HashSet<>();
-        for (AreasBean areasBean : bean.data.areas) {
-            String name = areasBean.name.replace("　", "");
-            citys.add(new City(areasBean.id, name, PinyinUtils.getPinYin(name), areasBean.is_hot == 1));
-            for (AreasBean.ChildrenBeanX childrenBeanX : areasBean.children) {
-                citys.add(new City(childrenBeanX.id, childrenBeanX.name, PinyinUtils.getPinYin(childrenBeanX.name), childrenBeanX.is_hot == 1));
-            }
-        }
-        //set转换list
-        ArrayList<City> cities = new ArrayList<>(citys);
-        //按照字母排序
-        Collections.sort(cities, new Comparator<City>() {
-            @Override
-            public int compare(City city, City t1) {
-                return city.getPinyin().compareTo(t1.getPinyin());
-            }
-        });
-        mCityAdapter.setData(cities);
-        mCityAdapter.updateLocateState(LocateState.SUCCESS, SharedPreUtils.getInstance().getString("city", ""));
-    }
 
     @OnClick(R.id.back)
     public void onClick(View view) {
@@ -110,7 +84,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
     }
 
     protected void initData() {
-        getCityData();
         mCityAdapter.setOnCityClickListener(new CityListAdapter.OnCityClickListener() {
             @Override
             public void onCityClick(String name) {//选择城市
@@ -129,7 +102,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
             }
         });
         String sign = SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp());
-        mPresenter.getCity(ApiService.appKey, SignUtils.temp(), sign);
+        mPresenter.getCity(ApiService.appKey, SignUtils.temp(), sign, this);
 
     }
 
@@ -139,4 +112,25 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
     }
 
 
+    @Override
+    public void getCity(String city) {
+        HashSet<City> citys = new HashSet<>();
+        CityPickerBean cityPickerBean = new Gson().fromJson(city, CityPickerBean.class);
+        for (CityPickerBean.CityListBean bean : cityPickerBean.getCityList()
+        ) {
+            citys.add(new City(bean.getAdCode(), bean.getCity(), PinyinUtils.getPinYin(bean.getCity())));
+        }
+
+        //set转换list
+        ArrayList<City> cities = new ArrayList<>(citys);
+        //按照字母排序
+        Collections.sort(cities, new Comparator<City>() {
+            @Override
+            public int compare(City city, City t1) {
+                return city.getPinyin().compareTo(t1.getPinyin());
+            }
+        });
+        mCityAdapter.setData(cities);
+        mCityAdapter.updateLocateState(LocateState.SUCCESS, SharedPreUtils.getInstance().getString("city", ""));
+    }
 }

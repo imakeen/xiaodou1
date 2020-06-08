@@ -42,8 +42,8 @@ public class CityListAdapter extends BaseAdapter {
         if (mCities == null) {
             mCities = new ArrayList<>();
         }
-        mCities.add(0, new City(-1, "定位", "0"));
-        mCities.add(1, new City(-1, "热门", "1"));
+        mCities.add(0, new City("-1", "定位", "0"));
+        mCities.add(1, new City("-1", "热门", "1"));
         int size = mCities.size();
         letterIndexes = new HashMap<>();
         sections = new String[size];

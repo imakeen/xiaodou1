@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.xinzu.xiaodou.dragger.ActivityScope;
 import com.xinzu.xiaodou.dragger.module.ActivityModule;
+import com.xinzu.xiaodou.pro.activity.cartype.CarTypeAcitvity;
 import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
 import com.xinzu.xiaodou.pro.activity.login.LoginActivity;
 
@@ -20,5 +21,7 @@ public interface ActivityComponent {
 
     void inject(LoginActivity activity);
 
-  void inject(CityPickerActivity activity);
+    void inject(CityPickerActivity activity);
+
+    void inject(CarTypeAcitvity activity);
 }

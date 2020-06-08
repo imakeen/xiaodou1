@@ -1,6 +1,4 @@
-package com.xinzu.xiaodou.pro.activity.city;
-
-import android.content.Context;
+package com.xinzu.xiaodou.pro.activity.cartype;
 
 import com.xinzu.xiaodou.base.mvp.BasePersenter;
 import com.xinzu.xiaodou.base.mvp.BaseView;
@@ -10,16 +8,16 @@ import com.xinzu.xiaodou.base.mvp.BaseView;
  * LoginContract
  *
  * @author Administrator
- */
-public interface CityPickContract {
+ * */
+public interface CarTypeContract {
 
 
     interface View extends BaseView {
-        void getCity(String city);
+
     }
 
     interface Presenter extends BasePersenter<View> {
-        void getCity(String appKey, String timeStamp, String sign, Context context);
+
     }
 
 }

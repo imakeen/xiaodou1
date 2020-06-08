@@ -3,7 +3,7 @@ package com.xinzu.xiaodou.bean;
 import java.util.Objects;
 
 public class City {
-    private int id;
+    private String id;
     private String name;
     private String pinyin;
     private boolean isHot;
@@ -17,18 +17,19 @@ public class City {
         this.id = id;
     }
 
-    public City(int id, String name, String pinyin) {
+    public City(String id, String name, String pinyin) {
         this.name = name;
         this.pinyin = pinyin;
         this.id = id;
     }
 
-    public City(int id, String name, String pinyin, boolean isHot) {
+    public City(String id, String name, String pinyin, boolean isHot) {
         this.name = name;
         this.pinyin = pinyin;
         this.id = id;
         this.isHot = isHot;
     }
+
 
     public String getName() {
         return name;
@@ -46,11 +47,11 @@ public class City {
         this.pinyin = pinyin;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

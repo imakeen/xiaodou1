@@ -10,6 +10,7 @@ import com.xinzu.xiaodou.util.DownloadListener;
 import com.xinzu.xiaodou.util.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -18,7 +19,10 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -38,6 +42,7 @@ public class HttpManager {
     private ConcurrentHashMap<Class, Object> cachedApis = new ConcurrentHashMap<>();
     private PersistentCookieJar cookieJar;
 
+
     public HttpManager() {
         cookieJar = new PersistentCookieJar(new SetCookieCache(), new
                 SharedPrefsCookiePersistor(MyApp.getInstance()));
@@ -45,6 +50,7 @@ public class HttpManager {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         // int okhttp
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
                 .connectTimeout(15, TimeUnit.SECONDS)
@@ -58,30 +64,36 @@ public class HttpManager {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.ServiceUrl)
                 .client(client)
+
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(StringConverterFactory.create())
                 .build();
 
         mServiceHashMap.put(ApiService.class, mRetrofit);
+
     }
-    public  void downLoadapk(String url, final File file, final DownloadListener callBak) {
+
+    public void downLoadapk(String url, final File file, final DownloadListener callBak) {
         MyApp.apiService(ApiService.class).downLoadApk(url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
+
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         LogUtils.e("----写入文件：-----");
 //                        请求完成以后=----写入文件
-                        FileUtils.writeFileSDcard(responseBody,file,callBak);
+                        FileUtils.writeFileSDcard(responseBody, file, callBak);
                     }
+
                     @Override
                     public void onError(Throwable e) {
 //                        callBak.OnError(e);
-                        LogUtils.e("下载请求错误："+e.toString());
+                        LogUtils.e("下载请求错误：" + e.toString());
                     }
+
                     @Override
                     public void onComplete() {
                         LogUtils.e("下载文件----onComplete");
