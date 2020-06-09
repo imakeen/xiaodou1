@@ -63,6 +63,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
     @BindView(R.id.et_seach)
     EditText et_serch;
     private String cityExtra;
+    private String citycode;
 
     @Override
     protected void initBundle() {
@@ -83,6 +84,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
         Intent intent = getIntent();
 
         String city_title = intent.getStringExtra("city_title");
+        citycode = intent.getStringExtra("citycode");
         cityExtra = intent.getStringExtra("city");
         if (city_title != null) {
             searchPoi(city_title, 0, currentInfo.get("cityCode"), false);
@@ -117,6 +119,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
                 if (hasFocus) {
                     Intent intent = new Intent(EnterPriseMapActivity.this, SearchActivity.class);
                     intent.putExtra("city", cityExtra);
+                    intent.putExtra("citycode",citycode);
                     ActivityUtils.startActivity(intent);
                     finish();
                 }
@@ -129,6 +132,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
                 Intent intent = new Intent(EnterPriseMapActivity.this, SearchActivity.class);
                 intent.putExtra("citytitle", city);
                 intent.putExtra("city", cityExtra);
+                intent.putExtra("citycode",citycode);
                 ActivityUtils.startActivity(intent);
                 finish();
             }

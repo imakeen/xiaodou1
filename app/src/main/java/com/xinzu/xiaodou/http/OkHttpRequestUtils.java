@@ -282,6 +282,13 @@ public class OkHttpRequestUtils {
         return call;
     }
 
+    public <T> Call requestAsynjson(String actionUrl, String json,
+                                    RequestCallBack<T> callBack) {
+        Call call = null;
+        call = requestPostByAsynjson(actionUrl, json, callBack);
+        return call;
+    }
+
     /**
      * okHttp get异步请求
      *
@@ -345,6 +352,48 @@ public class OkHttpRequestUtils {
         try {
             Gson gson = new Gson();
             RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, gson.toJson(paramsMap));
+            String requestUrl = String.format("%s%s", BASE_URL, actionUrl);
+            final Request request = addHeaders().url(requestUrl).post(body).build();
+            final Call call = mOkHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    failedCallBack("访问失败", callBack);
+                    Log.e(TAG, e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        String string = response.body().string();
+                        Log.i(TAG, "response ----->" + string);
+                        successCallBack((T) string, callBack);
+                    } else {
+                        failedCallBack("服务器错误", callBack);
+                    }
+                }
+            });
+            return call;
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+            return null;
+        }
+    }
+
+    /**
+     * okHttp post异步请求
+     *
+     * @param actionUrl 接口地址
+     * @param 请求参数
+     * @param callBack  请求返回数据回调
+     * @param <T>       数据泛型
+     * @return
+     */
+    public <T> Call requestPostByAsynjson(String actionUrl, String json,
+                                          final RequestCallBack<T> callBack) {
+        try {
+
+            RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
             String requestUrl = String.format("%s%s", BASE_URL, actionUrl);
             final Request request = addHeaders().url(requestUrl).post(body).build();
             final Call call = mOkHttpClient.newCall(request);

@@ -31,14 +31,19 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
+import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.backTimeBean;
+import com.xinzu.xiaodou.bean.getCarttypeBean;
 import com.xinzu.xiaodou.http.ApiService;
+import com.xinzu.xiaodou.pro.activity.cartype.CarTypeAcitvity;
 import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
 import com.xinzu.xiaodou.ui.EnterPriseMapActivity;
 import com.xinzu.xiaodou.ui.SearchActivity;
 import com.xinzu.xiaodou.util.Day;
-import com.xinzu.xiaodou.view.PickerDailog;
+import com.xinzu.xiaodou.util.KHMD5;
 import com.xinzu.xiaodou.util.SharedPreUtils;
+import com.xinzu.xiaodou.util.SignUtils;
+import com.xinzu.xiaodou.view.PickerDailog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,15 +62,15 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     TextView Mapse;
 
     @BindView(R.id.Ri_Qu)
-    TextView mRi_qu;
+    TextView tv_pick_day;
     @BindView(R.id.Tian_Shu)
     TextView tianshu;
     @BindView(R.id.Ri_qi)
-    TextView ri_qi;
+    TextView tv_return_day;
     @BindView(R.id.Zhou_ri)
-    TextView zhou_ri;
+    TextView tv_pick_week;
     @BindView(R.id.Zhao_ris)
-    TextView zhao_ris;
+    TextView tv_return_week;
     @BindView(R.id.Lease_immediately)
     Button mLease_immediately;
     @BindView(R.id.mapty)
@@ -79,17 +84,16 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public static final int PERMISSION_REQUESTCODE = 0x001;
     private AMap aMap;
     private boolean isShowPermission = true;
-    private backTimeBean mBackInfo;
+
+    private String Pickuplatitude;
+    private String Pickuplongitude;
+    private String Citycode;
+
     private String names;
-    private String lat;
-    private String lng;
-    private String nn;
-    private String tumesy;
-    private String subsytem;
-    private String tiemsg;
+
 
     private GeocodeSearch mGeocoderSearch;
-    private String formatAddress;
+
     int context;
 
     public static HomeFragment newInstance(String title) {
@@ -134,16 +138,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     protected void loadData() {
-        names = SharedPreUtils.getInstance().getString("names", "");
-        lat = SharedPreUtils.getInstance().getString("lat", "");
-        lng = SharedPreUtils.getInstance().getString("lng", "");
-        nn = SharedPreUtils.getInstance().getString("nn", "");
 
 
-        mRi_qu.setText(Day.pickcar_date("day", true));
-        zhou_ri.setText(Day.pickcar_date("week", true));
-        ri_qi.setText(Day.pickcar_date("day", false));
-        zhao_ris.setText(Day.pickcar_date("week", false));
+        tv_pick_day.setText(Day.pickcar_date("day", true));
+        tv_pick_week.setText(Day.pickcar_date("week", true));
+        tv_return_day.setText(Day.pickcar_date("day", false));
+        tv_return_week.setText(Day.pickcar_date("week", false));
 
     }
 
@@ -154,9 +154,19 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         SearchActivity searchActivity = new SearchActivity();
         searchActivity.setselect(new SearchActivity.Slelect() {
             @Override
-            public void select(String city_title, String city) {
+            public void select(String city_title, String city, String citycode, String pickuplongitude, String pickuplatitude) {
                 Mapse.setText(city_title);
                 mMaps.setText(city);
+                if (citycode != null) {
+                    Citycode = citycode;
+                }
+                if (pickuplatitude != null) {
+                    Pickuplongitude = pickuplongitude;
+                }
+                if (pickuplatitude != null) {
+                    Pickuplatitude = pickuplatitude;
+                }
+
             }
         });
     }
@@ -185,11 +195,50 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             case R.id.Mapse:
                 if (!mMaps.equals("请选择")) {
                     Intent intent1 = new Intent(getContext(), EnterPriseMapActivity.class);
-                    intent1.putExtra("city_title", mMaps.getText().toString());
+                    intent1.putExtra("city_title", Mapse.getText().toString());
                     startActivity(intent1);
                 }
                 break;
+
+            case R.id.Lease_immediately:
+
+                getCattype();
+
+
+                break;
         }
+    }
+
+    private void getCattype() {
+        getCarttypeBean bean = new getCarttypeBean();
+        bean.setAppKey(ApiService.appKey);
+        //bean.setCarGroupId(0);
+        bean.setOrderChannel(4);
+        bean.setChannelId(1);
+        String pickminute = tv_pick_week.getText().toString();
+        bean.setPickupDate(tv_pick_day.getText().toString() + " " + pickminute.substring(pickminute.length() - 5, pickminute.length()));
+        bean.setPickuplongitude(Pickuplongitude);
+        bean.setPickuplatitude(Pickuplatitude);
+        String returnminute = tv_return_week.getText().toString();
+        bean.setReturnDate(tv_return_day.getText().toString() + " " + returnminute.substring(returnminute.length() - 5, returnminute.length()));
+        bean.setReturnlongitude(Pickuplongitude);
+        bean.setReturnlatitude(Pickuplatitude);
+        bean.setTimeStamp(SignUtils.temp());
+        bean.setSign(SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
+
+        getCarttypeBean.StoreListBean storeListBean = new getCarttypeBean.StoreListBean();
+        storeListBean.setPickupCityCode(Citycode);
+        storeListBean.setReturnCityCode(Citycode);
+        ArrayList<getCarttypeBean.StoreListBean> arrayList = new ArrayList<>();
+        arrayList.add(storeListBean);
+        bean.setStoreList(arrayList);
+        Intent intent = new Intent(getContext(), CarTypeAcitvity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("cartype", bean);
+        bundle.putString("city", mMaps.getText().toString());
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
     }
 
     /**
@@ -198,11 +247,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private void startPickDailog(Boolean qu_or_back) {
         backTimeBean timeBean = new backTimeBean();
 
-        timeBean.setQu_day(mRi_qu.getText().toString());
-        timeBean.setQu_week_time(zhou_ri.getText().toString());
+        timeBean.setQu_day(tv_pick_day.getText().toString());
+        timeBean.setQu_week_time(tv_pick_week.getText().toString());
 
-        timeBean.setBack_day(ri_qi.getText().toString());
-        timeBean.setBack_week_time(zhao_ris.getText().toString());
+        timeBean.setBack_day(tv_return_day.getText().toString());
+        timeBean.setBack_week_time(tv_return_week.getText().toString());
 
         pickerDailog = new PickerDailog(qu_or_back, getContext(), timeBean, getActivity());
         if (!pickerDailog.isShowing()) {
@@ -211,7 +260,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         pickerDailog.setOnDateSelectFinished(new PickerDailog.callback() {
             @Override
             public void getTime(String startTime_day, String startTime_week, String endTime_day, String endTime_week) {
-                mRi_qu.setText(startTime_day);
+                tv_pick_day.setText(startTime_day);
             }
         });
     }
@@ -282,7 +331,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         mGeocoderSearch = new GeocodeSearch(getContext());
         checkPermissions();
         mGeocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
-            private String adCode;
+
             private String citys;
 
             @Override
@@ -298,11 +347,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                     SharedPreUtils.getInstance().putString("city", citys);
                     mMaps.setText(citys);
                     Mapse.setText(aoiName);
-                    if (names.equals("")) {
-                        Mapse.setText(aoiName);
-                    } else {
-                        Mapse.setText(names);
-                    }
+                    Citycode = result.getRegeocodeAddress().getAdCode();
+                    String code = Citycode.substring(0, 4);
+                    Citycode = code + "00";
+                    Pickuplongitude = result.getRegeocodeQuery().getPoint().getLongitude() + "";
+                    Pickuplatitude = result.getRegeocodeQuery().getPoint().getLatitude() + "";
                 }
             }
         });

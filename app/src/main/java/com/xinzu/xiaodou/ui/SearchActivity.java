@@ -60,11 +60,13 @@ public class SearchActivity extends BaseGActivity implements PoiSearch.OnPoiSear
     EditText et_serch;
     private static Slelect slelect;
     private String city;
+    private String citycode;
 
     @Override
     protected void initBundle() {
         Intent intent = getIntent();
         city = intent.getStringExtra("city");
+        citycode = intent.getStringExtra("citycode");
         searchPoi(intent.getStringExtra("citytitle"), 0, currentInfo.get("cityCode"), false);
     }
 
@@ -114,7 +116,10 @@ public class SearchActivity extends BaseGActivity implements PoiSearch.OnPoiSear
         cityAddapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                slelect.select(poiItemArrayList.get(position).getTitle(), city == null ? poiItemArrayList.get(position).getCityName() : city);
+                slelect.select(poiItemArrayList.get(position).getTitle(), city == null ? poiItemArrayList.get(position).getCityName() : city
+                        , citycode, poiItemArrayList.get(position).getLatLonPoint().getLongitude() + ""
+                        , poiItemArrayList.get(position).getLatLonPoint().getLatitude() + ""
+                );
                 finish();
             }
         });
@@ -166,6 +171,8 @@ public class SearchActivity extends BaseGActivity implements PoiSearch.OnPoiSear
     }
 
     public interface Slelect {
-        void select(String city_title, String city);
+        void select(String city_title, String city, String citycode,
+                    String pickuplongitude,
+                    String pickuplatitude);
     }
 }

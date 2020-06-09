@@ -141,7 +141,9 @@ public class CityListAdapter extends BaseAdapter {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if (onCityClickListener != null) {
-                            onCityClickListener.onCityClick(hotCityGridAdapter.getItem(position).getName());
+                            onCityClickListener.onCityClick(hotCityGridAdapter.getItem(position).getName(),
+                                    hotCityGridAdapter.getItem(position).getId()
+                            );
                         }
                     }
                 });
@@ -158,6 +160,7 @@ public class CityListAdapter extends BaseAdapter {
                 }
                 if (position >= 1) {
                     final String city = mCities.get(position).getName();
+                    final String code = mCities.get(position).getId();
                     holder.name.setText(city);
                     String currentLetter = PinyinUtils.getFirstLetter(mCities.get(position).getPinyin());
                     String previousLetter = position >= 1 ? PinyinUtils.getFirstLetter(mCities.get(position - 1).getPinyin()) : "";
@@ -171,7 +174,7 @@ public class CityListAdapter extends BaseAdapter {
                         @Override
                         public void onClick(View v) {
                             if (onCityClickListener != null) {
-                                onCityClickListener.onCityClick(city);
+                                onCityClickListener.onCityClick(city,code);
                             }
                         }
                     });
@@ -191,7 +194,7 @@ public class CityListAdapter extends BaseAdapter {
     }
 
     public interface OnCityClickListener {
-        void onCityClick(String name);
+        void onCityClick(String name, String citycode);
 
         void onLocateClick();
     }

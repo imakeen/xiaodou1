@@ -153,7 +153,8 @@ public class SignUtils {
      * @param request
      * @return
      */
-    public static Boolean sign(HttpServletRequest request) {
+    public static Boolean
+    sign(HttpServletRequest request) {
         Boolean bool = null;
         String timestamp = request.getParameter("timestamp");
         String sign = request.getParameter("sign");

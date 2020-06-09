@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="@dimen/dp_10"
-            android:src="@mipmap/ic_back"
+            android:src="@mipmap/back_write"
             android:tint="@color/white" />
 
         <TextView

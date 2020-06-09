@@ -39,17 +39,12 @@ public interface ApiService {
 
 
     public static String collectCityInfo = "collectCityInfo";
+    public static String getCarGroups = "getCarGroups";
+    public static String searchVehicle = "searchVehicle";
+
 
     @GET()
     Flowable<JsonObject> get(@Url String url);
 
-
-    @POST
-    Observable<ResponseBody> downLoadApk(@Url String url);
-
-
-    @POST("collectCityInfo")
-    @FormUrlEncoded
-    Observable<ResponseBody> collectCityInfo(@Field("appKey") String appKey, @Field("timeStamp") String timeStamp, @Field("sign") String sign);
 
 }

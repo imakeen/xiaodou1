@@ -75,31 +75,31 @@ public class HttpManager {
     }
 
     public void downLoadapk(String url, final File file, final DownloadListener callBak) {
-        MyApp.apiService(ApiService.class).downLoadApk(url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        LogUtils.e("----写入文件：-----");
-//                        请求完成以后=----写入文件
-                        FileUtils.writeFileSDcard(responseBody, file, callBak);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-//                        callBak.OnError(e);
-                        LogUtils.e("下载请求错误：" + e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        LogUtils.e("下载文件----onComplete");
-                    }
-                });
-    }
+//        MyApp.apiService(ApiService.class).downLoadApk(url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<ResponseBody>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onNext(ResponseBody responseBody) {
+//                        LogUtils.e("----写入文件：-----");
+////                        请求完成以后=----写入文件
+//                        FileUtils.writeFileSDcard(responseBody, file, callBak);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+////                        callBak.OnError(e);
+//                        LogUtils.e("下载请求错误：" + e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        LogUtils.e("下载文件----onComplete");
+//                    }
+//                });
+   }
 
 
     public <T> T getService(Class<T> clz) {

@@ -1,29 +1,53 @@
 package com.xinzu.xiaodou.pro.activity.cartype;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.xinzu.xiaodou.R;
-import com.xinzu.xiaodou.adapter.HomeAdapter;
+import com.xinzu.xiaodou.adapter.CarAdapter;
+import com.xinzu.xiaodou.adapter.MenuAdapter;
 import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
+import com.xinzu.xiaodou.bean.CarBean;
+import com.xinzu.xiaodou.bean.CarGroupBean;
+import com.xinzu.xiaodou.bean.getCarttypeBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implements CarTypeContract.View {
     @BindView(R.id.lv_menu)
-    ListView lvMenu;
+    RecyclerView lvMenu;
     @BindView(R.id.lv_home)
-    ListView lvHome;
+    RecyclerView lvHome;
+    @BindView(R.id.tv_pick_city)
+    TextView tvPickCity;
+    @BindView(R.id.tv_pick_time)
+    TextView tvPickTime;
+    @BindView(R.id.Tian_Shu)
+    TextView TianShu;
+    @BindView(R.id.tv_return_city)
+    TextView tvReturnCity;
+    @BindView(R.id.tv_return_time)
+    TextView tvReturnTime;
 
-    private HomeAdapter homeAdapter;
-   // private MenuAdapter menuAdapter;
+    private MenuAdapter menuAdapter;
+    private CarAdapter carAdapter;
     private int currentItem;
     private List<Integer> showTitle = new ArrayList<>();
+    private String json;
+    private getCarttypeBean carttypeBean;
+    private Bundle bundle;
+    private ArrayList<CarGroupBean.CarGroupListBean> arrayList;
+
 
     @Override
     protected void initInject() {
@@ -32,6 +56,12 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     @Override
     protected void initBundle() {
+        Intent intent = getIntent();
+        bundle = intent.getBundleExtra("bundle");
+        carttypeBean = bundle.getParcelable("cartype");
+
+        Gson gson = new Gson();
+        json = gson.toJson(carttypeBean);
 
     }
 
@@ -42,7 +72,18 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     @Override
     protected void initView() {
+        tvPickTime.setText(carttypeBean.getPickupDate() + "");
+        tvReturnTime.setText(carttypeBean.getReturnDate() + "");
+        tvPickCity.setText(bundle.getString("city"));
+        tvReturnCity.setText(bundle.getString("city"));
+        lvMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        menuAdapter = new MenuAdapter();
+        lvMenu.setAdapter(menuAdapter);
+        mPresenter.getcartype(json, this);
 
+        lvHome.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        carAdapter = new CarAdapter();
+        lvHome.setAdapter(carAdapter);
     }
 
     @Override
@@ -52,52 +93,51 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     @Override
     protected void initData() {
-        List<String> stringList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            stringList.add("");
-            showTitle.add(i);
-        }
 
-        homeAdapter = new HomeAdapter(this, stringList);
-        lvHome.setAdapter(homeAdapter);
-//        menuAdapter = new MenuAdapter(this, stringList);
-//        lvMenu.setAdapter(menuAdapter);
-//        lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                menuAdapter.setSelectItem(position);
-//                menuAdapter.notifyDataSetInvalidated();
-//                lvHome.setSelection(showTitle.get(position));
-//            }
-//        });
+    }
 
-        lvHome.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int scrollState;
 
+    @Override
+    protected void initListener() {
+        menuAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                this.scrollState = scrollState;
-            }
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                menuAdapter.setSelectItem(position);
+                menuAdapter.notifyDataSetChanged();
+                carttypeBean.setCarGroupId(arrayList.get(position).getCarGroupId());
+                Gson gson = new Gson();
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-                    return;
-                }
-                int current = showTitle.indexOf(firstVisibleItem);
-//				lv_home.setSelection(current);
-                if (currentItem != current && current >= 0) {
-                    currentItem = current;
-//                    menuAdapter.setSelectItem(currentItem);
-//                    menuAdapter.notifyDataSetInvalidated();
-                }
+                mPresenter.getcar(gson.toJson(carttypeBean), CarTypeAcitvity.this);
             }
         });
     }
 
     @Override
-    protected void initListener() {
+    public void getCarType(String cartype) {
+        CarGroupBean carGroupBean = new Gson().fromJson(cartype, CarGroupBean.class);
+        arrayList = new ArrayList<>();
+        CarGroupBean.CarGroupListBean allbean = new CarGroupBean.CarGroupListBean();
+        allbean.setCarGroupId(0);
+        allbean.setCarGroupName("全部");
+        arrayList.add(allbean);
+        arrayList.addAll(carGroupBean.getCarGroupList());
+        menuAdapter.addData(arrayList);
+        menuAdapter.notifyDataSetChanged();
 
+        carttypeBean.setCarGroupId(arrayList.get(0).getCarGroupId());
+        Gson gson = new Gson();
+        mPresenter.getcar(gson.toJson(carttypeBean), CarTypeAcitvity.this);
     }
+
+    @Override
+    public void getCar(String car) {
+        CarBean carBean = new Gson().fromJson(car, CarBean.class);
+        ArrayList<CarBean.StoreListBean> carList = new ArrayList<>();
+        carList.addAll(carBean.getStoreList());
+        carAdapter = new CarAdapter();
+        lvHome.setAdapter(carAdapter);
+        carAdapter.addData(carList);
+        carAdapter.notifyDataSetChanged();
+    }
+
 }
