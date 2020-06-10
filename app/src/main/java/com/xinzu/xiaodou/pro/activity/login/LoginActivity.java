@@ -22,15 +22,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         getActivityComponent().inject(this);
     }
 
-    @OnClick({R.id.bt_login})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.bt_login:
-                break;
-            default:
-                break;
-        }
-    }
+
 
 
 

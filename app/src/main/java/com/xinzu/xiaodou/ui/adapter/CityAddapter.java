@@ -1,4 +1,4 @@
-package com.xinzu.xiaodou.adapter;
+package com.xinzu.xiaodou.ui.adapter;
 
 import android.support.annotation.Nullable;
 

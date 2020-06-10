@@ -73,9 +73,11 @@
 
         </activity>
         <activity android:name=".pro.activity.city.CityPickerActivity" />
-        <activity android:name=".ui.EnterPriseMapActivity" />
-        <activity android:name=".ui.SearchActivity" />
+        <activity android:name=".ui.activity.EnterPriseMapActivity" />
+        <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".pro.activity.cartype.CarTypeAcitvity" />
+        <activity android:name=".pro.activity.register.RegisterActivity" />
+        <activity android:name=".ui.activity.CarInfoActivity" />
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService"></service>
@@ -89,13 +91,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>
 
 </manifest>

@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_car"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dp10"
-    android:background="@mipmap/back_write"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="@dimen/dp20">
 

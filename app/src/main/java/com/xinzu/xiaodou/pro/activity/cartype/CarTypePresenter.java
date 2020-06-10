@@ -40,13 +40,14 @@ public class CarTypePresenter extends BasePAV<CarTypeContract.View> implements C
 
     @Override
     public void getcar(String json, Context context) {
+        mView.showLoading();
         OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(context);
         okHttpRequestUtils.requestAsynjson(ApiService.searchVehicle, json, new RequestCallBack() {
             @Override
             public void onRequestSuccess(Object result) {
                 LogUtils.e(result.toString());
                 mView.getCar(result.toString());
-
+                mView.closeLoading();
             }
 
             @Override

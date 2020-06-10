@@ -1,4 +1,4 @@
-package com.xinzu.xiaodou.adapter;
+package com.xinzu.xiaodou.ui.adapter;
 
 import android.graphics.Color;
 import android.view.View;
@@ -37,5 +37,7 @@ public class CarAdapter extends BaseQuickAdapter<CarBean.StoreListBean, BaseView
         ImageView imageView = helper.getView(R.id.car_image);
         GlideUtils.getInstance().loadPathImage(mContext, item.getImage(), imageView);
 
+
+        helper.addOnClickListener(R.id.ll_car);
     }
 }

@@ -1,14 +1,10 @@
-package com.xinzu.xiaodou.ui;
+package com.xinzu.xiaodou.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -33,7 +29,7 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xinzu.xiaodou.R;
-import com.xinzu.xiaodou.adapter.CityAddapter;
+import com.xinzu.xiaodou.ui.adapter.CityAddapter;
 import com.xinzu.xiaodou.base.BaseGActivity;
 
 import java.util.ArrayList;

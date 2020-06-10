@@ -28,20 +28,18 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
-import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.bean.getCarttypeBean;
 import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.pro.activity.cartype.CarTypeAcitvity;
 import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
-import com.xinzu.xiaodou.ui.EnterPriseMapActivity;
-import com.xinzu.xiaodou.ui.SearchActivity;
+import com.xinzu.xiaodou.ui.activity.EnterPriseMapActivity;
+import com.xinzu.xiaodou.ui.activity.SearchActivity;
 import com.xinzu.xiaodou.util.Day;
-import com.xinzu.xiaodou.util.KHMD5;
-import com.xinzu.xiaodou.util.SharedPreUtils;
 import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.view.PickerDailog;
 
@@ -344,7 +342,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 if (rCode == 1000) {
                     String aoiName = result.getRegeocodeAddress().getAois().get(context).getAoiName();
                     citys = result.getRegeocodeAddress().getCity();
-                    SharedPreUtils.getInstance().putString("city", citys);
+                    SPUtils.getInstance().put("city", citys);
                     mMaps.setText(citys);
                     Mapse.setText(aoiName);
                     Citycode = result.getRegeocodeAddress().getAdCode();

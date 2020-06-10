@@ -7,6 +7,7 @@ import com.xinzu.xiaodou.dragger.module.ActivityModule;
 import com.xinzu.xiaodou.pro.activity.cartype.CarTypeAcitvity;
 import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
 import com.xinzu.xiaodou.pro.activity.login.LoginActivity;
+import com.xinzu.xiaodou.pro.activity.register.RegisterActivity;
 
 import dagger.Component;
 
@@ -24,4 +25,7 @@ public interface ActivityComponent {
     void inject(CityPickerActivity activity);
 
     void inject(CarTypeAcitvity activity);
+
+    void inject(RegisterActivity activity);
+
 }

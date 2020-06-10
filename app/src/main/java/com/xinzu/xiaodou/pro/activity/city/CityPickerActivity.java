@@ -8,17 +8,17 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
+import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 import com.xinzu.xiaodou.R;
-import com.xinzu.xiaodou.adapter.CityListAdapter;
+import com.xinzu.xiaodou.ui.adapter.CityListAdapter;
 import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
 import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.CityPickerBean;
 import com.xinzu.xiaodou.bean.LocateState;
 import com.xinzu.xiaodou.http.ApiService;
-import com.xinzu.xiaodou.ui.EnterPriseMapActivity;
+import com.xinzu.xiaodou.ui.activity.EnterPriseMapActivity;
 import com.xinzu.xiaodou.util.PinyinUtils;
-import com.xinzu.xiaodou.util.SharedPreUtils;
 import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.view.SideLetterBar;
 
@@ -132,6 +132,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
             }
         });
         mCityAdapter.setData(cities);
-        mCityAdapter.updateLocateState(LocateState.SUCCESS, SharedPreUtils.getInstance().getString("city", ""));
+        mCityAdapter.updateLocateState(LocateState.SUCCESS, SPUtils.getInstance().getString("city", ""));
     }
 }

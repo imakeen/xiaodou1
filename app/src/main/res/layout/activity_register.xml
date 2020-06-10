@@ -83,7 +83,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp20"
             android:background="@drawable/bt_register"
-            android:text="登录"
+            android:text="注册"
             android:textColor="@color/white"
             android:textSize="17sp" />
     </LinearLayout>
