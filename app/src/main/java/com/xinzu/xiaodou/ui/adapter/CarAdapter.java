@@ -1,16 +1,11 @@
 package com.xinzu.xiaodou.ui.adapter;
 
-import android.graphics.Color;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.bean.CarBean;
-import com.xinzu.xiaodou.bean.CarGroupBean;
 import com.xinzu.xiaodou.util.GlideUtils;
 
 /**

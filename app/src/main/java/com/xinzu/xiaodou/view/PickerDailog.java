@@ -269,20 +269,22 @@ public class PickerDailog extends Dialog {
     private void yincang(String hour) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, 3); //减填负数
+        calendar.add(Calendar.DAY_OF_MONTH, 0);
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("MM月dd日HH");
 
         String format = simpleDateFormat1.format(calendar.getTime());
-        now_hour = Integer.parseInt(format.substring(format.length() - 2));
-        String qu_hour = mQuTimeTv.getText().toString();
+        now_hour = Integer.parseInt(format.substring(format.length() - 2, format.length()));
+        String mitun = mQuTimeTv.getText().toString();
         if (tv_qu_day.getText().toString().equals(format.substring(0, format.length() - 2))) {
-            if (Integer.parseInt(qu_hour.substring(0, qu_hour.length() - 3)) < now_hour) {
+            if (Integer.parseInt(hour) < now_hour) {
                 mHourSpinner.setValue(now_hour);
-                mQuTimeTv.setText(Day.dialog_start_hour(now_hour + "", qu_hour));
+                mQuTimeTv.setText(Day.dialog_start_hour(now_hour + "", mitun.substring(mitun.length() - 2, mitun.length())));
             } else {
-                mQuTimeTv.setText(Day.dialog_start_hour(hour, qu_hour));
+                mQuTimeTv.setText(Day.dialog_start_hour(hour, mitun.substring(mitun.length() - 2, mitun.length())))
+                ;
             }
         } else {
-            mQuTimeTv.setText(Day.dialog_start_hour(hour, qu_hour));
+            mQuTimeTv.setText(Day.dialog_start_hour(hour, mitun.substring(mitun.length() - 2, mitun.length())));
         }
 
     }
@@ -294,9 +296,9 @@ public class PickerDailog extends Dialog {
      * @parm
      */
     private void tianshu() throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日HH:mm");
-        String qutime = tv_qu_day.getText().toString() + mQuTimeTv.getText().toString();
-        String huantime = tv_huan_day.getText().toString() + mQuTimeTv.getText().toString();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM月dd日HH:mm");
+        String qutime = timeBean.getQu_day().substring(0, 4) + "-" + tv_qu_day.getText().toString() + mQuTimeTv.getText().toString();
+        String huantime = timeBean.getBack_day().substring(0, 4) + "-" + tv_huan_day.getText().toString() + mHuanTimeTv.getText().toString();
         mSelectTv.setText(BetweenUtil.getDatePoor(simpleDateFormat.parse(huantime), simpleDateFormat.parse(qutime)));
     }
 
