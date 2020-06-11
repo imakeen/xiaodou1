@@ -412,7 +412,6 @@ public class AppCompatViewInflater {
                         }
                     }
                 } catch (NoSuchMethodException var5) {
-                    ;
                 }
 
                 if (context instanceof ContextWrapper) {

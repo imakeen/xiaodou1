@@ -120,7 +120,7 @@ public class PopupUtil {
      * @return
      */
     public PopupUtil showDirection(int direction) {
-        int location[] = new int[2];
+        int[] location = new int[2];
         int x, y;
         mBasisView.getLocationOnScreen(location);
         x = location[0];

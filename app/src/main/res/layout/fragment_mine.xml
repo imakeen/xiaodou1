@@ -61,6 +61,7 @@
             android:paddingRight="@dimen/dp20">
 
             <LinearLayout
+                android:id="@+id/my_integral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -92,6 +93,7 @@
             <include layout="@layout/view_item" />
 
             <LinearLayout
+                android:id="@+id/my_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -118,6 +120,7 @@
             <include layout="@layout/view_item" />
 
             <LinearLayout
+                android:id="@+id/my_opinion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"

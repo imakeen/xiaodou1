@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,12 +29,12 @@ public class SignUtils {
      */
     public static String encodeData(String data, String key) {
         try {
-            DESKeySpec ks = new DESKeySpec(key.getBytes("UTF-8"));
+            DESKeySpec ks = new DESKeySpec(key.getBytes(StandardCharsets.UTF_8));
             SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
             SecretKey sk = skf.generateSecret(ks);
             Cipher cip = Cipher.getInstance("DES");
             cip.init(Cipher.ENCRYPT_MODE, sk);
-            return encodeBase64(cip.doFinal(data.getBytes("UTF-8")));
+            return encodeBase64(cip.doFinal(data.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return "";
@@ -67,12 +68,12 @@ public class SignUtils {
      */
     public static String decodeData(String data, String key) {
         try {
-            DESKeySpec ks = new DESKeySpec(key.getBytes("UTF-8"));
+            DESKeySpec ks = new DESKeySpec(key.getBytes(StandardCharsets.UTF_8));
             SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
             SecretKey sk = skf.generateSecret(ks);
             Cipher cip = Cipher.getInstance("DES");
             cip.init(Cipher.DECRYPT_MODE, sk);
-            return new String(cip.doFinal(decodeBase64(data)), "UTF-8");
+            return new String(cip.doFinal(decodeBase64(data)), StandardCharsets.UTF_8);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return "";
@@ -99,10 +100,10 @@ public class SignUtils {
     public final static String md5Encrypt(String pwd) {
 
         // 用于加密的字符
-        char md5String[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        char[] md5String = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
             // 使用平台的默认字符集将此 String 编码为 byte序列，并将结果存储到一个新的 byte数组中
-            byte[] btInput = pwd.getBytes("UTF-8");
+            byte[] btInput = pwd.getBytes(StandardCharsets.UTF_8);
 
             // 信息摘要是安全的单向哈希函数，它接收任意大小的数据，并输出固定长度的哈希值。
             MessageDigest mdInst = MessageDigest.getInstance("MD5");
@@ -115,7 +116,7 @@ public class SignUtils {
 
             // 把密文转换成十六进制的字符串形式
             int j = md.length;
-            char str[] = new char[j * 2];
+            char[] str = new char[j * 2];
             int k = 0;
             for (int i = 0; i < j; i++) { // i = 0
                 byte byte0 = md[i]; // 95

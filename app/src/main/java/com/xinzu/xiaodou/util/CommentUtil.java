@@ -98,7 +98,6 @@ public class CommentUtil {
     }
 
     public static void startLogin() {
-        SPUtils.saveLoginInfo(MyApp.getInstance(), "");
         startActivity(LoginActivity.class);
         ActivityCollector.removeAll(LoginActivity.class, MainActivity.class);
     }

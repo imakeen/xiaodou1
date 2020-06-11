@@ -384,7 +384,6 @@ public class OkHttpRequestUtils {
      * okHttp post异步请求
      *
      * @param actionUrl 接口地址
-     * @param 请求参数
      * @param callBack  请求返回数据回调
      * @param <T>       数据泛型
      * @return

@@ -1,5 +1,8 @@
 package com.xinzu.xiaodou.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -41,7 +44,7 @@ public class CarBean {
         this.storeList = storeList;
     }
 
-    public static class StoreListBean {
+    public static class StoreListBean implements Parcelable {
         /**
          * amount : 948
          * basicInsuranceFee : 120
@@ -295,5 +298,82 @@ public class CarBean {
         public void setVipCar(boolean vipCar) {
             this.vipCar = vipCar;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.amount);
+            dest.writeInt(this.basicInsuranceFee);
+            dest.writeString(this.brand);
+            dest.writeString(this.carGroup);
+            dest.writeInt(this.diffStoreFee);
+            dest.writeString(this.displacement);
+            dest.writeDouble(this.distance);
+            dest.writeString(this.image);
+            dest.writeByte(this.isVipCar ? (byte) 1 : (byte) 0);
+            dest.writeInt(this.nightServiceFee);
+            dest.writeInt(this.passengerNumber);
+            dest.writeString(this.pickupStoreCode);
+            dest.writeString(this.pickupStoreName);
+            dest.writeInt(this.quantity);
+            dest.writeString(this.returnStoreCode);
+            dest.writeInt(this.serviceFee);
+            dest.writeInt(this.sesametype);
+            dest.writeInt(this.standardTotalPrice);
+            dest.writeInt(this.standardUnitPrice);
+            dest.writeInt(this.status);
+            dest.writeString(this.transmissionType);
+            dest.writeInt(this.unitPrice);
+            dest.writeString(this.vehicleCode);
+            dest.writeString(this.vehicleName);
+            dest.writeByte(this.vipCar ? (byte) 1 : (byte) 0);
+        }
+
+        public StoreListBean() {
+        }
+
+        protected StoreListBean(Parcel in) {
+            this.amount = in.readInt();
+            this.basicInsuranceFee = in.readInt();
+            this.brand = in.readString();
+            this.carGroup = in.readString();
+            this.diffStoreFee = in.readInt();
+            this.displacement = in.readString();
+            this.distance = in.readDouble();
+            this.image = in.readString();
+            this.isVipCar = in.readByte() != 0;
+            this.nightServiceFee = in.readInt();
+            this.passengerNumber = in.readInt();
+            this.pickupStoreCode = in.readString();
+            this.pickupStoreName = in.readString();
+            this.quantity = in.readInt();
+            this.returnStoreCode = in.readString();
+            this.serviceFee = in.readInt();
+            this.sesametype = in.readInt();
+            this.standardTotalPrice = in.readInt();
+            this.standardUnitPrice = in.readInt();
+            this.status = in.readInt();
+            this.transmissionType = in.readString();
+            this.unitPrice = in.readInt();
+            this.vehicleCode = in.readString();
+            this.vehicleName = in.readString();
+            this.vipCar = in.readByte() != 0;
+        }
+
+        public static final Parcelable.Creator<StoreListBean> CREATOR = new Parcelable.Creator<StoreListBean>() {
+            @Override
+            public StoreListBean createFromParcel(Parcel source) {
+                return new StoreListBean(source);
+            }
+
+            @Override
+            public StoreListBean[] newArray(int size) {
+                return new StoreListBean[size];
+            }
+        };
     }
 }

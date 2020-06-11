@@ -14,7 +14,7 @@ public class KHMD5 {
 	public static String getMD5String(String temp) {
 		String resultString = null;
 		try {
-			resultString = new String(temp);
+			resultString = temp;
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			// md.digest() 该函数返回值为存放哈希值结果的byte数组
 			resultString = byte32ToString(md.digest(temp.getBytes()));

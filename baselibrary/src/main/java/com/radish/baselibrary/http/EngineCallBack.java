@@ -22,7 +22,7 @@ public interface EngineCallBack {
     void onSuccess(String result);
 
     // 默认
-    public final EngineCallBack DEFAULT_CALL_BACK = new EngineCallBack(){
+    EngineCallBack DEFAULT_CALL_BACK = new EngineCallBack(){
         @Override
         public void onError(Exception e) {
 

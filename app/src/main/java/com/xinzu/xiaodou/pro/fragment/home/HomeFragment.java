@@ -191,7 +191,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 startPickDailog(false);
                 break;
             case R.id.Mapse:
-                if (!mMaps.equals("请选择")) {
+                if (!"请选择".equals(Mapse.getText().toString())) {
                     Intent intent1 = new Intent(getContext(), EnterPriseMapActivity.class);
                     intent1.putExtra("city_title", Mapse.getText().toString());
                     startActivity(intent1);
@@ -214,11 +214,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         bean.setOrderChannel(4);
         bean.setChannelId(1);
         String pickminute = tv_pick_week.getText().toString();
-        bean.setPickupDate(tv_pick_day.getText().toString() + " " + pickminute.substring(pickminute.length() - 5, pickminute.length()));
+        bean.setPickupDate(tv_pick_day.getText().toString() + " " + pickminute.substring(pickminute.length() - 5));
         bean.setPickuplongitude(Pickuplongitude);
         bean.setPickuplatitude(Pickuplatitude);
         String returnminute = tv_return_week.getText().toString();
-        bean.setReturnDate(tv_return_day.getText().toString() + " " + returnminute.substring(returnminute.length() - 5, returnminute.length()));
+        bean.setReturnDate(tv_return_day.getText().toString() + " " + returnminute.substring(returnminute.length() - 5));
         bean.setReturnlongitude(Pickuplongitude);
         bean.setReturnlatitude(Pickuplatitude);
         bean.setTimeStamp(SignUtils.temp());
@@ -235,6 +235,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         Bundle bundle = new Bundle();
         bundle.putParcelable("cartype", bean);
         bundle.putString("city", mMaps.getText().toString());
+        bundle.putString("cityinfo", Mapse.getText().toString());
+        bundle.putString("day", tianshu.getText().toString());
         intent.putExtra("bundle", bundle);
         startActivity(intent);
     }

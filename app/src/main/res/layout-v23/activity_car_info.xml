@@ -128,7 +128,6 @@
                         android:id="@+id/tv_pick_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:text="石家庄市"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp12" />
@@ -137,22 +136,13 @@
                         android:id="@+id/tv_pick_city_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/image1"
+                        android:layout_alignParentEnd="true"
+                        android:drawableRight="@mipmap/dingwei"
+                        android:drawablePadding="@dimen/dp10"
                         android:drawableTint="@color/colororange"
                         android:text="河北省石家庄市桥西区大经街"
                         android:textColor="#ff666666"
                         android:textSize="12sp" />
-
-                    <ImageView
-                        android:id="@+id/image1"
-                        android:layout_width="@dimen/dp20"
-                        android:layout_height="@dimen/dp20"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp10"
-                        android:src="@mipmap/dingwei"
-                        android:tint="@color/colororange" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -160,13 +150,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp20"
                     android:layout_marginRight="@dimen/dp20"
-                    android:layout_marginBottom="@dimen/dp20">
+                    android:paddingBottom="@dimen/dp20">
 
                     <TextView
                         android:id="@+id/tv_return_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:text="石家庄市"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp12" />
@@ -175,22 +164,13 @@
                         android:id="@+id/tv_return_city_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/image2"
+                        android:layout_alignParentEnd="true"
+                        android:drawableRight="@mipmap/dingwei"
                         android:drawablePadding="@dimen/dp10"
+                        android:drawableTint="@color/colororange"
                         android:text="河北省石家庄市桥西区大经街"
                         android:textColor="#ff666666"
                         android:textSize="12sp" />
-
-                    <ImageView
-                        android:id="@+id/image2"
-                        android:layout_width="@dimen/dp20"
-                        android:layout_height="@dimen/dp20"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp10"
-                        android:src="@mipmap/dingwei"
-                        android:tint="@color/colororange" />
                 </RelativeLayout>
 
                 <View
@@ -199,7 +179,6 @@
                     android:background="#f7f7f7" />
 
                 <LinearLayout
-                    android:id="@+id/ll_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp20"
@@ -221,7 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dp20"
-                        android:text=""
+                        android:text="刘德华"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp14" />
 
@@ -390,7 +369,6 @@
                 android:textSize="@dimen/sp14" />
 
             <Button
-                android:id="@+id/bt_usercar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/colororange"

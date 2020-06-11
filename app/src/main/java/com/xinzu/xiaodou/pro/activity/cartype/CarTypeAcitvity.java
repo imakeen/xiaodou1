@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.xinzu.xiaodou.R;
+import com.xinzu.xiaodou.pro.activity.registerlogin.RegisterActivity;
 import com.xinzu.xiaodou.ui.activity.CarInfoActivity;
 import com.xinzu.xiaodou.ui.adapter.CarAdapter;
 import com.xinzu.xiaodou.ui.adapter.MenuAdapter;
@@ -20,7 +21,7 @@ import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
 import com.xinzu.xiaodou.bean.CarBean;
 import com.xinzu.xiaodou.bean.CarGroupBean;
 import com.xinzu.xiaodou.bean.getCarttypeBean;
-import com.xinzu.xiaodou.pro.activity.register.RegisterActivity;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +48,14 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     private MenuAdapter menuAdapter;
     private CarAdapter carAdapter;
-    private int currentItem;
-    private List<Integer> showTitle = new ArrayList<>();
     private String json;
     private getCarttypeBean carttypeBean;
     private Bundle bundle;
     private ArrayList<CarGroupBean.CarGroupListBean> arrayList;
     private ArrayList<CarBean.StoreListBean> carList;
-
+    private String cityinfo;
+    private String day;
+    private String city;
 
     @Override
     protected void initInject() {
@@ -66,6 +67,9 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
         Intent intent = getIntent();
         bundle = intent.getBundleExtra("bundle");
         carttypeBean = bundle.getParcelable("cartype");
+        cityinfo = bundle.getString("cityinfo");
+        day = bundle.getString("day");
+        city = bundle.getString("city");
 
         Gson gson = new Gson();
         json = gson.toJson(carttypeBean);
@@ -121,6 +125,7 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     @Override
     public void getCarType(String cartype) {
+        this.closeLoading();
         CarGroupBean carGroupBean = new Gson().fromJson(cartype, CarGroupBean.class);
         if (carGroupBean.getStatus() == 0) {
             ll_car_type.setVisibility(View.GONE);
@@ -142,6 +147,7 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     @Override
     public void getCar(String car) {
+        this.closeLoading();
         CarBean carBean = new Gson().fromJson(car, CarBean.class);
         carList = new ArrayList<>();
         carList.addAll(carBean.getStoreList());
@@ -150,15 +156,28 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
         carAdapter.addData(carList);
         carAdapter.notifyDataSetChanged();
         carAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+
+
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 String userId = SPUtils.getInstance().getString("userid");
-                userId = "20";
                 if (userId.isEmpty()) {
                     startActivity(new Intent(CarTypeAcitvity.this, RegisterActivity.class));
                     finish();
+                    return;
                 }
-                ActivityUtils.startActivity(CarInfoActivity.class);
+
+                Intent intent = new Intent(CarTypeAcitvity.this, CarInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("carlist", carList.get(position));
+                bundle.putString("city", city);
+                bundle.putString("cityinfo", cityinfo);
+                bundle.putString("day", day);
+                bundle.putString("picktime", carttypeBean.getPickupDate());
+                bundle.putString("returntime", carttypeBean.getReturnDate());
+                intent.putExtra("bundle", bundle);
+                ActivityUtils.startActivity(intent);
+
             }
         });
     }

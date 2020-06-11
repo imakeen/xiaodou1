@@ -1,36 +1,37 @@
-package com.xinzu.xiaodou.pro.activity.cartype;
+package com.xinzu.xiaodou.pro.activity.registerlogin;
 
 import android.content.Context;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.google.gson.Gson;
 import com.xinzu.xiaodou.base.mvp.BasePAV;
 import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.http.OkHttpRequestUtils;
 import com.xinzu.xiaodou.http.RequestCallBack;
-import com.xinzu.xiaodou.pro.activity.login.LoginContract;
+
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
 
-public class CarTypePresenter extends BasePAV<CarTypeContract.View> implements CarTypeContract.Presenter {
+public class RegisterPresenter extends BasePAV<RegisterContract.View> implements RegisterContract.Presenter {
 
     @Inject
-    CarTypePresenter() {
+    RegisterPresenter() {
 
     }
 
 
     @Override
-    public void getcartype(String json, Context context) {
-        mView.showLoading();
+    public void getsendRegistSms(String mobile, Context context) {
         new Thread(() -> {
+            HashMap<String, String> hashMap = new HashMap<String, String>();
+            hashMap.put("phone", mobile);
             OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(context);
-            okHttpRequestUtils.requestAsynjson(ApiService.getCarGroups, json, new RequestCallBack() {
+            okHttpRequestUtils.requestAsynjson(ApiService.getMsgCode, new Gson().toJson(hashMap), new RequestCallBack() {
                 @Override
                 public void onRequestSuccess(Object result) {
-                    LogUtils.e(result.toString());
-                    mView.getCarType(result.toString());
-
+                    mView.getmsgcode(result.toString());
                 }
 
                 @Override
@@ -42,15 +43,18 @@ public class CarTypePresenter extends BasePAV<CarTypeContract.View> implements C
     }
 
     @Override
-    public void getcar(String json, Context context) {
+    public void login(String phone, String msgcode, Context context) {
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("phone", phone);
+        hashMap.put("msgCode", msgcode);
         mView.showLoading();
         new Thread(() -> {
             OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(context);
-            okHttpRequestUtils.requestAsynjson(ApiService.searchVehicle, json, new RequestCallBack() {
+            okHttpRequestUtils.requestAsynjson(ApiService.loging, new Gson().toJson(hashMap), new RequestCallBack() {
                 @Override
                 public void onRequestSuccess(Object result) {
-                    LogUtils.e(result.toString());
-                    mView.getCar(result.toString());
+                    mView.closeLoading();
+                    mView.getloginresult(result.toString());
                 }
 
                 @Override
@@ -59,5 +63,7 @@ public class CarTypePresenter extends BasePAV<CarTypeContract.View> implements C
                 }
             });
         }).start();
+
     }
 }
+

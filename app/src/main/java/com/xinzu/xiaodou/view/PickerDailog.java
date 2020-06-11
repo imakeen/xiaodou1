@@ -247,7 +247,7 @@ public class PickerDailog extends Dialog {
         }
         mHourSpinner.setValue(Integer.parseInt(timeBean.getQu_week_time().substring(3, 5)));
         minute = timeBean.getQu_week_time();
-        mMinuteSpinner.setValue(Integer.parseInt(minute.substring(minute.length() - 2, minute.length())));
+        mMinuteSpinner.setValue(Integer.parseInt(minute.substring(minute.length() - 2)));
         qu_day.append(tv_qu_day.getText().toString() + mQuTimeTv.getText().toString());
     }
 
@@ -261,7 +261,7 @@ public class PickerDailog extends Dialog {
         mHourSpinner.setValue(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)));
 
         minute = timeBean.getBack_week_time();
-        mMinuteSpinner.setValue(Integer.parseInt(minute.substring(minute.length() - 2, minute.length())));
+        mMinuteSpinner.setValue(Integer.parseInt(minute.substring(minute.length() - 2)));
         huan_day.append(tv_huan_day.getText().toString() + mHuanTimeTv.getText().toString());
     }
 
@@ -272,7 +272,7 @@ public class PickerDailog extends Dialog {
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("MM月dd日HH");
 
         String format = simpleDateFormat1.format(calendar.getTime());
-        now_hour = Integer.parseInt(format.substring(format.length() - 2, format.length()));
+        now_hour = Integer.parseInt(format.substring(format.length() - 2));
         String qu_hour = mQuTimeTv.getText().toString();
         if (tv_qu_day.getText().toString().equals(format.substring(0, format.length() - 2))) {
             if (Integer.parseInt(qu_hour.substring(0, qu_hour.length() - 3)) < now_hour) {
@@ -372,7 +372,7 @@ public class PickerDailog extends Dialog {
                 String hour = mHuanTimeTv.getText().toString();
 
                 mHourSpinner.setValue(Integer.parseInt(hour.substring(0, 2)));
-                mMinuteSpinner.setValue(Integer.parseInt(hour.substring(hour.length() - 2, hour.length())));
+                mMinuteSpinner.setValue(Integer.parseInt(hour.substring(hour.length() - 2)));
             }
         });
         mQuLy.setOnClickListener(new View.OnClickListener() {
@@ -389,7 +389,7 @@ public class PickerDailog extends Dialog {
                 }
                 String hour = mQuTimeTv.getText().toString();
                 mHourSpinner.setValue(Integer.parseInt(hour.substring(0, 2)));
-                mMinuteSpinner.setValue(Integer.parseInt(hour.substring(hour.length() - 2, hour.length())));
+                mMinuteSpinner.setValue(Integer.parseInt(hour.substring(hour.length() - 2)));
             }
         });
 

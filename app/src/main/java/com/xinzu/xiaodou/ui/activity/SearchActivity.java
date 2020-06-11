@@ -27,7 +27,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SearchActivity extends BaseGActivity implements PoiSearch.OnPoiSearchListener {
+public class SearchActivity extends BaseGActivity {
     @BindView(R.id.rv_ct)
     RecyclerView recyclerView;
     private AMap aMap;
@@ -94,20 +94,10 @@ public class SearchActivity extends BaseGActivity implements PoiSearch.OnPoiSear
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchPoi(et_serch.getText().toString(), 0, currentInfo.get("cityCode"), false);
+                searchPoi(s.toString(), 0, currentInfo.get("cityCode"), false);
+            }
+        });
 
-            }
-        });
-        cityAddapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                slelect.select(poiItemArrayList.get(position).getTitle(), city == null ? poiItemArrayList.get(position).getCityName() : city
-                        , citycode, poiItemArrayList.get(position).getLatLonPoint().getLongitude() + ""
-                        , poiItemArrayList.get(position).getLatLonPoint().getLatitude() + ""
-                );
-                finish();
-            }
-        });
     }
 
     @OnClick({R.id.city_canel})
@@ -121,39 +111,54 @@ public class SearchActivity extends BaseGActivity implements PoiSearch.OnPoiSear
     }
 
     public void setselect(Slelect select) {
-        this.slelect = select;
+        slelect = select;
     }
 
-    void searchPoi(String key, int pageNum, String cityCode, boolean nearby) {
+    private void searchPoi(String key, int pageNum, String cityCode, boolean nearby) {
         isPoiSearched = true;
         query = new PoiSearch.Query(key, "", cityCode);
         query.setPageSize(20);// 设置每页最多返回多少条poiitem
         query.setPageNum(pageNum);//设置查询页码
         poiSearch = new PoiSearch(this, query);
-        poiSearch.setOnPoiSearchListener((PoiSearch.OnPoiSearchListener) this);
+        poiSearch.setOnPoiSearchListener(new PoiSearch.OnPoiSearchListener() {
+            @Override
+            public void onPoiSearched(PoiResult poiResult, int i) {
+                int index = 0;
+                //填充数据，并更新listview
+                if (poiResult != null) {
+                    ArrayList<PoiItem> result = poiResult.getPois();
+                    if (result.size() > 0) {
+                        poiItemArrayList.clear();
+                        poiItemArrayList.addAll(result);
+                        cityAddapter = new CityAddapter();
+                        recyclerView.setAdapter(cityAddapter);
+                        cityAddapter.addData(poiItemArrayList);
+                        cityAddapter.notifyDataSetChanged();
+                        cityAddapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                            @Override
+                            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                                slelect.select( poiItemArrayList.get(position).getTitle(), city == null ? poiItemArrayList.get(position).getCityName() : city
+                                        , citycode, poiItemArrayList.get(position).getLatLonPoint().getLongitude() + ""
+                                        , poiItemArrayList.get(position).getLatLonPoint().getLatitude() + ""
+                                );
+                                finish();
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onPoiItemSearched(PoiItem poiItem, int i) {
+
+            }
+        });
         if (nearby)
             poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(mCurrentLat,
                     mCurrentLng), 1500));//设置周边搜索的中心点以及半径
         poiSearch.searchPOIAsyn();
     }
 
-    public void onPoiSearched(PoiResult poiResult, int i) {
-        int index = 0;
-        //填充数据，并更新listview
-        if (poiResult != null) {
-            ArrayList<PoiItem> result = poiResult.getPois();
-            if (result.size() > 0) {
-                poiItemArrayList.clear();
-                poiItemArrayList.addAll(result);
-                cityAddapter.addData(poiItemArrayList);
-                cityAddapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
-    public void onPoiItemSearched(PoiItem poiItem, int i) {
-    }
 
     public interface Slelect {
         void select(String city_title, String city, String citycode,

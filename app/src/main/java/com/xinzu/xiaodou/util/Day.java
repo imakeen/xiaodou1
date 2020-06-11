@@ -114,7 +114,7 @@ public class Day {
     }
 
     public static String dialog_start_hour(String hour, String fen) {
-        String minlun = fen.substring(fen.length() - 3, fen.length());
+        String minlun = fen.substring(fen.length() - 3);
         calendar.clear();
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
         SimpleDateFormat simpleDateFormatday = new SimpleDateFormat("HH");

@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 读取Assets目录下的文件工具类
@@ -29,7 +30,7 @@ public class ReadAssetsFileUtil {
             is.read(buffer);
             is.close();
             // Convert the buffer into a string.
-            String text = new String(buffer, "utf-8");
+            String text = new String(buffer, StandardCharsets.UTF_8);
             // Finally stick the string into the text view.
             return text;
         } catch (IOException e) {

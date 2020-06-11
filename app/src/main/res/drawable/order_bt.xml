@@ -6,7 +6,7 @@
             <solid android:color="@color/colororange" />
         </shape>
     </item>
-    <item android:state_enabled="false">
+    <item android:state_selected="false">
         <shape>
             <corners android:radius="@dimen/dp50" />
             <solid android:color="#999999" />

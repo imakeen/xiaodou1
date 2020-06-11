@@ -76,8 +76,9 @@
         <activity android:name=".ui.activity.EnterPriseMapActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".pro.activity.cartype.CarTypeAcitvity" />
-        <activity android:name=".pro.activity.register.RegisterActivity" />
+        <activity android:name=".pro.activity.registerlogin.RegisterActivity" />
         <activity android:name=".ui.activity.CarInfoActivity" />
+        <activity android:name=".ui.activity.OpinionActivity" />
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService"></service>

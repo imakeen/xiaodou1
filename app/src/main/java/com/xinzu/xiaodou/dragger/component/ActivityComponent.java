@@ -7,8 +7,8 @@ import com.xinzu.xiaodou.dragger.module.ActivityModule;
 import com.xinzu.xiaodou.pro.activity.cartype.CarTypeAcitvity;
 import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
 import com.xinzu.xiaodou.pro.activity.login.LoginActivity;
-import com.xinzu.xiaodou.pro.activity.register.RegisterActivity;
 
+import com.xinzu.xiaodou.pro.activity.registerlogin.RegisterActivity;
 import dagger.Component;
 
 /**

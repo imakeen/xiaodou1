@@ -158,7 +158,7 @@ public class OkGoUtils {
     private static HttpParams initParams(HttpParams params) {
         if (params == null) {
             params = new HttpParams();
-        };
+        }
         LinkedHashMap<String, List<String>> map = params.urlParamsMap;
         StringBuilder mapStr = new StringBuilder();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
