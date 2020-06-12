@@ -57,6 +57,22 @@ public class HttpManager {
                 .readTimeout(45, TimeUnit.SECONDS)
                 .writeTimeout(55, TimeUnit.SECONDS)
                 .addInterceptor(logInterceptor)
+//                .addInterceptor(new Interceptor() {
+//                    @Override
+//                    public Response intercept(Interceptor.Chain chain) throws IOException {
+//                        Request original = chain.request();
+////                String sha1 = EncryptUtils.phpSha1OfString("guxiren");
+////                String base64Str = sha1 + "&time=" + (System.currentTimeMillis() / 1000);
+////                String sign = Base64.encodeToString(base64Str.getBytes(), Base64.NO_WRAP);
+////                String token = CommonUtil.getStr(SharedPreferencesHelper.getToken());
+//                        Request request = original
+//                                .newBuilder()
+////                        .header("sign", sign.trim())
+////                        .header("token", token)
+//                                .method(original.method(), original.body()).build();
+//                        return chain.proceed(request);
+//                    }
+//                })
                 .cookieJar(cookieJar)
                 .build();
 
@@ -64,7 +80,6 @@ public class HttpManager {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.ServiceUrl)
                 .client(client)
-
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(StringConverterFactory.create())
@@ -99,7 +114,7 @@ public class HttpManager {
 //                        LogUtils.e("下载文件----onComplete");
 //                    }
 //                });
-   }
+    }
 
 
     public <T> T getService(Class<T> clz) {

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp10"
+    android:background="@drawable/write_5"
+    android:orientation="vertical"
+    android:padding="@dimen/dp20">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="RtlSymmetry">
+
+        <LinearLayout
+            android:id="@+id/ll_qu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_order_pick_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="石家庄市"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Zhou_ri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="19:20"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Tian_Shu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="共2天"
+                android:textColor="@color/colororange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(待支付)"
+                android:textColor="#ffdb5414"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_huan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/Ri_qi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="石家庄市"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Zhao_ris"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:textSize="@dimen/sp12" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/gray9" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20">
+
+        <ImageView
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/banner" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp20"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="@dimen/dp129"
+                android:layout_height="wrap_content"
+                android:text="现代 瑞纳 2010款 舒适型GS"
+                android:textColor="#ff000000"
+                android:textSize="@dimen/sp14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="自动挡 5座 1.4L"
+                android:textColor="#ff000000"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp20"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥220元"
+
+                android:textColor="@color/colororange"
+                android:textSize="@dimen/sp14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="全额"
+                android:textColor="@color/gray6"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

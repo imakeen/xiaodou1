@@ -1,6 +1,6 @@
 package com.xinzu.xiaodou.ui.activity;
 
-import android.os.Bundle;
+import android.arch.lifecycle.LifecycleOwner;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -9,24 +9,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.radish.baselibrary.utils.LogUtils;
 import com.radish.baselibrary.utils.ToastUtil;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+import com.xinzu.xiaodou.MyApp;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.http.ApiService;
-import com.xinzu.xiaodou.http.OkHttpRequestUtils;
-import com.xinzu.xiaodou.http.RequestCallBack;
+import com.xinzu.xiaodou.http.RequestBodyUtil;
+import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.util.SignUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 意见反馈
+ *
+ * @parm
+ * @return
+ */
 public class OpinionActivity extends BaseGActivity {
     @BindView(R.id.et_content)
     EditText etContent;
@@ -96,42 +103,72 @@ public class OpinionActivity extends BaseGActivity {
     }
 
     private void submit() {
-        showLoading();
-        new Thread(() -> {
-
-            HashMap<String, String> hashMap = new HashMap<String, String>();
-            String sign = SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp());
-            hashMap.put("appKey", ApiService.appKey);
-            hashMap.put("appSecret", "112233");
-            hashMap.put("timeStamp", SignUtils.temp());
-            hashMap.put("addressType", "0");
-            hashMap.put("isSecret", "0");
-            hashMap.put("sign", sign);
-            hashMap.put("content", etContent.getText().toString());
-            runOnUiThread(() -> {
-                OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(this);
-                okHttpRequestUtils.requestAsynjson(ApiService.saveFeedback, new Gson().toJson(hashMap), new RequestCallBack() {
-                    @Override
-                    public void onRequestSuccess(Object result) {
-                        closeLoading();
-                        ToastUtil.showShort(result.toString());
-                        try {
-                            JSONObject jsonObject = new JSONObject(result.toString());
-                            if (1 == jsonObject.getInt("status")) {
-                                ToastUtil.showShort("提交成功");
-                                finish();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        String sign = SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp());
+        hashMap.put("appKey", ApiService.appKey);
+        hashMap.put("appSecret", "112233");
+        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("addressType", "0");
+        hashMap.put("isSecret", "0");
+        hashMap.put("sign", sign);
+        hashMap.put("content", etContent.getText().toString());
+        MyApp.apiService(ApiService.class)
+                .saveFeedback(RequestBodyUtil.jsonRequestBody(hashMap)
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+                    showLoading();
+                })
+                .doFinally(() -> {
+                    closeLoading();
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
+                .subscribe(bean -> {
+                    JSONObject jsonObject = new JSONObject(bean.string());
+                    if (1 == jsonObject.getInt("status")) {
+                        ToastUtil.showShort("提交成功");
+                        finish();
                     }
-
-                    @Override
-                    public void onRequestFailed(String errorMsg) {
-                        closeLoading();
-                    }
+                }, throwable -> {
+                    LogUtils.e("联网失败：" + throwable.toString());
+                    onFail();
                 });
-            });
-        }).start();
+//        showLoading();
+//        new Thread(() -> {
+//
+//            HashMap<String, String> hashMap = new HashMap<String, String>();
+//            String sign = SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp());
+//            hashMap.put("appKey", ApiService.appKey);
+//            hashMap.put("appSecret", "112233");
+//            hashMap.put("timeStamp", SignUtils.temp());
+//            hashMap.put("addressType", "0");
+//            hashMap.put("isSecret", "0");
+//            hashMap.put("sign", sign);
+//            hashMap.put("content", etContent.getText().toString());
+//            runOnUiThread(() -> {
+//                OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(this);
+//                okHttpRequestUtils.requestAsynjson(ApiService.saveFeedback, new Gson().toJson(hashMap), new RequestCallBack() {
+//                    @Override
+//                    public void onRequestSuccess(Object result) {
+//                        closeLoading();
+//                        ToastUtil.showShort(result.toString());
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(result.toString());
+//                            if (1 == jsonObject.getInt("status")) {
+//                                ToastUtil.showShort("提交成功");
+//                                finish();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onRequestFailed(String errorMsg) {
+//                        closeLoading();
+//                    }
+//                });
+//            });
+//        }).start();
     }
 }

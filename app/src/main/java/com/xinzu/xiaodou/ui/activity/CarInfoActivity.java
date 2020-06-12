@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.BaseGActivity;
@@ -113,6 +114,10 @@ public class CarInfoActivity extends BaseGActivity {
                     return;
                 }
                 break;
+            case R.id.ll_user:
+                ActivityUtils.startActivity(CaruserActivity.class)
+                ;
+                return;
         }
     }
 

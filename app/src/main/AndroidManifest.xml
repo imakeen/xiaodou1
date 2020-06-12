@@ -79,6 +79,8 @@
         <activity android:name=".pro.activity.registerlogin.RegisterActivity" />
         <activity android:name=".ui.activity.CarInfoActivity" />
         <activity android:name=".ui.activity.OpinionActivity" />
+        <activity android:name=".ui.activity.CaruserActivity" />
+        <activity android:name=".ui.activity.NewUserActivity" />
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService"></service>

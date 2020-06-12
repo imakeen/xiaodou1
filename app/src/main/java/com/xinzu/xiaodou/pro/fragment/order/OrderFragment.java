@@ -1,29 +1,20 @@
 package com.xinzu.xiaodou.pro.fragment.order;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.amap.api.maps2d.MapView;
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
-import com.bigkoo.convenientbanner.holder.Holder;
-import com.bigkoo.convenientbanner.listener.OnItemClickListener;
-import com.bumptech.glide.Glide;
 import com.radish.baselibrary.utils.LogUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
-import com.xinzu.xiaodou.http.ApiService;
-import com.xinzu.xiaodou.pro.fragment.home.HomeContract;
-import com.xinzu.xiaodou.pro.fragment.home.HomePresenter;
-
-import java.util.Arrays;
-import java.util.List;
+import com.xinzu.xiaodou.util.CommonUtil;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
+
 
 /**
  * <pre>  *     author : radish  *     e-mail : 15703379121@163.com  *     time   : 2019/4/16  *     desc   :  * </pre>
@@ -38,6 +29,9 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
     Button bt_xc;
     @BindView(R.id.bt_yiwancheng)
     Button bt_ywc;
+
+    @BindView(R.id.srl)
+    SmartRefreshLayout smartRefreshLayout;
 
     public static OrderFragment newInstance(String title) {
 
@@ -79,7 +73,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
 
     @Override
     protected void initListener() {
-
+        RefreshLayout();
     }
 
     @Override
@@ -88,5 +82,25 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
 
     }
 
+    /**
+     * 上拉刷新下拉加载
+     *
+     * @time 2019/10/9 17:43
+     */
+    private void RefreshLayout() {
+        CommonUtil.initRefresh(getActivity(), smartRefreshLayout);
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishLoadMore(2000);
+            }
+        });
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishLoadMore(2000);
+            }
+        });
+    }
 
 }

@@ -42,7 +42,7 @@ public abstract class SuccessfulConsumer implements Consumer<ResponseBody> {
         LogUtils.e("获取网络数据:  " + url + "   " + json);
         JSONObject jsonObject = new JSONObject(json);
         success(json);
-//        String code = jsonObject.getString("code");
+        String code = jsonObject.getString("code");
 //        if ("0".equals(code)) {
 //            success(json);
 //        }
@@ -52,7 +52,7 @@ public abstract class SuccessfulConsumer implements Consumer<ResponseBody> {
 //                ((MainActivity) activity).startLogin();
 //            }
 //            CommentUtil.startLogin();
-        //}
+//        }
 //        else {
 //            LogUtils.e("code:" + code);
 //            showMessage(json);

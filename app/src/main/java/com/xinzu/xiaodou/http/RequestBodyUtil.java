@@ -1,7 +1,10 @@
 package com.xinzu.xiaodou.http;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -44,6 +47,19 @@ public class RequestBodyUtil {
     }
 
     /**
+     * 将参数封装成requestBody形式上传参数
+     * json
+     *
+     * @param hashMap 参数
+     * @return RequestBody
+     */
+    public static RequestBody jsonRequestBody(HashMap<String, String> hashMap) {
+        Gson gson = new Gson();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(hashMap));
+        return requestBody;
+    }
+
+    /**
      * 将文件进行转换
      *
      * @param param 为文件类型
@@ -61,7 +77,7 @@ public class RequestBodyUtil {
      * @param param 为文件类型
      * @return
      */
-    public static MultipartBody.Part filesToMultipartBodyPart(String key,File param) {
+    public static MultipartBody.Part filesToMultipartBodyPart(String key, File param) {
         RequestBody requestBody = convertToRequestBodyMap(param);
         MultipartBody.Part part = MultipartBody.Part.createFormData(key, param.getName(), requestBody);
         return part;

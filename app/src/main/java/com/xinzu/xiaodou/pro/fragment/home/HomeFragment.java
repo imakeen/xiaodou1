@@ -112,7 +112,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     protected void initBundle() {
-
+        SPUtils.getInstance().put("userid", "503");
     }
 
     @Override
