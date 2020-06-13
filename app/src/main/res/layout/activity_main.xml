@@ -15,13 +15,12 @@
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        style="@style/Widget.Design.BottomNavigationView"
+        style="@style/myNavigationDrawerStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp65"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:elevation="@dimen/dp16"
         app:itemTextColor="@color/selector_tab_color_appcolor_gray"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="@id/vp_main"

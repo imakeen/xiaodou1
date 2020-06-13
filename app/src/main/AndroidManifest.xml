@@ -83,7 +83,7 @@
         <activity android:name=".ui.activity.NewUserActivity" />
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="af5a74d8f7f50250301014b33b3a9e74" />
@@ -101,6 +101,13 @@
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="850" />
     </application>
 
 </manifest>

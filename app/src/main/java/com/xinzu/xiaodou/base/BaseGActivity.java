@@ -101,11 +101,11 @@ public abstract class BaseGActivity extends BaseActivity implements BaseView {
      */
     public void setStatusBar() {
         mImmersionBar
-                .fitsSystemWindows(true)
+                .fitsSystemWindows(false)
                 .statusBarDarkFont(true, 0.2f)
                 .statusBarColor(R.color.colororange)
                 .navigationBarColor(R.color.black)
-                .statusBarDarkFont(true)
+                .statusBarDarkFont(false)
                 .fullScreen(false)
                 .init();
     }

@@ -46,6 +46,7 @@ import com.xinzu.xiaodou.view.PickerDailog;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -253,7 +254,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         timeBean.setBack_day(tv_return_day.getText().toString());
         timeBean.setBack_week_time(tv_return_week.getText().toString());
 
-        pickerDailog = new PickerDailog(qu_or_back, getContext(), timeBean, getActivity());
+        pickerDailog = new PickerDailog(qu_or_back, Objects.requireNonNull(getContext()), timeBean, getActivity());
         if (!pickerDailog.isShowing()) {
             pickerDailog.show();
         }
@@ -375,11 +376,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private void checkPermissions(String... permissions) {
         //获取权限列表
         List<String> needRequestPermissonList = findDeniedPermissions(permissions);
-        if (null != needRequestPermissonList
-                && needRequestPermissonList.size() > 0) {
+        if (needRequestPermissonList.size() > 0) {
             //list.toarray将集合转化为数组
-            ActivityCompat.requestPermissions(getActivity(),
-                    needRequestPermissonList.toArray(new String[needRequestPermissonList.size()]),
+            ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
+                    needRequestPermissonList.toArray(new String[0]),
                     PERMISSON_REQUESTCODE);
         }
     }
@@ -388,10 +388,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         List<String> needRequestPermissonList = new ArrayList<String>();
         //for (循环变量类型 循环变量名称 : 要被遍历的对象)
         for (String perm : permissions) {
-            if (ContextCompat.checkSelfPermission(getContext(),
+            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
                     perm) != PackageManager.PERMISSION_GRANTED
                     || ActivityCompat.shouldShowRequestPermissionRationale(
-                    getActivity(), perm)) {
+                    Objects.requireNonNull(getActivity()), perm)) {
                 needRequestPermissonList.add(perm);
             }
         }
@@ -431,14 +431,14 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         mListener = listener;
         List<String> permissionLists = new ArrayList<>();
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(getContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), permission) != PackageManager.PERMISSION_GRANTED) {
                 permissionLists.add(permission);
             }
         }
         if (!permissionLists.isEmpty()) {
             ActivityCompat.requestPermissions
-                    (getActivity(), permissionLists.toArray
-                            (new String[permissionLists.size()]), PERMISSION_REQUESTCODE);
+                    (Objects.requireNonNull(getActivity()), permissionLists.toArray
+                            (new String[0]), PERMISSION_REQUESTCODE);
         } else {
             //表示全都授权了
             mListener.onGranted();
@@ -454,28 +454,24 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public void onRequestPermissionsResult
             (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUESTCODE:
-                if (grantResults.length > 0) {
-                    //存放没授权的权限
-                    List<String> deniedPermissions = new ArrayList<>();
-                    for (int i = 0; i < grantResults.length; i++) {
-                        int grantResult = grantResults[i];
-                        String permission = permissions[i];
-                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                            deniedPermissions.add(permission);
-                        }
-                    }
-                    if (deniedPermissions.isEmpty()) {
-                        //说明都授权了
-                        mListener.onGranted();
-                    } else {
-                        mListener.onDenied(deniedPermissions);
+        if (requestCode == PERMISSION_REQUESTCODE) {
+            if (grantResults.length > 0) {
+                //存放没授权的权限
+                List<String> deniedPermissions = new ArrayList<>();
+                for (int i = 0; i < grantResults.length; i++) {
+                    int grantResult = grantResults[i];
+                    String permission = permissions[i];
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        deniedPermissions.add(permission);
                     }
                 }
-                break;
-            default:
-                break;
+                if (deniedPermissions.isEmpty()) {
+                    //说明都授权了
+                    mListener.onGranted();
+                } else {
+                    mListener.onDenied(deniedPermissions);
+                }
+            }
         }
     }
 }

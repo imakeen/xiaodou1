@@ -3,8 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <include layout="@layout/title_item" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:background="@color/colororange">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="小豆租车"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -153,7 +165,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="共2天"
-                        android:textColor="@color/colororange" />
+                        android:textColor="@color/colororange"
+                        android:textSize="@dimen/sp16" />
 
                     <View
                         android:layout_width="@dimen/dp61"
@@ -200,6 +213,8 @@
                 android:layout_marginTop="@dimen/dp20"
                 android:layout_marginRight="@dimen/dp10"
                 android:background="@drawable/course_details_checked"
+                android:paddingTop="@dimen/dp14"
+                android:paddingBottom="@dimen/dp14"
                 android:text="去选车"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/sp15"

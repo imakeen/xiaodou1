@@ -112,6 +112,8 @@ dependencies {
     //微信支付sdk
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.1.6'
 
+    implementation 'me.jessyan:autosize:1.1.2'
+
     //eventbus
     implementation 'org.greenrobot:eventbus:3.0.0'
 

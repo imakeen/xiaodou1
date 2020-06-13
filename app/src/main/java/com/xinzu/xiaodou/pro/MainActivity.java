@@ -46,8 +46,8 @@ public class MainActivity extends BaseGActivity {
   @Override
   protected void initView() {
     mVpMain.setNoScroll(true);
-    isUseImmersionBar = false;
     setStatusBar();
+    isUseImmersionBar = false;
     fragments.add(HomeFragment.newInstance("首页"));
     fragments.add(OrderFragment.newInstance("订单"));
     fragments.add(MineFragment.newInstance("我的"));
@@ -75,9 +75,9 @@ public class MainActivity extends BaseGActivity {
     bottomNavigation.setOnNavigationItemSelectedListener(item -> {
       switch (item.getItemId()) {
         case R.id.action_home:
+          setStatusBar();
           isUseImmersionBar = false;
           naviTab(0);
-          setStatusBar();
           break;
         case R.id.action_order:
           setStatusBar();

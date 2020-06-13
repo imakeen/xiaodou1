@@ -1,8 +1,5 @@
 package com.xinzu.xiaodou.bean;
 
-import java.io.Serializable;
-import java.util.Calendar;
-
 public class backTimeBean {
     String qu_day;
     String qu_week_time;

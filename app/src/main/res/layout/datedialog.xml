@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-
-        <TextView
-            android:id="@+id/dailog_select_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="共2天"
-            android:textColor="#343434" />
-
-        <TextView
-            android:id="@+id/dailog_cancel"
-
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="取消"
-            android:textColor="@color/colororange" />
-
-        <TextView
-            android:id="@+id/dailog_ok"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="@color/colororange" />
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/dp60"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dailog_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/colororange"
+            android:textSize="@dimen/sp16" />
+
+        <TextView
+            android:id="@+id/dailog_select_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="共2天"
+            android:textColor="#343434"
+            android:textSize="@dimen/sp14" />
+
+        <TextView
+            android:id="@+id/dailog_ok"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/colororange"
+            android:textSize="@dimen/sp16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -60,11 +67,12 @@
                 android:paddingTop="6dp"
                 android:text="取车时间"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="@dimen/sp12" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp3"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -72,8 +80,9 @@
                     android:id="@+id/dailog_qu_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:gravity="center"
-                    android:paddingTop="3dp"
+
                     android:text="03月12日"
                     android:textColor="#ffffff"
                     android:textSize="@dimen/sp12" />
@@ -106,11 +115,12 @@
                 android:paddingTop="6dp"
                 android:text="取车时间"
                 android:textColor="@color/blacktime"
-                android:textSize="12sp" />
+                android:textSize="@dimen/sp12" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp3"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -119,10 +129,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingTop="3dp"
                     android:text="03月12日"
                     android:textColor="@color/blacktime"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp12" />
 
                 <TextView
                     android:id="@+id/dailog_huan_time"
@@ -132,7 +141,7 @@
                     android:paddingTop="3dp"
                     android:text="18:00"
                     android:textColor="@color/blacktime"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp12" />
             </LinearLayout>
         </LinearLayout>
 
@@ -142,14 +151,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="@dimen/dp20">
 
         <NumberPicker
             android:id="@+id/np_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-
-            />
+            android:layout_weight="1" />
 
         <NumberPicker
             android:id="@+id/np_hour"
