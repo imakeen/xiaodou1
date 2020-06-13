@@ -199,7 +199,7 @@
                     android:background="#f7f7f7" />
 
                 <LinearLayout
-                    android:id="@+id/ll_user"
+                    android:id="@+id/ll_users"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp20"

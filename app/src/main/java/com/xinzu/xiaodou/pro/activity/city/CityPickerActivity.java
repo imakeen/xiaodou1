@@ -88,7 +88,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
             @Override
             public void onCityClick(String name, String citycode) {//选择城市
                 Toast.makeText(CityPickerActivity.this, name, Toast.LENGTH_SHORT).show();
-//                SharedPreUtils.getInstance().putString("city", name);
                 Intent intent = new Intent(CityPickerActivity.this, EnterPriseMapActivity.class);
                 intent.putExtra("city", name);
                 intent.putExtra("citycode", citycode);

@@ -139,7 +139,6 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
             arrayList.addAll(carGroupBean.getCarGroupList());
             menuAdapter.addData(arrayList);
             menuAdapter.notifyDataSetChanged();
-
             carttypeBean.setCarGroupId(arrayList.get(0).getCarGroupId());
             Gson gson = new Gson();
             mPresenter.getcar(gson.toJson(carttypeBean), CarTypeAcitvity.this);

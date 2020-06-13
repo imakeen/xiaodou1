@@ -165,7 +165,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
                 myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
                 aMap.animateCamera(CameraUpdateFactory.zoomTo(aMap.getMaxZoomLevel() - 1));
                 aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-                myLocationStyle.interval(2000);
+                myLocationStyle.interval(1500);
                 aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
                 CameraUpdate cu = CameraUpdateFactory.newLatLng(ll);
                 aMap.animateCamera(cu);

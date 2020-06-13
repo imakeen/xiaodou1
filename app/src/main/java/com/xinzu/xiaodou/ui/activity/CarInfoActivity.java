@@ -105,8 +105,8 @@ public class CarInfoActivity extends BaseGActivity {
 
     }
 
-    @OnClick({R.id.ll_user, R.id.bt_usercar})
-    public void onClick(View view) {
+    @OnClick({R.id.ll_users, R.id.bt_usercar})
+    public  void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_usercar:
                 if (tvUser.getText().toString().isEmpty()) {
@@ -114,10 +114,10 @@ public class CarInfoActivity extends BaseGActivity {
                     return;
                 }
                 break;
-            case R.id.ll_user:
-                ActivityUtils.startActivity(CaruserActivity.class)
-                ;
-                return;
+            case R.id.ll_users:
+                ActivityUtils.startActivity(CaruserActivity.class);
+                break;
+
         }
     }
 
