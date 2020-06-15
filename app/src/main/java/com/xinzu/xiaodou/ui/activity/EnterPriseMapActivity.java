@@ -1,6 +1,8 @@
 package com.xinzu.xiaodou.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,8 +41,10 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.internal.CancelAdapt;
 
-public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.OnPoiSearchListener, GeocodeSearch.OnGeocodeSearchListener {
+public class EnterPriseMapActivity extends BaseGActivity implements
+        PoiSearch.OnPoiSearchListener, GeocodeSearch.OnGeocodeSearchListener , CancelAdapt {
     @BindView(R.id.mapView)
     MapView mapView;
     @BindView(R.id.rv_ct)
@@ -115,7 +119,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
                 if (hasFocus) {
                     Intent intent = new Intent(EnterPriseMapActivity.this, SearchActivity.class);
                     intent.putExtra("city", cityExtra);
-                    intent.putExtra("citycode",citycode);
+                    intent.putExtra("citycode", citycode);
                     ActivityUtils.startActivity(intent);
                     finish();
                 }
@@ -128,7 +132,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements PoiSearch.On
                 Intent intent = new Intent(EnterPriseMapActivity.this, SearchActivity.class);
                 intent.putExtra("citytitle", city);
                 intent.putExtra("city", cityExtra);
-                intent.putExtra("citycode",citycode);
+                intent.putExtra("citycode", citycode);
                 ActivityUtils.startActivity(intent);
                 finish();
             }

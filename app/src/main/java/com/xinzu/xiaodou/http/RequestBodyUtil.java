@@ -55,8 +55,7 @@ public class RequestBodyUtil {
      */
     public static RequestBody jsonRequestBody(HashMap<String, String> hashMap) {
         Gson gson = new Gson();
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(hashMap));
-        return requestBody;
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(hashMap));
     }
 
     /**

@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorNo">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -179,6 +180,7 @@
                     android:background="#f7f7f7" />
 
                 <LinearLayout
+                    android:id="@+id/ll_users"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp20"
@@ -369,6 +371,7 @@
                 android:textSize="@dimen/sp14" />
 
             <Button
+                android:id="@+id/bt_usercar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/colororange"

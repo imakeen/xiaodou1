@@ -101,7 +101,7 @@ public abstract class BaseGActivity extends BaseActivity implements BaseView {
      */
     public void setStatusBar() {
         mImmersionBar
-                .fitsSystemWindows(false)
+                .fitsSystemWindows(true, R.color.colororange)
                 .statusBarDarkFont(true, 0.2f)
                 .statusBarColor(R.color.colororange)
                 .navigationBarColor(R.color.black)
@@ -112,7 +112,8 @@ public abstract class BaseGActivity extends BaseActivity implements BaseView {
 
     public void setStatusBarColor() {
         mImmersionBar
-                .fitsSystemWindows(true)
+                .fitsSystemWindows(true, R.color.white
+                )
                 .statusBarDarkFont(true, 0.2f)
                 .statusBarColor(R.color.white)
                 .navigationBarColor(R.color.black)
@@ -123,7 +124,7 @@ public abstract class BaseGActivity extends BaseActivity implements BaseView {
     }
 
 
-    protected void getPermission(final OnPermissionCallBack callBack, final String... permissions) {
+    public void getPermission(final OnPermissionCallBack callBack, final String... permissions) {
         this.mPermissionCallBack = callBack;
         PermissionsUtils.getInstance().checkPermissions(this, new PermissionsUtils.IPermissionsResult() {
             @Override
