@@ -17,6 +17,8 @@ public class CarUserBean {
     private String message;
     private int orderChannel;
     private int status;
+
+
     private List<ConsumersBean> consumers;
 
     public String getMessage() {
@@ -65,7 +67,15 @@ public class CarUserBean {
         private String mobile;
         private int type;
         private String userName;
+        private Boolean ifselect;
 
+        public Boolean getIfselect() {
+            return ifselect;
+        }
+
+        public void setIfselect(Boolean ifselect) {
+            this.ifselect = ifselect;
+        }
         public String getConsumerId() {
             return consumerId;
         }

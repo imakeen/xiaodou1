@@ -65,8 +65,9 @@ public class NewUserActivity extends BaseGActivity {
     protected void initBundle() {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
-        bean = bundle.getParcelable("bean");
-
+        if (bundle != null && !bundle.isEmpty()) {
+            bean = bundle.getParcelable("bean");
+        }
     }
 
     @Override

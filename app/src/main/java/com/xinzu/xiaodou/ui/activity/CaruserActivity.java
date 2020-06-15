@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.radish.baselibrary.utils.LogUtils;
+import com.radish.baselibrary.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -63,6 +64,8 @@ public class CaruserActivity extends BaseGActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
     private CarUserAdapter carUserAdapter;
+    private String name = "";
+    private static GetName getName;
 
     @Override
     protected void initBundle() {
@@ -92,6 +95,10 @@ public class CaruserActivity extends BaseGActivity {
 
     }
 
+    public void setName(GetName getName) {
+        this.getName = getName;
+    }
+
     @Override
     protected void initListener() {
         RefreshLayout();
@@ -118,13 +125,20 @@ public class CaruserActivity extends BaseGActivity {
     }
 
 
-    @OnClick({R.id.bt_new_user,R.id.bt_add_user})
-    public void onClick(View view)
-    {
+    @OnClick({R.id.bt_new_user, R.id.bt_add_user, R.id.bt_ok_user})
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_new_user:
             case R.id.bt_add_user:
                 ActivityUtils.startActivity(NewUserActivity.class);
+                break;
+            case R.id.bt_ok_user:
+                if (name.isEmpty()) {
+                    ToastUtil.showShort("请选择驾驶员");
+                    return;
+                }
+                getName.getName(name);
+                finish();
                 break;
         }
     }
@@ -132,6 +146,12 @@ public class CaruserActivity extends BaseGActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getUserCar();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         getUserCar();
     }
 
@@ -160,17 +180,20 @@ public class CaruserActivity extends BaseGActivity {
                                public void success(String jsonObject) {
                                    LogUtils.e(jsonObject);
                                    CarUserBean carUserBean = new Gson().fromJson(jsonObject, CarUserBean.class);
-
                                    if (carUserBean.getConsumers().size() == 0 || carUserBean.getConsumers() == null) {
                                        smartRefreshLayout2.setVisibility(View.VISIBLE);
                                        smartRefreshLayout.setVisibility(View.GONE);
                                    } else {
+                                       smartRefreshLayout2.setVisibility(View.GONE);
+                                       smartRefreshLayout.setVisibility(View.VISIBLE);
                                        ArrayList<CarUserBean.ConsumersBean> arrayList = new ArrayList<>();
+
                                        arrayList.addAll(carUserBean.getConsumers());
                                        carUserAdapter = new CarUserAdapter();
                                        carUserAdapter.addData(arrayList);
                                        carUserAdapter.notifyDataSetChanged();
                                        recyclerView.setAdapter(carUserAdapter);
+
                                        carUserAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                                            @Override
                                            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -189,6 +212,7 @@ public class CaruserActivity extends BaseGActivity {
                                                }
                                            }
                                        });
+                                       name = carUserAdapter.name();
                                    }
                                }
                            }, throwable -> {
@@ -225,6 +249,11 @@ public class CaruserActivity extends BaseGActivity {
                             try {
                                 JSONObject object = new JSONObject(jsonObject);
                                 if (1 == object.getInt("status")) {
+                                    if (ConsumerId.equals(SPUtils.getInstance().getString("ConsumerId"))) {
+                                        SPUtils.getInstance().put("user", "");
+                                        SPUtils.getInstance().put("ConsumerId", "");
+                                    }
+
                                     ToastUtils.showShort(object.getString("message"));
                                     getUserCar();
                                 } else {
@@ -240,4 +269,7 @@ public class CaruserActivity extends BaseGActivity {
         });
     }
 
+    public interface GetName {
+        void getName(String name);
+    }
 }

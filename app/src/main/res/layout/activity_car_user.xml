@@ -106,6 +106,7 @@
                     android:textSize="@dimen/sp16" />
 
                 <Button
+                    android:id="@+id/bt_ok_user"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp20"

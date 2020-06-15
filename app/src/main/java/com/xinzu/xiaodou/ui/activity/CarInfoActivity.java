@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.BaseGActivity;
@@ -87,6 +88,9 @@ public class CarInfoActivity extends BaseGActivity {
         tvReturnCity.setText(city);
         tvPickCityInfo.setText(cityinfo);
         tvReturnCityInfo.setText(cityinfo);
+        if (!SPUtils.getInstance().getString("user").isEmpty()) {
+            tvUser.setText(SPUtils.getInstance().getString("user"));
+        }
     }
 
     @Override
@@ -96,7 +100,10 @@ public class CarInfoActivity extends BaseGActivity {
 
     @Override
     protected void initData() {
-
+        CaruserActivity caruserActivity = new CaruserActivity();
+        caruserActivity.setName(name -> {
+            tvUser.setText(name);
+        });
     }
 
 
