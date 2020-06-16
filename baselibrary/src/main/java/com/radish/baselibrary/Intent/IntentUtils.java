@@ -42,6 +42,11 @@ public class IntentUtils {
         return mInstance;
     }
 
+    public IntentUtils with() {
+        mIntent = new Intent();
+        return this;
+    }
+
     public IntentUtils with(Context context, Class clazz) {
         mContext = context;
         mIntent = new Intent(mContext, clazz);
@@ -202,8 +207,8 @@ public class IntentUtils {
     public void start() {
         if (mContext != null && mIntent != null) {
             if (mContext instanceof Activity) {
-                ((Activity) mContext).startActivityForResult(mIntent,0);
-            }else {
+                ((Activity) mContext).startActivityForResult(mIntent, 0);
+            } else {
                 mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(mIntent);
             }
@@ -315,5 +320,14 @@ public class IntentUtils {
                 }
             }
         }
+    }
+
+    public void setResult(Activity activity, int resultCode) {
+        activity.setResult(resultCode, mIntent);
+    }
+
+    public void setResultAndFinish(Activity activity, int resultCode) {
+        activity.setResult(resultCode, mIntent);
+        activity.finish();
     }
 }

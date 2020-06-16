@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_slecet_user"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dp20"
@@ -19,14 +20,6 @@
             android:text="刘德华"
             android:textColor="#ff000000"
             android:textSize="@dimen/sp18" />
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/xuanzhong"
-            android:button="@null" />
-
     </LinearLayout>
 
     <LinearLayout

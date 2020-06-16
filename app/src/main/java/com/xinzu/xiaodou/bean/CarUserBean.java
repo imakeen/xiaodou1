@@ -21,6 +21,16 @@ public class CarUserBean {
 
     private List<ConsumersBean> consumers;
 
+    private ConsumersBean consumersBean;
+
+    public ConsumersBean getConsumersBean() {
+        return consumersBean;
+    }
+
+    public void setConsumersBean(ConsumersBean consumersBean) {
+        this.consumersBean = consumersBean;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -67,15 +77,7 @@ public class CarUserBean {
         private String mobile;
         private int type;
         private String userName;
-        private Boolean ifselect;
 
-        public Boolean getIfselect() {
-            return ifselect;
-        }
-
-        public void setIfselect(Boolean ifselect) {
-            this.ifselect = ifselect;
-        }
         public String getConsumerId() {
             return consumerId;
         }
@@ -128,9 +130,6 @@ public class CarUserBean {
             dest.writeString(this.mobile);
             dest.writeInt(this.type);
             dest.writeString(this.userName);
-        }
-
-        public ConsumersBean() {
         }
 
         protected ConsumersBean(Parcel in) {

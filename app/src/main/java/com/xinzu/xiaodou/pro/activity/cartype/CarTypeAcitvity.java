@@ -175,6 +175,8 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
                 bundle.putString("day", day);
                 bundle.putString("picktime", carttypeBean.getPickupDate());
                 bundle.putString("returntime", carttypeBean.getReturnDate());
+                bundle.putString("citywide", carttypeBean.getStoreList().get(position)
+                        .getPickupCityCode());
                 intent.putExtra("bundle", bundle);
                 ActivityUtils.startActivity(intent);
 

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7F7">
+    android:background="@color/colorNo">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -197,7 +197,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp10"
-                    android:background="#f7f7f7" />
+                    android:background="@color/colorNo" />
 
                 <LinearLayout
                     android:id="@+id/ll_users"
@@ -243,7 +243,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp10"
-                    android:background="#f7f7f7" />
+                    android:background="@color/colorNo" />
 
                 <RelativeLayout
 
@@ -275,7 +275,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp10"
-                    android:background="#f7f7f7" />
+                    android:background="@color/colorNo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -368,6 +368,7 @@
             android:textSize="@dimen/sp14" />
 
         <TextView
+            android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp10"

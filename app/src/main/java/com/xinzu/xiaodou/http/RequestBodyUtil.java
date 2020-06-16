@@ -58,6 +58,11 @@ public class RequestBodyUtil {
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(hashMap));
     }
 
+    public static RequestBody RequestBody(String bean) {
+
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), bean);
+    }
+
     /**
      * 将文件进行转换
      *

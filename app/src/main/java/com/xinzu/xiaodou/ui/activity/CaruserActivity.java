@@ -14,6 +14,8 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.radish.baselibrary.Intent.IntentData;
+import com.radish.baselibrary.Intent.IntentUtils;
 import com.radish.baselibrary.utils.LogUtils;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -30,7 +32,6 @@ import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.http.RequestBodyUtil;
 import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.http.SuccessfulConsumer;
-import com.xinzu.xiaodou.ui.adapter.CarAdapter;
 import com.xinzu.xiaodou.ui.adapter.CarUserAdapter;
 import com.xinzu.xiaodou.util.CommonUtil;
 import com.xinzu.xiaodou.util.DialogUtil;
@@ -64,8 +65,13 @@ public class CaruserActivity extends BaseGActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
     private CarUserAdapter carUserAdapter;
-    private String name = "";
-    private static GetName getName;
+
+
+    @IntentData
+    private int type = 0;
+
+
+    private ArrayList<CarUserBean.ConsumersBean> consumersBeanArrayList;
 
     @Override
     protected void initBundle() {
@@ -95,9 +101,6 @@ public class CaruserActivity extends BaseGActivity {
 
     }
 
-    public void setName(GetName getName) {
-        this.getName = getName;
-    }
 
     @Override
     protected void initListener() {
@@ -125,7 +128,7 @@ public class CaruserActivity extends BaseGActivity {
     }
 
 
-    @OnClick({R.id.bt_new_user, R.id.bt_add_user, R.id.bt_ok_user})
+    @OnClick({R.id.bt_new_user, R.id.bt_add_user, R.id.bt_ok_user, R.id.back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_new_user:
@@ -133,11 +136,18 @@ public class CaruserActivity extends BaseGActivity {
                 ActivityUtils.startActivity(NewUserActivity.class);
                 break;
             case R.id.bt_ok_user:
-                if (name.isEmpty()) {
-                    ToastUtil.showShort("请选择驾驶员");
-                    return;
+                ToastUtil.showShort("请选择驾驶员");
+                //getName.getName(name);
+                finish();
+                break;
+            case R.id.back:
+                if (type == 1) {
+                    if (consumersBeanArrayList == null || consumersBeanArrayList.size() == 0) {
+                        IntentUtils.getInstance().with().putParcelable("bean", null)
+                                .setResultAndFinish(this, 100);
+                        return;
+                    }
                 }
-                getName.getName(name);
                 finish();
                 break;
         }
@@ -186,33 +196,39 @@ public class CaruserActivity extends BaseGActivity {
                                    } else {
                                        smartRefreshLayout2.setVisibility(View.GONE);
                                        smartRefreshLayout.setVisibility(View.VISIBLE);
-                                       ArrayList<CarUserBean.ConsumersBean> arrayList = new ArrayList<>();
-
-                                       arrayList.addAll(carUserBean.getConsumers());
+                                       consumersBeanArrayList = new ArrayList<>();
+                                       consumersBeanArrayList.addAll(carUserBean.getConsumers());
                                        carUserAdapter = new CarUserAdapter();
-                                       carUserAdapter.addData(arrayList);
+                                       carUserAdapter.addData(consumersBeanArrayList);
                                        carUserAdapter.notifyDataSetChanged();
-                                       recyclerView.setAdapter(carUserAdapter);
+
 
                                        carUserAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                                            @Override
                                            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                                                switch (view.getId()) {
                                                    case R.id.iv_delcect:
-
-                                                       deleteUser(arrayList.get(position).getConsumerId());
+                                                       deleteUser(consumersBeanArrayList.get(position).getConsumerId());
                                                        break;
                                                    case R.id.iv_edit:
                                                        Intent intent = new Intent(CaruserActivity.this, NewUserActivity.class);
                                                        Bundle bundle = new Bundle();
                                                        intent.putExtra("bundle", bundle);
-                                                       bundle.putParcelable("bean", arrayList.get(position));
+                                                       bundle.putParcelable("bean", consumersBeanArrayList.get(position));
                                                        startActivity(intent);
+                                                       break;
+                                                   case R.id.ll_slecet_user:
+                                                       if (type == 1) {
+                                                           // 携带数据返回上一页面
+                                                           IntentUtils.getInstance().with().putParcelable("consumersBean", carUserAdapter.getData().get(position))
+                                                                   .setResultAndFinish(CaruserActivity.this, 100);
+                                                       }
                                                        break;
                                                }
                                            }
                                        });
-                                       name = carUserAdapter.name();
+                                       recyclerView.setAdapter(carUserAdapter);
+
                                    }
                                }
                            }, throwable -> {
@@ -269,7 +285,5 @@ public class CaruserActivity extends BaseGActivity {
         });
     }
 
-    public interface GetName {
-        void getName(String name);
-    }
+
 }

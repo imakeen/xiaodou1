@@ -30,14 +30,11 @@ public class MenuAdapter extends BaseQuickAdapter<CarGroupBean.CarGroupListBean,
         TextView textVie = helper.getView(R.id.item_name);
         View view = helper.getView(R.id.view_ce);
         if (helper.getAdapterPosition() == selectItem) {
-
             textVie.setBackgroundColor(Color.parseColor("#ffffff"));
             textVie.setTextColor(Color.parseColor("#DB5414"));
-
-
             view.setVisibility(View.VISIBLE);
         } else {
-            textVie.setBackgroundColor(Color.parseColor("#fff7f7f7"));
+            textVie.setBackgroundColor(Color.parseColor("#ffF0F1F1"));
             textVie.setTextColor(Color.BLACK);
             view.setVisibility(View.INVISIBLE);
         }

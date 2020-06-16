@@ -1,20 +1,43 @@
 package com.xinzu.xiaodou.ui.activity;
 
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
+import com.radish.baselibrary.Intent.IntentData;
+import com.radish.baselibrary.Intent.IntentUtils;
+import com.radish.baselibrary.utils.LogUtils;
 import com.radish.baselibrary.utils.ToastUtil;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+import com.xinzu.xiaodou.MyApp;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.bean.CarBean;
+import com.xinzu.xiaodou.bean.CarUserBean;
+import com.xinzu.xiaodou.bean.CreatOrderBean;
+import com.xinzu.xiaodou.bean.SuccessOrderBean;
+import com.xinzu.xiaodou.http.ApiService;
+import com.xinzu.xiaodou.http.RequestBodyUtil;
+import com.xinzu.xiaodou.http.RxSchedulers;
+import com.xinzu.xiaodou.http.SuccessfulConsumer;
 import com.xinzu.xiaodou.util.GlideUtils;
+import com.xinzu.xiaodou.util.SignUtils;
+import com.xinzu.xiaodou.wxapi.AliPay;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,12 +75,20 @@ public class CarInfoActivity extends BaseGActivity {
     TextView tvYouhui;
     @BindView(R.id.checkbox)
     CheckBox checkbox;
+    @BindView(R.id.tv_money)
+    TextView tv_money;
     private CarBean.StoreListBean bean;
     private String cityinfo;
     private String day;
     private String city;
     private String picktime;
+    private String citywide;
     private String returntime;
+    private CreatOrderBean creatOrderBean = new CreatOrderBean();
+    private CreatOrderBean.UserInfoBean userInfoBean;
+    private CarUserBean.ConsumersBean consumersBean;
+    private SuccessOrderBean successOrderBean;
+    ;
 
     @Override
     protected void initBundle() {
@@ -69,7 +100,7 @@ public class CarInfoActivity extends BaseGActivity {
         city = bundle.getString("city");
         picktime = bundle.getString("picktime");
         returntime = bundle.getString("returntime");
-
+        citywide = bundle.getString("citywide");
     }
 
     @Override
@@ -79,6 +110,7 @@ public class CarInfoActivity extends BaseGActivity {
 
     @Override
     protected void initView() {
+
         GlideUtils.getInstance().loadPathImage(this, bean.getImage(), carImage);
         tvVehicleName.setText(bean.getVehicleName());
         tvDisplacement.setText(bean.getDisplacement());
@@ -88,9 +120,7 @@ public class CarInfoActivity extends BaseGActivity {
         tvReturnCity.setText(city);
         tvPickCityInfo.setText(cityinfo);
         tvReturnCityInfo.setText(cityinfo);
-        if (!SPUtils.getInstance().getString("user").isEmpty()) {
-            tvUser.setText(SPUtils.getInstance().getString("user"));
-        }
+        tv_money.setText("￥" + bean.getAmount() + "元");
     }
 
     @Override
@@ -100,10 +130,7 @@ public class CarInfoActivity extends BaseGActivity {
 
     @Override
     protected void initData() {
-        CaruserActivity caruserActivity = new CaruserActivity();
-        caruserActivity.setName(name -> {
-            tvUser.setText(name);
-        });
+
     }
 
 
@@ -121,12 +148,138 @@ public class CarInfoActivity extends BaseGActivity {
                     ToastUtil.showShort("请选择司机");
                     return;
                 }
+
+                creatOrderBean.setAppKey(ApiService.appKey);
+                creatOrderBean.setChannelId(4);
+                creatOrderBean.setOrderChannel(1);
+                creatOrderBean.setOrderSource(1);
+                creatOrderBean.setPayAmount(bean.getAmount() + "");
+                creatOrderBean.setPayMode(2);
+                creatOrderBean.setPriceType(1);
+                creatOrderBean.setAddress(cityinfo);
+                CreatOrderBean.PickoffOndoorAddrBean pickoffOndoorAddrBean = new CreatOrderBean.PickoffOndoorAddrBean();
+                creatOrderBean.setPickoffOndoorAddr(pickoffOndoorAddrBean);
+                CreatOrderBean.PickupOndoorAddrBean pickupOndoorAddrBean = new CreatOrderBean.PickupOndoorAddrBean();
+                creatOrderBean.setPickupOndoorAddr(pickupOndoorAddrBean);
+                pickoffOndoorAddrBean.setAddress(cityinfo);
+                creatOrderBean.getPickupOndoorAddr().setAddress(cityinfo);
+                creatOrderBean.setPickupCityCode(citywide);
+                creatOrderBean.setPickupDate(picktime);
+                creatOrderBean.setPickupStoreCode(bean.getPickupStoreCode());
+                creatOrderBean.setReturnCityCode(citywide);
+                creatOrderBean.setReturnDate(returntime);
+                creatOrderBean.setReturnStoreCode(bean.getReturnStoreCode());
+                creatOrderBean.setSign(SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
+                creatOrderBean.setTimeStamp(SignUtils.temp());
+                creatOrderBean.setUserId(SPUtils.getInstance().getString("userid"));
+                creatOrderBean.setVehicleCode(bean.getVehicleCode());
+                creatOrderBean.setTotalDays(day);
+                creatOrderBean.setUserInfo(userInfoBean);
+
+                CreatOrder(creatOrderBean);
                 break;
             case R.id.ll_users:
-                ActivityUtils.startActivity(CaruserActivity.class);
+                IntentUtils.getInstance()
+                        .with(CarInfoActivity.this, CaruserActivity.class)
+                        .putInt("type", 1)
+                        .start(22);
                 break;
         }
     }
 
+    private void CreatOrder(CreatOrderBean orderBean) {
+        Gson gson = new Gson();
+        MyApp.apiService(ApiService.class)
+                .createOrder(RequestBodyUtil.RequestBody(gson.toJson(orderBean))
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+                    showLoading();
+                })
+                .doFinally(() -> {
+                    closeLoading();
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
+                .subscribe(new SuccessfulConsumer() {
+                    @Override
+                    public void success(String jsonObject) {
+                        com.blankj.utilcode.util.LogUtils.e(jsonObject);
+                        try {
+                            JSONObject object = new JSONObject(jsonObject);
+                            if (1 == object.getInt("status")) {
+                                successOrderBean = new Gson().fromJson(jsonObject, SuccessOrderBean.class);
+                                AppPay(successOrderBean.getOrderCode(), successOrderBean.getPayAmount());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                    }
+                }, throwable -> {
+                    LogUtils.e("联网失败：" + throwable.toString());
+                });
+
+    }
+
+    private void AppPay(String OddNumbers, int price) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("orderCodel", OddNumbers);
+        hashMap.put("tradeNo", OddNumbers);
+        hashMap.put("price", price + "");
+        MyApp.apiService(ApiService.class)
+                .AppPay(RequestBodyUtil.jsonRequestBody(hashMap)
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+                    showLoading();
+                })
+                .doFinally(() -> {
+                    closeLoading();
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
+                .subscribe(new SuccessfulConsumer() {
+                    @Override
+                    public void success(String jsonObject) {
+                        com.blankj.utilcode.util.LogUtils.e(jsonObject);
+                        try {
+                            JSONObject object = new JSONObject(jsonObject);
+                            switch (object.getInt("status")) {
+                                case 1:
+                                    AliPay.pay(CarInfoActivity.this,successOrderBean.getAlipayUserId() , () -> {
+
+                                    });
+                                    break;
+                                case 0:
+                                case -1:
+                                    ToastUtil.showShort(object.getString("message"));
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, throwable -> {
+                    LogUtils.e("联网失败：" + throwable.toString());
+                });
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 100) {
+            // 地址列表 MyDizhi
+            assert data != null;
+            consumersBean = data.getParcelableExtra("consumersBean");
+            userInfoBean = new CreatOrderBean.UserInfoBean();
+            userInfoBean.setIdNo(consumersBean.getIdNo());
+            userInfoBean.setIdType(consumersBean.getType());
+            userInfoBean.setMobile(consumersBean.getMobile());
+            userInfoBean.setName(consumersBean.getUserName());
+            tvUser.setText(consumersBean.getUserName());
+
+        } else if (requestCode == 101) {
+        }
+    }
 }

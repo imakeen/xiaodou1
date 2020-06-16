@@ -61,6 +61,21 @@ public interface ApiService {
     @POST("deleteConsumers")
     Observable<ResponseBody> deleteConsumers(@Body RequestBody body);
 
+
+    //创建订单
+    @POST("createOrder")
+    Observable<ResponseBody> createOrder(@Body RequestBody body);
+
+
+    //支付宝支付接口
+    @POST("AppPay")
+    Observable<ResponseBody> AppPay(@Body RequestBody body);
+
+
+    //查看订单
+    @POST("userOrderList")
+    Observable<ResponseBody> userOrderList(@Body RequestBody body);
+
     @GET()
     Flowable<JsonObject> get(@Url String url);
 

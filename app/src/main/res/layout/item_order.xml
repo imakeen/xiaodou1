@@ -53,6 +53,7 @@
                 android:textColor="@color/colororange" />
 
             <TextView
+                android:id="@+id/tv_zf_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(待支付)"
@@ -100,6 +101,7 @@
         android:layout_marginTop="@dimen/dp20">
 
         <ImageView
+            android:id="@+id/iv_url"
             android:layout_width="@dimen/dp80"
             android:layout_height="@dimen/dp80"
             android:scaleType="centerCrop"
@@ -114,6 +116,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_vehicleName"
                 android:layout_width="@dimen/dp129"
                 android:layout_height="wrap_content"
                 android:text="现代 瑞纳 2010款 舒适型GS"
@@ -121,6 +124,7 @@
                 android:textSize="@dimen/sp14" />
 
             <TextView
+                android:id="@+id/tv_displacement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp20"
@@ -139,6 +143,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="￥220元"
@@ -147,6 +152,7 @@
                 android:textSize="@dimen/sp14" />
 
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp20"
