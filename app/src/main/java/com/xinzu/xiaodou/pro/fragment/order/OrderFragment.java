@@ -21,6 +21,7 @@ import com.xinzu.xiaodou.ui.adapter.OrderAdapter;
 import com.xinzu.xiaodou.util.CommonUtil;
 import com.xinzu.xiaodou.util.KHMD5;
 import com.xinzu.xiaodou.util.SignUtils;
+import com.xinzu.xiaodou.util.SpaceItemDecoration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -151,6 +152,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
                 OrderAdapter orderAdapter = new OrderAdapter();
                 orderAdapter.addData(arrayList);
                 orderAdapter.notifyDataSetChanged();
+                recyclerView.addItemDecoration(new SpaceItemDecoration(0, 20));
                 recyclerView.setAdapter(orderAdapter);
             }
         } catch (JSONException e) {
