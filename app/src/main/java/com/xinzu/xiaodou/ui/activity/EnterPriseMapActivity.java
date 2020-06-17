@@ -44,7 +44,7 @@ import butterknife.OnClick;
 import me.jessyan.autosize.internal.CancelAdapt;
 
 public class EnterPriseMapActivity extends BaseGActivity implements
-        PoiSearch.OnPoiSearchListener, GeocodeSearch.OnGeocodeSearchListener , CancelAdapt {
+        PoiSearch.OnPoiSearchListener, GeocodeSearch.OnGeocodeSearchListener, CancelAdapt {
     @BindView(R.id.mapView)
     MapView mapView;
     @BindView(R.id.rv_ct)
@@ -206,8 +206,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements
             if (result.size() > 0) {
                 poiItemArrayList.clear();
                 poiItemArrayList.addAll(result);
-                cityAddapter.addData(poiItemArrayList);
-
+                cityAddapter.setNewData(poiItemArrayList);
                 cityAddapter.notifyDataSetChanged();
             }
         }

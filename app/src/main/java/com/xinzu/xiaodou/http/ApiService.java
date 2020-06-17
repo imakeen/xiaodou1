@@ -80,8 +80,7 @@ public interface ApiService {
     Flowable<JsonObject> get(@Url String url);
 
 
-    @POST("payForOrder")
-    @FormUrlEncoded
-    Observable<ResponseBody> payForOrder(@Field("userId") String userId, @Field("orderId") String orderId, @Field("payType") String payType);
-
+    //订单详情
+    @POST("orderDetail")
+    Observable<ResponseBody> orderDetail(@Body RequestBody body);
 }

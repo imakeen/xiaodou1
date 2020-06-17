@@ -97,58 +97,10 @@ public class DialogUtil {
     }
 
 
-    public interface PayCallBack {
-        void callBack(String type);
-    }
 
-    public static void showPayDialog(BaseGActivity activity, int orderId, PayCallBack callBack) {
-        new RadishDialog.Builder(activity).setView(R.layout.dialog_alter_pay)
-                .setClick(R.id.dialog_submit, (dialog, view) -> {
-                    dialog.dismiss();
-                    RadioGroup rg = dialog.findView(R.id.rg);
-                    payForOrder(activity, orderId, rg.getCheckedRadioButtonId() == R.id.rb1 ? "2" : "1", callBack);
-                })
-                .setClick(R.id.dialog_cancel, (dialog, view) -> dialog.dismiss()).show();
 
-    }
 
-    private static void payForOrder(BaseGActivity activity, int orderId, String payType, PayCallBack callBack) {
-        MyApp.apiService(ApiService.class)
-                .payForOrder(SharedPreferencesHelper.getUserId(), orderId + "", payType)
-                .compose(RxSchedulers.io_main())
-                .doOnSubscribe(d -> {
-                    activity.showLoading();
-                })
-                .doFinally(() -> {
-                    activity.closeLoading();
-                })
-                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) activity)))
-                .subscribe(new SuccessfulConsumer() {
-                    @Override
-                    public void success(String jsonObject) {
-                        payCallBack(activity, jsonObject, payType, callBack);
-                    }
-                }, throwable -> {
-                    LogUtils.e("联网失败：" + throwable);
-                    activity.onFail();
-                });
-    }
 
-    private static void payCallBack(BaseGActivity activity, String jsonObject, String payType, PayCallBack callBack) {
-        try {
-            if (TextUtils.equals("1", payType)) {
-                //支付宝
-                JSONObject object = new JSONObject(jsonObject);
-                String payStr = object.getString("payStr");
-                AliPay.pay(activity, payStr, () -> {
-                    if (callBack != null)
-                        callBack.callBack(payType);
-                });
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     public interface OnAlterDialogCallBack {

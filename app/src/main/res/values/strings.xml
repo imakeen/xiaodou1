@@ -1,37 +1,18 @@
 <resources>
 
     <string name="app_name">小豆租车</string>
-    <string name="collection_time">取车城市</string>
-    <string name="Pick_up_location">取还地点</string>
-    <string name="Long_distance_car">异地还车</string>
-    <string name="Shijz">请输入</string>
-    <string name="Mapss">请输入</string>
-    <string name="Rental">租车</string>
-    <string name="search_address_str">请输入要搜索的地址</string>
-    <string name="search_str">搜索</string>
-    <string name="return_thes">还车城市</string>
-    <string name="return_th">还车地点</string>
-    <string name="no_result">对不起，没有搜索到相关数据！</string>
-    <string name="Times">输入取车时间</string>
-    <string name="Select_models">选择车型</string>
-    <string name="number_of_days">共2天</string>
-    <string name="Name_mass">大众  朗逸</string>
-    <string name="Name_Text_Shijz">石家庄裕华区建设大街</string>
-    <string name="Name_Text_ShijzS">石家庄  石家庄站</string>
-    <string name="jikedao_introduce">小豆租车是基于安全诚信服务理念，依托被国家相关部门认可的全国诚信租凭大数据平台，面向全国中小型汽车汽车
-    租凭公司的综合服务B2B/B2C平台，现已覆盖全国港澳台以上的全部省会城市及重要旅游城市，吸引了数百家汽车租凭公司入驻，小豆租车源于信租出行，以移动互联网技术为
-    依托，是一个支持休闲旅游.商务租车,企事业单位长短租邓业务的第三方汽车租凭互联网服务平台。</string>
-    <string name="Text_JiBenBaoZhang">租车过程中的车辆损失，您只需要承担1500元以内的维修费用</string>
-    <string name="zuchengGuochengzhong">         延迟半小时（含）内还车，不含至2小时，收取当日订单金额含基本保险，但不含手续费及附加服务费的60%(更多请看预定条款。预定须知)</string>
-    <string name="QvChePinZhen">身份证有效期需1个月以上，驾驶证有效期2个月以上</string>
-    <string name="YaJinYvShouQuan">取车是授权3000元作为租车押金 还车时冻结；还车时冻结2000元违章押金，换车后30天内无违章。解冻该笔押金</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_Xiaodou">小豆租车</string>
-    <string name="title_Xiaodoudinwei"> . 北方大厦</string>
-    <string name="title_ZhoghuaShushikuan">中华 H530 2017款 舒适</string>
-    <string name="titleVehicle_type">自动 5座 1.6L型</string>
-    <string name="titleVehicle_types">距你当前位置0.6公里</string>
-    <string name="titles">取消原则</string>
-    <string name="titles1">       订单支付成功后，距离取车时间2小时一外，可免费取消订单；距离取车时间2小时以内(含)，如取消订单，将收取日租金作为违约金(最高不超过150);过了取车时间取消订单,将扣除订单总费用作为违约金(更多请看预定条款，预定须知)</string>
-    <string name="yte">信租出行. 小豆租车成立以来与携程(去哪了)，同程(艺龙)飞猪三方平台合作，实现多渠道全平台运营，同时建立一整套完善的服务体系为您提供便捷，安全，贴心的租车服务</string>
+    <string name="becareful1">
+         一、取车凭证: 本人身份证件、驾驶证原件、国内信用卡
+    </string>
+    <string name="content1">
+      本人身份证有效期一个月以上，本人驾驶证有效期期2月以上、驾驶龄6个月以上，本人国内信用卡有效期1个月以上
+    </string>
+
+
+    <string name="becareful2">
+         一、取车凭证: 本人身份证件、驾驶证原件、国内信用卡
+    </string>
+    <string name="content2">
+      本人身份证有效期一个月以上，本人驾驶证有效期期2月以上、驾驶龄6个月以上，本人国内信用卡有效期1个月以上
+    </string>
 </resources>

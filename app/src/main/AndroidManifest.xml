@@ -79,9 +79,8 @@
         <activity android:name=".pro.activity.registerlogin.RegisterActivity" />
         <activity android:name=".ui.activity.CarInfoActivity" />
         <activity android:name=".ui.activity.OpinionActivity" />
-        <activity android:name=".ui.activity.CaruserActivity" >
-
-        </activity>
+        <activity android:name=".ui.activity.CaruserActivity" />
+        <activity android:name=".ui.activity.OrderDetailsActivity" />
         <activity android:name=".ui.activity.NewUserActivity">
 
 

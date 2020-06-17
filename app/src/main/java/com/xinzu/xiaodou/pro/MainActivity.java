@@ -11,6 +11,7 @@ import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.pro.fragment.home.HomeFragment;
 import com.xinzu.xiaodou.pro.fragment.mine.MineFragment;
 import com.xinzu.xiaodou.pro.fragment.order.OrderFragment;
+import com.xinzu.xiaodou.ui.fragment.OrdersFragment;
 import com.xinzu.xiaodou.view.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseGActivity {
     setStatusBar();
     isUseImmersionBar = false;
     fragments.add(HomeFragment.newInstance("首页"));
-    fragments.add(OrderFragment.newInstance("订单"));
+    fragments.add(OrdersFragment.newInstance("订单"));
     fragments.add(MineFragment.newInstance("我的"));
 
 

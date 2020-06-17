@@ -130,9 +130,8 @@ public class SearchActivity extends BaseGActivity {
                     if (result.size() > 0) {
                         poiItemArrayList.clear();
                         poiItemArrayList.addAll(result);
-                        cityAddapter = new CityAddapter();
                         recyclerView.setAdapter(cityAddapter);
-                        cityAddapter.addData(poiItemArrayList);
+                        cityAddapter.setNewData(poiItemArrayList);
                         cityAddapter.notifyDataSetChanged();
                         cityAddapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                             @Override

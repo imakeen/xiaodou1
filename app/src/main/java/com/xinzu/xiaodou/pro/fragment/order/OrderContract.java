@@ -10,10 +10,14 @@ public interface OrderContract {
     // update UI
     interface View extends BaseView {
         void getOrderList(String body);
+
+        void getOrderDetails(String body);
     }
 
     // 连接 数据
     interface Presenter extends BasePersenter<View> {
         void userOrderList(String bean);
+
+        void userOrderDetails(String bean);
     }
 }

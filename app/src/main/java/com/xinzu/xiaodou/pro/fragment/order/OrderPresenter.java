@@ -54,4 +54,28 @@ public class OrderPresenter extends BasePAV<OrderContract.View> implements Order
                     LogUtils.e("联网失败：" + throwable.toString());
                 });
     }
+
+    @Override
+    public void userOrderDetails(String bean) {
+        MyApp.apiService(ApiService.class)
+                .orderDetail(RequestBodyUtil.RequestBody(bean)
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+                    mView.showLoading();
+                })
+                .doFinally(() -> {
+                    mView.closeLoading();
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) mView)))
+                .subscribe(new SuccessfulConsumer() {
+                    @Override
+                    public void success(String jsonObject) {
+                        com.blankj.utilcode.util.LogUtils.e(jsonObject);
+                        mView.getOrderDetails(jsonObject);
+                    }
+                }, throwable -> {
+                    LogUtils.e("联网失败：" + throwable.toString());
+                });
+    }
 }

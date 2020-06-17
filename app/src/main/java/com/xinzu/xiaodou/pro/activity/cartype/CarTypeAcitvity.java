@@ -137,7 +137,7 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
             allbean.setCarGroupName("全部");
             arrayList.add(allbean);
             arrayList.addAll(carGroupBean.getCarGroupList());
-            menuAdapter.addData(arrayList);
+            menuAdapter.setNewData(arrayList);
             menuAdapter.notifyDataSetChanged();
             carttypeBean.setCarGroupId(arrayList.get(0).getCarGroupId());
             Gson gson = new Gson();
@@ -153,7 +153,7 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
         carList.addAll(carBean.getStoreList());
         carAdapter = new CarAdapter();
         lvHome.setAdapter(carAdapter);
-        carAdapter.addData(carList);
+        carAdapter.setNewData(carList);
         carAdapter.notifyDataSetChanged();
         carAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
 

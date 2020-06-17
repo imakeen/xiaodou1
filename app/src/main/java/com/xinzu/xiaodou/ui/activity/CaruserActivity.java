@@ -199,7 +199,7 @@ public class CaruserActivity extends BaseGActivity {
                                        consumersBeanArrayList = new ArrayList<>();
                                        consumersBeanArrayList.addAll(carUserBean.getConsumers());
                                        carUserAdapter = new CarUserAdapter();
-                                       carUserAdapter.addData(consumersBeanArrayList);
+                                       carUserAdapter.setNewData(consumersBeanArrayList);
                                        carUserAdapter.notifyDataSetChanged();
 
 
