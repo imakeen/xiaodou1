@@ -43,6 +43,8 @@ public class getCarttypeBean implements Parcelable {
     private String returnlongitude;//经度
     private String sign;
     private String timeStamp;
+
+
     private List<StoreListBean> storeList;
 
     public String getAppKey() {

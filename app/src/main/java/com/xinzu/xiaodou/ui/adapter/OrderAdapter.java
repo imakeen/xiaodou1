@@ -19,11 +19,14 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.OrderListBean, Base
         TextView textView = helper.getView(R.id.tv_zf_type);
 
         //0未支付 1已支付
-        if (item.getPayAmount() == 0) {
-            textView.setText("未支付");
+        if (item.getPayments() == 0) {
+            if (item.getState() == 3)
+                textView.setText("已取消");
+            else textView.setText("未支付");
+
         }
         //0待提车；1 订单完成；2未到店取车；3已取消；4延迟还车；6已取车
-        else if (1==item.getPayAmount()){
+        else if (1 == item.getPayments()) {
             switch (item.getState()) {
                 case 0:
                     textView.setText("待提车");

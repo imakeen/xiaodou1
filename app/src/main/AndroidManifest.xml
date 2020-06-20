@@ -63,6 +63,7 @@
         <activity
             android:name=".pro.MainActivity"
             android:screenOrientation="portrait"
+
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
@@ -72,25 +73,47 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".pro.activity.city.CityPickerActivity" />
-        <activity android:name=".ui.activity.EnterPriseMapActivity" />
-        <activity android:name=".ui.activity.SearchActivity" />
-        <activity android:name=".pro.activity.cartype.CarTypeAcitvity" />
-        <activity android:name=".pro.activity.registerlogin.RegisterActivity" />
-        <activity android:name=".ui.activity.CarInfoActivity" />
-        <activity android:name=".ui.activity.OpinionActivity" />
-        <activity android:name=".ui.activity.CaruserActivity" />
-        <activity android:name=".ui.activity.OrderDetailsActivity" />
-        <activity android:name=".ui.activity.NewUserActivity">
+        <activity
+            android:name=".pro.activity.city.CityPickerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.EnterPriseMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pro.activity.cartype.CarTypeAcitvity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pro.activity.registerlogin.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CarInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.OpinionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CaruserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.NewUserActivity"
+            android:screenOrientation="portrait" />
 
 
-        </activity>
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="3712863bf475a1051242a984590d78eb" />
+            android:value="af5a74d8f7f50250301014b33b3a9e74" />
+
+        <!--     笔记本   af5a74d8f7f50250301014b33b3a9e74-->
+        <!--     公司   3712863bf475a1051242a984590d78eb-->
 
 
         <activity

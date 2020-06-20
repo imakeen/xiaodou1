@@ -66,7 +66,7 @@
                         android:id="@+id/Collection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/collection_time"
+                        android:text="取还城市"
                         android:textSize="@dimen/sp12" />
 
                     <TextView
@@ -93,7 +93,7 @@
                         android:id="@+id/Pick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Pick_up_location"
+                        android:text="取还地点"
                         android:textSize="@dimen/sp12" />
 
                     <TextView
@@ -140,7 +140,7 @@
                         android:id="@+id/Ri_Qu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Times"
+                        android:text="输入取车时间"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp16"
                         android:textStyle="bold" />

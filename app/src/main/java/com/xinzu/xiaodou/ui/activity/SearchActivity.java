@@ -1,11 +1,13 @@
 package com.xinzu.xiaodou.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.amap.api.maps2d.AMap;
@@ -102,6 +104,9 @@ public class SearchActivity extends BaseGActivity {
 
     @OnClick({R.id.city_canel})
     public void onClick(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
         finish();
     }
 

@@ -17,6 +17,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.util.BetweenUtil;
@@ -46,7 +47,9 @@ public class PickerDailog extends Dialog {
     private View mQuLy;
     private TextView mHuanStatuTv;
     private TextView mQuStatuTv;
-
+    private Boolean bl_day = false;
+    private String pickweek;
+    private String returnweek;
     private String[] mDateDisplayValues = new String[60];
 
     String[] hours = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
@@ -62,6 +65,10 @@ public class PickerDailog extends Dialog {
     private boolean start_end = true;
     private String minute;
     private int now_hour;
+
+    private String ifday;
+    private String quDay;
+    private String huanDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,15 +151,18 @@ public class PickerDailog extends Dialog {
 
     private void initData() {
         //取车时间
-        String qu_day = timeBean.getQu_day().substring(8, 10);
+        pickweek = timeBean.getQu_week_time().substring(0, 3);
+        returnweek = timeBean.getBack_week_time().substring(0, 3);
+        quDay = timeBean.getQu_day().substring(8, 10);
         String qu_month = timeBean.getQu_day().substring(5, 7);
-        tv_qu_day.setText(Day.dialog_start(qu_month, qu_day));
+        tv_qu_day.setText(Day.dialog_start(qu_month, quDay));
         mQuTimeTv.setText(Integer.parseInt(timeBean.getQu_week_time().substring(3, 5)) + ":00");
         //还车时间
-        String huan_day = timeBean.getBack_day().substring(8, 10);
+        huanDay = timeBean.getBack_day().substring(8, 10);
         String huan_month = timeBean.getBack_day().substring(5, 7);
-        tv_huan_day.setText(Day.dialog_start(huan_month, huan_day));
+        tv_huan_day.setText(Day.dialog_start(huan_month, huanDay));
         mHuanTimeTv.setText(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)) + ":00");
+
         updateQuDateControl();
         try {
             tianshu();
@@ -181,8 +191,11 @@ public class PickerDailog extends Dialog {
 
         //监听滑动日期
         mDateSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            LogUtils.e("===================>" + newVal);
+            pickweek = day[newVal].substring(day[newVal].length() - 3, day[newVal].length());
+            returnweek = day[newVal].substring(day[newVal].length() - 3, day[newVal].length());
             start_day = day[newVal].substring(0, day[newVal].length() - 4);
+            LogUtils.e(day[newVal].substring(0, day[newVal].length() - 4));
+
             if (start_end) {
                 tv_qu_day.setText(start_day);
                 qu_day.setLength(0);
@@ -205,7 +218,9 @@ public class PickerDailog extends Dialog {
                 yincang(hour);
 
             } else {
-                mHuanTimeTv.setText(Day.dialog_start_hour(hour, mHuanTimeTv.getText().toString()));
+                String fen = mHuanTimeTv.getText().toString();
+                fen = fen.substring(fen.length() - 2, fen.length());
+                mHuanTimeTv.setText(Day.dialog_start_hour(hour, fen));
             }
             try {
                 tianshu();
@@ -271,7 +286,6 @@ public class PickerDailog extends Dialog {
         calendar.add(Calendar.HOUR, 3); //减填负数
         calendar.add(Calendar.DAY_OF_MONTH, 0);
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("MM月dd日HH");
-
         String format = simpleDateFormat1.format(calendar.getTime());
         now_hour = Integer.parseInt(format.substring(format.length() - 2, format.length()));
         String mitun = mQuTimeTv.getText().toString();
@@ -299,7 +313,20 @@ public class PickerDailog extends Dialog {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM月dd日HH:mm");
         String qutime = timeBean.getQu_day().substring(0, 4) + "-" + tv_qu_day.getText().toString() + mQuTimeTv.getText().toString();
         String huantime = timeBean.getBack_day().substring(0, 4) + "-" + tv_huan_day.getText().toString() + mHuanTimeTv.getText().toString();
-        mSelectTv.setText(BetweenUtil.getDatePoor(simpleDateFormat.parse(huantime), simpleDateFormat.parse(qutime)));
+        String day = BetweenUtil.getDatePoor(simpleDateFormat.parse(huantime), simpleDateFormat.parse(qutime));
+        if (day.equals("-1") || day.equals("-2")) {
+            if (day.equals("-1")) {
+                ifday = "还车时间必须大于取车时间";
+            } else {
+                ifday = "还车时间必须大于取车时间";
+            }
+            mSelectTv.setText("");
+            ToastUtil.showShort(ifday);
+            bl_day = false;
+            return;
+        }
+        bl_day = true;
+        mSelectTv.setText(day);
     }
 
     /**
@@ -355,7 +382,17 @@ public class PickerDailog extends Dialog {
         mDailogOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  callback.getTime(format, null, format_huan, null);
+                if (!bl_day) {
+                    ToastUtil.showShort(ifday);
+                    return;
+                }
+
+                String pickday = timeBean.getQu_day().substring(0, 4) + "-" + tv_qu_day.getText().toString().substring(0, 2) + "-" + tv_qu_day.getText().toString().substring(3, 5);
+                String packtime = pickweek + mQuTimeTv.getText().toString();
+
+                String returnday = timeBean.getBack_day().substring(0, 4) + "-" + tv_huan_day.getText().toString().substring(0, 2) + "-" + tv_huan_day.getText().toString().substring(3, 5);
+                String returntime = returnweek + mHuanTimeTv.getText().toString();
+                callback.getTime(pickday, packtime, returnday, returntime, mSelectTv.getText().toString());
                 dismiss();
             }
         });
@@ -424,7 +461,7 @@ public class PickerDailog extends Dialog {
     }
 
     public interface callback {
-        void getTime(String startTime_day, String startTime_week, String endTime_day, String endTime_week);
+        void getTime(String startTime_day, String startTime_week, String endTime_day, String endTime_week, String day);
     }
 
 }

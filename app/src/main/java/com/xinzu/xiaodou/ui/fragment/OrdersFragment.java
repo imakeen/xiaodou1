@@ -75,6 +75,23 @@ public class OrdersFragment extends BaseGLFragment {
         for (int i = 0; i < string.length; i++) {
             tabLayout.getTabAt(i).setText(string[i]);
         }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                OrderFragment.newInstance(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         tabLayout.getTabAt(0).select();
         myViewPager.setCurrentItem(0);
     }

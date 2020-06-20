@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.radish.baselibrary.utils.LogUtils;
+import com.radish.baselibrary.utils.ToastUtil;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xinzu.xiaodou.MyApp;
@@ -227,9 +228,22 @@ public class NewUserActivity extends BaseGActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_submit_user:
+                if (etShowName.getText().toString().isEmpty()) {
+                    ToastUtil.showShort("请输入姓名");
+                    return;
+                }
+                if (etZjCode.getText().toString().isEmpty()) {
+                    ToastUtil.showShort("请输入证件号");
+                    return;
+                }
+                if (etPhone.getText().toString().isEmpty()) {
+                    ToastUtil.showShort("请输入手机号");
+                    return;
+                }
                 submitUser();
                 break;
             case R.id.tv_zj_type:
+
                 carType();
                 break;
             case R.id.back:

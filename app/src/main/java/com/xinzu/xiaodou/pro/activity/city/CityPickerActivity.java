@@ -1,6 +1,7 @@
 package com.xinzu.xiaodou.pro.activity.city;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
+import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.ui.adapter.CityListAdapter;
 import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
@@ -38,6 +40,8 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
+    private String city_name;
+    private String citycode;
 
     @Override
     protected void initInject() {
@@ -46,8 +50,9 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
 
     @Override
     protected void initBundle() {
-
-
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        city_name = bundle.getString("city");
+        citycode = bundle.getString("Citycode");
     }
 
     @Override
@@ -67,6 +72,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
                 mListView.setSelection(position);
             }
         });
+
         mCityAdapter = new CityListAdapter(this);
         mListView.setAdapter(mCityAdapter);
 //        mCityAdapter.updateLocateState();
@@ -97,7 +103,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
 
             @Override
             public void onLocateClick() {//点击定位按钮
-                mCityAdapter.updateLocateState(LocateState.LOCATING, null);
 
             }
         });
@@ -116,6 +121,13 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
     public void getCity(String city) {
         HashSet<City> citys = new HashSet<>();
         CityPickerBean cityPickerBean = new Gson().fromJson(city, CityPickerBean.class);
+        if (cityPickerBean == null ||
+                cityPickerBean.getMessage().equals("请求失败") ||
+                cityPickerBean.getCityList().size() == 0 ||
+                cityPickerBean.getCityList() == null) {
+            ToastUtil.showShort("请求失败");
+            return;
+        }
         for (CityPickerBean.CityListBean bean : cityPickerBean.getCityList()
         ) {
             citys.add(new City(bean.getAdCode(), bean.getCity(), PinyinUtils.getPinYin(bean.getCity())));
@@ -131,6 +143,6 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
             }
         });
         mCityAdapter.setData(cities);
-        mCityAdapter.updateLocateState(LocateState.SUCCESS, SPUtils.getInstance().getString("city", ""));
+        mCityAdapter.updateLocateState(LocateState.SUCCESS, city_name, citycode);
     }
 }

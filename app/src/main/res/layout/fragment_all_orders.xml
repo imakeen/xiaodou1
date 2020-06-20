@@ -22,25 +22,17 @@
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_marginLeft="@dimen/dp20"
-        android:layout_marginTop="@dimen/dp20"
-        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
         app:tabGravity="fill"
-
+        app:tabIndicatorColor="@color/colororange"
         app:tabIndicatorFullWidth="false"
         app:tabMode="fixed"
-        app:tabIndicatorColor="@color/colororange"
         app:tabSelectedTextColor="@color/colororange"
         app:tabTextColor="@color/gray6" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/dp20"
-        android:background="#999999" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/all_order_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp10" />
 </LinearLayout>

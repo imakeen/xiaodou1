@@ -58,13 +58,13 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     }
 
-    @OnClick({R.id.my_opinion})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.my_opinion:
-                ActivityUtils.startActivity(OpinionActivity.class);
-                break;
-        }
-    }
+//    @OnClick({R.id.my_opinion})
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.my_opinion:
+//                ActivityUtils.startActivity(OpinionActivity.class);
+//                break;
+//        }
+//    }
 
 }

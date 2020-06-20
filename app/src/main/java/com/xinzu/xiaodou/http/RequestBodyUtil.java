@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -56,7 +57,11 @@ public class RequestBodyUtil {
     public static RequestBody jsonRequestBody(HashMap<String, String> hashMap) {
         Gson gson = new Gson();
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(hashMap));
+    } public static RequestBody hashtableRequestBody(Hashtable<String, String> hashMap) {
+        Gson gson = new Gson();
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(hashMap));
     }
+
 
     public static RequestBody RequestBody(String bean) {
 

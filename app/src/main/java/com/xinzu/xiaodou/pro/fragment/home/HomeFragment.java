@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.MyLocationStyle;
@@ -30,6 +32,7 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
+import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
 import com.xinzu.xiaodou.bean.backTimeBean;
@@ -89,7 +92,9 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private String Citycode;
 
     private String names;
-
+    AMapLocationClient mLocationClient = null;
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
 
     private GeocodeSearch mGeocoderSearch;
 
@@ -133,16 +138,15 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         }
         myLocati();
         banner();
-    }
-
-    @Override
-    protected void loadData() {
-
-
         tv_pick_day.setText(Day.pickcar_date("day", true));
         tv_pick_week.setText(Day.pickcar_date("week", true));
         tv_return_day.setText(Day.pickcar_date("day", false));
         tv_return_week.setText(Day.pickcar_date("week", false));
+    }
+
+    @Override
+    protected void loadData() {
+        isVisible = false;
 
     }
 
@@ -177,10 +181,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         switch (view.getId()) {
             case R.id.Maps:
                 Intent intent = new Intent(getContext(), CityPickerActivity.class);
-
                 Bundle bundle = new Bundle();
                 intent.putExtra("bundle", bundle);
                 bundle.putString("city", mMaps.getText().toString());
+                bundle.putString("Citycode", Citycode);
                 ActivityUtils.startActivity(intent);
                 break;
 
@@ -200,7 +204,14 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 break;
 
             case R.id.Lease_immediately:
-
+                if ("请选择".equals(mMaps.getText().toString())) {
+                    ToastUtil.showShort("请选择城市");
+                    return;
+                }
+                if ("请选择".equals(Mapse.getText().toString())) {
+                    ToastUtil.showShort("请选择取还地点");
+                    return;
+                }
                 getCattype();
 
 
@@ -224,7 +235,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         bean.setReturnlatitude(Pickuplatitude);
         bean.setTimeStamp(SignUtils.temp());
         bean.setSign(SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-
         getCarttypeBean.StoreListBean storeListBean = new getCarttypeBean.StoreListBean();
         storeListBean.setPickupCityCode(Citycode);
         storeListBean.setReturnCityCode(Citycode);
@@ -232,7 +242,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         arrayList.add(storeListBean);
         bean.setStoreList(arrayList);
         Intent intent = new Intent(getContext(), CarTypeAcitvity.class);
-
         Bundle bundle = new Bundle();
         bundle.putParcelable("cartype", bean);
         bundle.putString("city", mMaps.getText().toString());
@@ -260,8 +269,13 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         }
         pickerDailog.setOnDateSelectFinished(new PickerDailog.callback() {
             @Override
-            public void getTime(String startTime_day, String startTime_week, String endTime_day, String endTime_week) {
+            public void getTime(String startTime_day, String startTime_week, String endTime_day, String endTime_week
+                    , String day) {
                 tv_pick_day.setText(startTime_day);
+                tv_pick_week.setText(startTime_week);
+                tv_return_day.setText(endTime_day);
+                tv_return_week.setText(endTime_week);
+                tianshu.setText(day);
             }
         });
     }
@@ -322,6 +336,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     }
 
     private void myLocati() {
+
+
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
@@ -345,7 +361,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 if (rCode == 1000) {
                     String aoiName = result.getRegeocodeAddress().getAois().get(context).getAoiName();
                     citys = result.getRegeocodeAddress().getCity();
-                    SPUtils.getInstance().put("city", citys);
                     mMaps.setText(citys);
                     Mapse.setText(aoiName);
                     Citycode = result.getRegeocodeAddress().getAdCode();

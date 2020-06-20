@@ -128,17 +128,12 @@ public class CaruserActivity extends BaseGActivity {
     }
 
 
-    @OnClick({R.id.bt_new_user, R.id.bt_add_user, R.id.bt_ok_user, R.id.back})
+    @OnClick({R.id.bt_new_user, R.id.bt_add_user, R.id.back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_new_user:
             case R.id.bt_add_user:
                 ActivityUtils.startActivity(NewUserActivity.class);
-                break;
-            case R.id.bt_ok_user:
-                ToastUtil.showShort("请选择驾驶员");
-                //getName.getName(name);
-                finish();
                 break;
             case R.id.back:
                 if (type == 1) {

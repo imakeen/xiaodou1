@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.radish.baselibrary.Intent.IntentUtils;
+import com.radish.baselibrary.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -50,7 +52,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
     private int endIndex = 9;
 
     private OrderAdapter orderAdapter;
-    private ArrayList<OrderBean.OrderListBean> arrayList;
+    private String orderid;
 
     public static OrderFragment newInstance(int title) {
         Bundle args = new Bundle();
@@ -81,7 +83,6 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
         orderAdapter = new OrderAdapter();
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, 20));
         recyclerView.setAdapter(orderAdapter);
-
     }
 
     @Override
@@ -124,59 +125,61 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishLoadMore(2000);
                 startIndex = startIndex + 10;
                 endIndex = endIndex + 10;
                 getOrderList();
+                refreshLayout.finishLoadMore(1000);
             }
         });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh(2000);
                 startIndex = 0;
                 endIndex = 9;
-                arrayList.clear();
                 getOrderList();
-
+                refreshLayout.finishRefresh(1000);
             }
         });
     }
 
     @Override
     public void getOrderList(String body) {
-        try {
-            JSONObject jsonObject = new JSONObject(body);
-            if (1 == jsonObject.getInt("status")) {
-                OrderBean orderBean = new Gson().fromJson(body, OrderBean.class);
-                arrayList = new ArrayList<>();
-                arrayList.addAll(orderBean.getOrderList());
-                if (startIndex == 0) {
-                    orderAdapter.setNewData(arrayList);
-                } else {
-                    orderAdapter.addData(arrayList);
-                }
-                orderAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                    @Override
-                    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
-                        OrderDetails(arrayList.get(position).getOrderId());
-                    }
-                });
-                orderAdapter.notifyDataSetChanged();
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        OrderBean orderBean = new Gson().fromJson(body, OrderBean.class);
+        if (orderBean == null || orderBean.getOrderList() == null || orderBean.getStatus() == 0) {
+            ToastUtils.showShort("暂无更多数据");
+            recyclerView.setVisibility(View.GONE);
+            return;
         }
+        recyclerView.setVisibility(View.VISIBLE);
+        if (startIndex == 0) {
+            orderAdapter.setNewData(orderBean.getOrderList());
+        } else {
+            orderAdapter.addData(orderBean.getOrderList());
+        }
+        orderAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (orderBean.getStatus() == 0) {
+                    ToastUtils.showShort("暂无更多数据");
+                    return;
+                }
+                orderid = orderBean.getOrderList().get(position).getOrderId();
+                OrderDetails(orderid);
+            }
+        });
+        orderAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void getOrderDetails(String body) {
         if (!body.isEmpty()) {
             OrderdetailsBean bean = new Gson().fromJson(body, OrderdetailsBean.class);
-            IntentUtils.getInstance().with(getActivity(), OrderDetailsActivity.class).putParcelable("bean", bean)
-                    .start();
+            if (bean != null && bean.getIdNo() != null)
+                IntentUtils.getInstance().with(getActivity(), OrderDetailsActivity.class).putParcelable("bean", bean)
+                        .putString("orderid", orderid)
+                        .start();
+            else ToastUtil.showShort("签名错误，请重试");
         }
     }
 

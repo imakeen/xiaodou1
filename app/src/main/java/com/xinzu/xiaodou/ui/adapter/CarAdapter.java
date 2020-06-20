@@ -8,6 +8,8 @@ import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.bean.CarBean;
 import com.xinzu.xiaodou.util.GlideUtils;
 
+import java.util.ArrayList;
+
 /**
  * 右侧主界面ListView的适配器
  *
@@ -16,8 +18,8 @@ import com.xinzu.xiaodou.util.GlideUtils;
 public class CarAdapter extends BaseQuickAdapter<CarBean.StoreListBean, BaseViewHolder> {
 
 
-    public CarAdapter() {
-        super(R.layout.item_car);
+    public CarAdapter(ArrayList<CarBean.StoreListBean> data) {
+        super(R.layout.item_car,data);
     }
 
 

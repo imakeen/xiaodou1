@@ -10,11 +10,13 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.radish.baselibrary.Intent.IntentData;
 import com.radish.baselibrary.Intent.IntentUtils;
+import com.radish.baselibrary.utils.ActivityCollector;
 import com.radish.baselibrary.utils.LogUtils;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.uber.autodispose.AutoDispose;
@@ -30,6 +32,7 @@ import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.http.RequestBodyUtil;
 import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.http.SuccessfulConsumer;
+import com.xinzu.xiaodou.pro.MainActivity;
 import com.xinzu.xiaodou.util.GlideUtils;
 import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.wxapi.AliPay;
@@ -110,7 +113,6 @@ public class CarInfoActivity extends BaseGActivity {
 
     @Override
     protected void initView() {
-
         GlideUtils.getInstance().loadPathImage(this, bean.getImage(), carImage);
         tvVehicleName.setText(bean.getVehicleName());
         tvDisplacement.setText(bean.getDisplacement());
@@ -121,6 +123,7 @@ public class CarInfoActivity extends BaseGActivity {
         tvPickCityInfo.setText(cityinfo);
         tvReturnCityInfo.setText(cityinfo);
         tv_money.setText("￥" + bean.getAmount() + "元");
+        tvDay.setText(day);
     }
 
     @Override
@@ -139,7 +142,7 @@ public class CarInfoActivity extends BaseGActivity {
 
     }
 
-    @OnClick({R.id.ll_users, R.id.bt_usercar})
+    @OnClick({R.id.ll_users, R.id.bt_usercar, R.id.tv_feiyong, R.id.back})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -148,7 +151,6 @@ public class CarInfoActivity extends BaseGActivity {
                     ToastUtil.showShort("请选择司机");
                     return;
                 }
-
                 creatOrderBean.setAppKey(ApiService.appKey);
                 creatOrderBean.setChannelId(4);
                 creatOrderBean.setOrderChannel(1);
@@ -184,8 +186,16 @@ public class CarInfoActivity extends BaseGActivity {
                         .putInt("type", 1)
                         .start(22);
                 break;
+
+            case R.id.tv_feiyong:
+
+                break;
+            case R.id.back:
+                finish();
+                break;
         }
     }
+
 
     private void CreatOrder(CreatOrderBean orderBean) {
         Gson gson = new Gson();
@@ -245,8 +255,9 @@ public class CarInfoActivity extends BaseGActivity {
                             JSONObject object = new JSONObject(jsonObject);
                             switch (object.getInt("status")) {
                                 case 1:
-                                    AliPay.pay(CarInfoActivity.this,successOrderBean.getAlipayUserId() , () -> {
-
+                                    AliPay.pay(CarInfoActivity.this, successOrderBean.getOrderCode(), String.valueOf(successOrderBean.getPayAmount()), () -> {
+                                        ActivityCollector.finishAll();
+                                        IntentUtils.getInstance().with(CarInfoActivity.this, MainActivity.class).putInt("order", 1);
                                     });
                                     break;
                                 case 0:

@@ -23,10 +23,11 @@ import com.xinzu.xiaodou.ui.activity.CarInfoActivity;
 import com.xinzu.xiaodou.ui.adapter.CarAdapter;
 import com.xinzu.xiaodou.ui.adapter.MenuAdapter;
 
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implements CarTypeContract.View {
     @BindView(R.id.lv_menu)
@@ -45,6 +46,8 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
     TextView tvReturnCity;
     @BindView(R.id.tv_return_time)
     TextView tvReturnTime;
+    @BindView(R.id.ll_huan)
+    LinearLayout llHuan;
 
     private MenuAdapter menuAdapter;
     private CarAdapter carAdapter;
@@ -83,18 +86,18 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     @Override
     protected void initView() {
+        lvMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        menuAdapter = new MenuAdapter();
+        lvMenu.setAdapter(menuAdapter);
+        lvHome.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mPresenter.getcartype(json, this);
         tvPickTime.setText(carttypeBean.getPickupDate() + "");
         tvReturnTime.setText(carttypeBean.getReturnDate() + "");
         tvPickCity.setText(bundle.getString("city"));
         tvReturnCity.setText(bundle.getString("city"));
-        lvMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        menuAdapter = new MenuAdapter();
-        lvMenu.setAdapter(menuAdapter);
-        mPresenter.getcartype(json, this);
+        TianShu.setText(day);
 
-        lvHome.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        carAdapter = new CarAdapter();
-        lvHome.setAdapter(carAdapter);
+
     }
 
     @Override
@@ -125,7 +128,6 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
 
     @Override
     public void getCarType(String cartype) {
-        this.closeLoading();
         LogUtils.e(cartype);
         CarGroupBean carGroupBean = new Gson().fromJson(cartype, CarGroupBean.class);
         if (carGroupBean.getStatus() == 0) {
@@ -151,9 +153,8 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
         CarBean carBean = new Gson().fromJson(car, CarBean.class);
         carList = new ArrayList<>();
         carList.addAll(carBean.getStoreList());
-        carAdapter = new CarAdapter();
+        carAdapter = new CarAdapter(carList);
         lvHome.setAdapter(carAdapter);
-        carAdapter.setNewData(carList);
         carAdapter.notifyDataSetChanged();
         carAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
 
@@ -175,8 +176,10 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
                 bundle.putString("day", day);
                 bundle.putString("picktime", carttypeBean.getPickupDate());
                 bundle.putString("returntime", carttypeBean.getReturnDate());
-                bundle.putString("citywide", carttypeBean.getStoreList().get(position)
-                        .getPickupCityCode());
+
+                if (carttypeBean.getStoreList() != null)
+                    bundle.putString("citywide", carttypeBean.getStoreList().get(0)
+                            .getPickupCityCode());
                 intent.putExtra("bundle", bundle);
                 ActivityUtils.startActivity(intent);
 
@@ -184,4 +187,9 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
         });
     }
 
+
+    @OnClick(R.id.back)
+    public void onViewClicked() {
+        finish();
+    }
 }

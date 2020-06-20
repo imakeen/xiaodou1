@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorNo"
     android:orientation="vertical">
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
@@ -15,7 +16,15 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorNo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂无更多数据" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
 </LinearLayout>

@@ -11,6 +11,7 @@ import com.xinzu.xiaodou.MyApp;
 import com.xinzu.xiaodou.base.mvp.BasePAV;
 import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.http.OkHttpRequestUtils;
+import com.xinzu.xiaodou.http.RequestBodyUtil;
 import com.xinzu.xiaodou.http.RequestCallBack;
 import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.http.SuccessfulConsumer;
@@ -31,22 +32,42 @@ public class CityPickPresenter extends BasePAV<CityPickContract.View> implements
 
     @Override
     public void getCity(String appKey, String timeStamp, String sign, Context context) {
+        mView.showLoading();
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("appKey", appKey);
         hashMap.put("timeStamp", timeStamp);
         hashMap.put("sign", sign);
-        OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(context);
-        okHttpRequestUtils.requestAsyn(ApiService.collectCityInfo, 1, hashMap, new RequestCallBack() {
-            @Override
-            public void onRequestSuccess(Object result) {
-                LogUtils.e(result.toString());
-                mView.getCity(result.toString());
-            }
+        MyApp.apiService(ApiService.class)
+                .collectCityInfo(RequestBodyUtil.jsonRequestBody(hashMap)
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+                    mView.showLoading();
+                })
+                .doFinally(() -> {
+                    mView.closeLoading();
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) mView)))
+                .subscribe(bean -> {
+                    mView.getCity(bean.string());
+                }, throwable -> {
+                    com.radish.baselibrary.utils.LogUtils.e("联网失败：" + throwable.toString());
+                });
 
-            @Override
-            public void onRequestFailed(String errorMsg) {
 
-            }
-        });
+//        OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(context);
+//        okHttpRequestUtils.requestAsyn(ApiService.collectCityInfo, 1, hashMap, new RequestCallBack() {
+//            @Override
+//            public void onRequestSuccess(Object result) {
+//                mView.closeLoading();
+//                LogUtils.e(result.toString());
+//                mView.getCity(result.toString());
+//            }
+//
+//            @Override
+//            public void onRequestFailed(String errorMsg) {
+//                mView.closeLoading();
+//            }
+//        });
     }
 }

@@ -1,5 +1,7 @@
 package com.xinzu.xiaodou.ZFBpay.utils;
 
+import com.xinzu.xiaodou.bean.SuccessOrderBean;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -8,6 +10,7 @@ import java.util.Random;
 
 public class Orderutli {
     // 商户PID
+    //2019103168786214
     public static final String PARTNER = "2088531464539710";
     // 商户收款账号
     public static final String SELLER = "xinzuchuxing@126.com";
@@ -15,7 +18,7 @@ public class Orderutli {
      * create the order info. 创建订单信息
      *
      */
-    public static String getOrderInfo(String subject, String body, String price, String TT) {
+    public static String getOrderInfo(String orderCode ,String price) {
 
         // 签约合作者身份ID
         String orderInfo = "partner=" + "\"" + PARTNER + "\"";
@@ -24,19 +27,19 @@ public class Orderutli {
         orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
 
         // 商户网站唯一订单号
-        orderInfo += "&out_trade_no=" + "\"" + TT+ "\"";
+        orderInfo += "&out_trade_no=" + "\"" + orderCode+ "\"";
 
         // 商品名称
-        orderInfo += "&subject=" + "\"" + subject + "\"";
+        orderInfo += "&subject=" + "\"" + "小豆租车" + "\"";
 
         // 商品详情
-        orderInfo += "&body=" + "\"" + body + "\"";
+        orderInfo += "&body=" + "\"" + "详情" + "\"";
 
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + price + "\"";
+        orderInfo += "&total_fee=" + "\"" +"0.01" + "\"";
 
         // 服务器异步通知页面路径
-        orderInfo += "&notify_url=" + "\"" + "http://39.105.178.240:8080/answerApp" + "\"";
+        orderInfo += "&notify_url=" + "\"" + "http://39.105.178.240:8080/xinzuinterface/answerApp" + "\"";
 
         // 服务接口名称， 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";

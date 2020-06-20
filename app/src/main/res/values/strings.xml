@@ -15,4 +15,7 @@
     <string name="content2">
       本人身份证有效期一个月以上，本人驾驶证有效期期2月以上、驾驶龄6个月以上，本人国内信用卡有效期1个月以上
     </string>
+    <string name="feiyong1">1、基本保障服务：指租车公司向您提供均购买有较强险及商务保险，保障你用车安全的一种服务，按天收费。</string>
+    <string name="feiyong_2">2、手续费：门店收取手续费用与车辆清洁，车辆保养，单据制作，人员服务等</string>
+    <string name="feiyong_3">3、夜间服务费：取车换车时间在21：00至8：00之间，可能会收取费用，按次收费</string>
 </resources>

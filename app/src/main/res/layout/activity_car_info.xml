@@ -125,11 +125,20 @@
                     android:layout_margin="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp20">
 
+
+                    <ImageView
+                        android:id="@+id/image11"
+                        android:layout_width="@dimen/dp20"
+                        android:layout_height="@dimen/dp20"
+                        android:src="@mipmap/qu" />
+
                     <TextView
                         android:id="@+id/tv_pick_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp10"
+                        android:layout_toEndOf="@id/image11"
                         android:text="石家庄市"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp12" />
@@ -163,11 +172,19 @@
                     android:layout_marginRight="@dimen/dp20"
                     android:layout_marginBottom="@dimen/dp20">
 
+                    <ImageView
+                        android:id="@+id/image22"
+                        android:layout_width="@dimen/dp20"
+                        android:layout_height="@dimen/dp20"
+                        android:src="@mipmap/huan" />
+
                     <TextView
                         android:id="@+id/tv_return_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_toEndOf="@id/image22"
                         android:text="石家庄市"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp12" />
@@ -314,7 +331,6 @@
                         android:textSize="14sp" />
 
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -436,6 +452,7 @@
             android:gravity="center|right">
 
             <TextView
+                android:id="@+id/tv_feiyong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dp20"

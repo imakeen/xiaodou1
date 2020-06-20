@@ -48,6 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp6"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -74,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp3"
                 android:gravity="center_horizontal"
+
                 android:orientation="horizontal">
 
                 <TextView
@@ -113,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="6dp"
-                android:text="取车时间"
+                android:text="还车时间"
                 android:textColor="@color/blacktime"
                 android:textSize="@dimen/sp12" />
 
@@ -155,9 +157,8 @@
 
         <NumberPicker
             android:id="@+id/np_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <NumberPicker
             android:id="@+id/np_hour"

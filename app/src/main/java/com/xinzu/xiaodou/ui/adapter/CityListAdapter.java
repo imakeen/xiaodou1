@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
+import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.LocateState;
@@ -34,6 +35,7 @@ public class CityListAdapter extends BaseAdapter {
     private OnCityClickListener onCityClickListener;
     private int locateState = LocateState.LOCATING;
     private String locatedCity;
+    private String code;
     private List<City> mHotData = new ArrayList<>();
 
     public void setData(List<City> mCities) {
@@ -73,9 +75,10 @@ public class CityListAdapter extends BaseAdapter {
      *
      * @param state
      */
-    public void updateLocateState(int state, String city) {
+    public void updateLocateState(int state, String city, String citycode) {
         this.locateState = state;
         this.locatedCity = city;
+        this.code = citycode;
         notifyDataSetChanged();
     }
 
@@ -126,9 +129,23 @@ public class CityListAdapter extends BaseAdapter {
                 TextView state = (TextView) view.findViewById(R.id.tv_located_city);
                 switch (locateState) {
                     case LocateState.SUCCESS:
-                        state.setText(locatedCity);
+                        if (locatedCity.equals("请选择")) {
+                            state.setText("定位失败");
+                        } else {
+                            state.setText(locatedCity);
+                        }
                         break;
                 }
+                container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (state.getText().toString().equals("定位失败")) {
+                            ToastUtil.showShort("定位失败");
+                            return;
+                        }
+                        onCityClickListener.onCityClick(state.getText().toString(), code);
+                    }
+                });
 
                 break;
             case 1:     //热门
@@ -174,7 +191,7 @@ public class CityListAdapter extends BaseAdapter {
                         @Override
                         public void onClick(View v) {
                             if (onCityClickListener != null) {
-                                onCityClickListener.onCityClick(city,code);
+                                onCityClickListener.onCityClick(city, code);
                             }
                         }
                     });
