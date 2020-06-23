@@ -53,6 +53,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
 
     private OrderAdapter orderAdapter;
     private String orderid;
+    private ArrayList<OrderBean.OrderListBean> arrayList = new ArrayList<>();
 
     public static OrderFragment newInstance(int title) {
         Bundle args = new Bundle();
@@ -136,6 +137,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 startIndex = 0;
                 endIndex = 9;
+                arrayList.clear();
                 getOrderList();
                 refreshLayout.finishRefresh(1000);
             }
@@ -151,6 +153,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
             return;
         }
         recyclerView.setVisibility(View.VISIBLE);
+        arrayList.addAll(orderBean.getOrderList());
         if (startIndex == 0) {
             orderAdapter.setNewData(orderBean.getOrderList());
         } else {
@@ -163,7 +166,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
                     ToastUtils.showShort("暂无更多数据");
                     return;
                 }
-                orderid = orderBean.getOrderList().get(position).getOrderId();
+                orderid = arrayList.get(position).getOrderId();
                 OrderDetails(orderid);
             }
         });

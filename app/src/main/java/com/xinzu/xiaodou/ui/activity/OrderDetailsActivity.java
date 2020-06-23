@@ -168,7 +168,7 @@ public class OrderDetailsActivity extends BaseGActivity {
     }
 
 
-    @OnClick({R.id.tv_youhui, R.id.bt_usercar, R.id.tv_quxiao})
+    @OnClick({R.id.tv_youhui, R.id.bt_usercar, R.id.tv_quxiao, R.id.back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_youhui:
@@ -179,9 +179,7 @@ public class OrderDetailsActivity extends BaseGActivity {
                     if (bean.getOrderState() == 3) {
                         delete();
                     } else {
-                        AliPay.pay(OrderDetailsActivity.this, orderid, String.valueOf(bean.getPayMount()), () -> {
-                            finish();
-                        });
+                        AppPay(orderid, bean.getPayMount());
                     }
                 } else {
                     switch (bean.getOrderState()) {
@@ -200,7 +198,9 @@ public class OrderDetailsActivity extends BaseGActivity {
                     }
                 }
                 break;
-
+            case R.id.back:
+                finish();
+                break;
             case R.id.tv_quxiao:
                 if (bean.getPayments() == 0) {
                     cancl();
@@ -216,10 +216,53 @@ public class OrderDetailsActivity extends BaseGActivity {
         }
     }
 
+    private void AppPay(String OddNumbers, int price) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("orderCodel", OddNumbers);
+        hashMap.put("tradeNo", OddNumbers);
+        hashMap.put("price", price + "");
+        MyApp.apiService(ApiService.class)
+                .AppPay(RequestBodyUtil.jsonRequestBody(hashMap)
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+                    showLoading();
+                })
+                .doFinally(() -> {
+                    closeLoading();
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
+                .subscribe(new SuccessfulConsumer() {
+                    @Override
+                    public void success(String jsonObject) {
+                        com.blankj.utilcode.util.LogUtils.e(jsonObject);
+                        try {
+                            JSONObject object = new JSONObject(jsonObject);
+                            LogUtils.e(object.getInt("status") + "");
+                            switch (object.getInt("status")) {
+                                case 1:
+                                    AliPay.pay(OrderDetailsActivity.this, orderid, String.valueOf(price), () -> {
+                                    });
+                                    break;
+                                case 0:
+                                case -1:
+                                    ToastUtil.showShort(object.getString("message"));
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, throwable -> {
+                    LogUtils.e("联网失败：" + throwable.toString());
+                });
+
+    }
+
     private void refundApp(String refundAmount) {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("outTradeNo", orderid);
-        hashMap.put("refundAmount", "0.1");
+        hashMap.put("refundAmount", refundAmount);
         hashMap.put("appKey", "xzcxzfb");
         hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
         hashMap.put("timeStamp", SignUtils.temp());
@@ -243,7 +286,8 @@ public class OrderDetailsActivity extends BaseGActivity {
                         try {
                             JSONObject jsonObject1 = new JSONObject(jsonObject);
                             if (jsonObject1.getInt("status") == 1) {
-
+                                ToastUtil.showShort(jsonObject1.getString("message"));
+                                cancl();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -280,6 +324,7 @@ public class OrderDetailsActivity extends BaseGActivity {
                         try {
                             JSONObject jsonObject1 = new JSONObject(jsonObject);
                             if (jsonObject1.getInt("status") == 1) {
+
                                 refundApp(jsonObject1.getInt("deduction") + "");
                             }
                         } catch (JSONException e) {

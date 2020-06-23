@@ -6,9 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.radish.baselibrary.Intent.IntentData;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.BaseGActivity;
+import com.xinzu.xiaodou.pro.activity.login.LoginActivity;
+import com.xinzu.xiaodou.pro.activity.registerlogin.RegisterActivity;
 import com.xinzu.xiaodou.pro.fragment.home.HomeFragment;
 import com.xinzu.xiaodou.pro.fragment.mine.MineFragment;
 import com.xinzu.xiaodou.pro.fragment.order.OrderFragment;
@@ -85,7 +89,11 @@ public class MainActivity extends BaseGActivity {
                 case R.id.action_order:
                     setStatusBar();
                     isUseImmersionBar = false;
-                    naviTab(1);
+                    if (SPUtils.getInstance().getString("userid").isEmpty()) {
+                        ActivityUtils.startActivity(RegisterActivity.class);
+
+                    }else {
+                    naviTab(1);}
                     break;
                 case R.id.action_mine:
                     isUseImmersionBar = true;

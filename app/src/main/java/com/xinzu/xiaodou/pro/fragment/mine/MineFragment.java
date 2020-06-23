@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
 import com.xinzu.xiaodou.ui.activity.OpinionActivity;
+import com.xinzu.xiaodou.ui.activity.SettingActivity;
 
 import butterknife.OnClick;
 
@@ -58,13 +59,13 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     }
 
-//    @OnClick({R.id.my_opinion})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.my_opinion:
-//                ActivityUtils.startActivity(OpinionActivity.class);
-//                break;
-//        }
-//    }
+    @OnClick({R.id.setting})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.setting:
+                ActivityUtils.startActivity(SettingActivity.class);
+                break;
+        }
+    }
 
 }

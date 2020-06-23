@@ -27,6 +27,7 @@ public interface ApiService {
     //String ServiceUrl = "http://192.168.0.141:9080/";
     String image1 = "https://7869-xiaodou-1301502367.tcb.qcloud.la/banner-3.jpg?sign=ec3c10493095e35e19e41901c0010532&t=1583749209";
     String image2 = "https://7869-xiaodou-1301502367.tcb.qcloud.la/banner-2.jpg?sign=db2c68808d293088dff25e175eb4200a&t=1583749228";
+
     //城市列表
     //String collectCityInfo = "collectCityInfo";
     //左边车型
@@ -35,10 +36,11 @@ public interface ApiService {
     //获取验证码
     //String getMsgCode = "getMsgCode";
     //登录注册
-   // String loging = "userLoginApp";
+    // String loging = "userLoginApp";
     //登录注册
     @POST("userLoginApp")
     Observable<ResponseBody> userLoginApp(@Body RequestBody body);
+
     //获取验证码
     @POST("getMsgCode")
     Observable<ResponseBody> getMsgCode(@Body RequestBody body);

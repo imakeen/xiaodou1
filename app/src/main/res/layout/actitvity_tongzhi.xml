@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colororange"
+        android:elevation="3dp"
+        android:orientation="horizontal">
+
+        <ImageView
+
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/back_write"
+
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="租车须知"
+            android:textColor="@color/white"
+
+            android:textSize="@dimen/sp16" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/xizhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginBottom="@dimen/dp10"
+                android:text="小豆租车须知"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp22"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/yv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/xizhi"
+                android:text="  取车："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/xizhi"
+                android:layout_toEndOf="@+id/yv"
+                android:text="  身份证（护照）+驾驶证+本人信用卡"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/syv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yv"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    说明：芝麻信用分达到650分，免车辆押金；芝麻信用分低于650分，需要收取全额的车辆押金，并刷违章押金，且预授权是刷信用卡。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/gsd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/syv"
+                android:layout_marginBottom="@dimen/dp5"
+                android:text="一、取还车说明:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/gy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gsd"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+
+                android:text="    取车时，会冻结信用卡一定金额作为租车预授权，还车时结算订单费用，然后解冻预授权。 还车时，会重新冻结信用卡一定金额作为违章预授权。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/st"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gy"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    1、 携带您本人身份证原件、本人中国驾驶证正副本和本人国内信用卡（或本人支付宝）办理取车手续（中国籍客户必须使用二代身份证，非中国国籍客户可凭护照等其他有效证件办理取车）。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/st"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    2、 身份证原件等证件信息必须与预定时填写的一致，否则可能会造成无法取车。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    3、 取车时会刷取信用卡一定金额作为租车预授权，还车时结算订单费用，然后解冻预授权。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh1"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    4、 还车时会重新刷取您信用卡一定金额作为违章预授权。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh2"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:text="二、取消规则："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/jh4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh3"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    （一）、平日取消规则"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh4"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="       订单支付成功后，距离取车时间2小时以外，可免费取消订单；距离取车时间2小时以内（含），如取消订单，将收取首日租金作为违约金（最高不超过150元）；过了取车时间取消订单，将扣除订单总费用作为违约金。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh6"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh5"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    （二）、节日期间的订单取消时将可能产生违约金，违约金规则如下："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh6"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     1）三天节假日："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh7"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     1. 提前24小时(含)以上：免费取消；"
+
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/jh9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh8"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     2. 24小时以内取消：扣除首日日租金；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jh9"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     3.	过提车时间（含预定提车时间）未提车，将收取全单金额作为违约金；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk1"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     4.	节假日期间提前还车不退款；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk2"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     5.	 仅支持预付"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk3"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     2）七天节假日："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk4"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     1、距离提车时间120h（含）以上取消，将收取首日日租金作为违约金；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk5"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     2.	距离提车时间72h（含）以上120h以内取消，将收取总金额的30%作为违约金；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk6"
+                android:text="     3.	距离提车时间72h以内取消，将收取总金额的50%作为违约金；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk7"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     4.	过提车时间未提车，将收取全单金额作为违约金；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk8"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     5.	节假日期间提前还车不退款；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk9"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="     6.	仅支持预付"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/kk11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk10"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="三、费用说明："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/kk12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk11"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    1、延后还车时间可能产生一定金额超时还车费，延迟还车需提前24小时联系门店；"
+                android:textColor="@color/black" />
+
+
+            <TextView
+                android:id="@+id/kk13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk12"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    （1）延迟 半小时（含）内还车，不额外收费；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kk13"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    （2）延迟 半 小时（不含）至2小时（含），收取当日订单金额（含基本保险，但不含手续费及附加服务费）的60%；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy1"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    （3）延迟 2 小时（不含）至3小时（含），收取当日订单金额（含基本保险，但不含手续费及附加服务费）的80%；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy2"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    （4）延迟 3 小时（不含）至4小时（含），收取当日订单金额（含基本保险，但不含手续费及附加服务费）的95%；"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy3"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    （5）延迟4小时以上还车按天收取并附加服务项目费用"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy4"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    2、晚上21:30（不含）至次日早上7:30（不含）之间取车或还车的客户，需缴纳夜间服务费，夜间服务费收费价格为50元/次，即：取车或还车各按1次计算。是否收取夜间服务费，以客户到店时间为准，不计客户排队和等待时间"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy5"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    3、不同门店还车，将会产生异门店还车费。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy6"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    4、租车公司原因导致无法按照订单预定车型派车，将会为您更换同级或者免费升级车辆；如只能更换成降级车辆，将退还您租金差价；如您不能接受车型变更，我们将会全额退还您的费用并赔偿您该订单首日租车费，敬请谅解。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy7"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    5、由于租客自身原因（醉驾、毒驾等）导致租车公司无法为您提供服务，租车公司不承担责任。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yy1111"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy8"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="四、违章说明："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/yy11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy1111"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    1、租车押金说明： 有车损，门店和客人共同确认后，先行扣除一定额度，若押金有剩余则通过解冻预授权的方式退还； 无车损，还车时，门店解冻全部预授权。"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/ll1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yy11"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    2、违章押金说明：1）客户租期内如发生违章，客户应在门店通知后的15天内进行处理，违章处理后，违章押金退换客户原支付账户。如在客户规定时限内未处理，或不履行违章处理义务。供应商则暂扣客户违章押金（由违章预授权直接转为押金，或违章押金暂时不退还），直到客户配合平台处理违章或按违章代办费用标准，由门店代为处理后，剩余违章费用退还客户原支付账户；2） 无违章，违章押金由银行自动解冻，解冻时间以各银行为准，一般为30-45天（部分区域，如新疆，西藏，西宁，兰州，成都等，因为进藏区导致的违章信息查询存在滞后性，解冻时间可能需要60天）"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/qq1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll1"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="五、保险说明："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/qq2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/qq1"
+                android:layout_marginTop="@dimen/dp5"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="    1、 小豆车为租赁汽车购置以下所列保险：车辆损失险、机动车第三者责任商业保险、全车盗抢险、全车玻璃单独破碎险、车上人员（司机）责任险和车辆自燃损失险。"
+                android:textColor="@color/black" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/qq2">
+
+                <ScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    1.1车辆损失险：赔款=实际修复费用×事故责任比例×（1-事故责任免赔率）×（1-绝对免赔率）-绝对免赔额（绝对免赔额为1500元），客户承担赔款以外部分，保险公司及小豆车承担赔款部分；"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    1.2机动车第三者责任商业保险、车上人员（司机）责任险、全车玻璃单独破碎险和车辆自燃损失险：保险公司及小豆车承担核定理赔的100%；"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    1.3全车盗抢险：客户承担20%，保险公司及小豆车承担80%；"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    2、车损免赔险：客户如在租赁期间内购买车损免赔险，1500元以下本车车辆损伤无需赔偿。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="六、油费说明："
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    若您在还车时多于发车时的油量，根据油市价返还，若少于发车时的油量，您还需根据市价支付油费和加油服务费。建议客户自行保留一份油量记录。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    油费=市场当期同标号油价X油箱容量X（油表缺失格数/车辆总油表格数）"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginBottom="@dimen/dp5"
+
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="七、城市限行："
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    限号期间优先提供不限号车辆，若暂时无法提供不限号车辆，可更换同等车型或免费升级车辆，以上无法满足时，客户车辆在限号当天在限号区域内停驶车辆，小豆租车可减免限号当天的日租金。（备注：客户车辆在限号区域内，小豆租车会根据客户行驶车辆的GPS数据判断是否适用于此减免规定）。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+
+                            android:layout_marginBottom="@dimen/dp5"
+
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="八、强行续租说明："
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    （1）超过预订还车时间，而承租方如因个人原因未履行有效续租手续强行不还车的，视为强行续租。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    （2）未履行有效续租手续是指：未提前告知且延期还车1小时以上的、未经出租方同意强行不还车的或到预订还车时间无法与承租方联系上的。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    （3）满足以上任一情况，则出租方有权立即收回车辆，出租方可以直接或委托小豆租车关联公司收回车辆。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    （4）承租方除支付正常租车费用外，还需按超期部分租金的300%支付违约金。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginBottom="@dimen/dp5"
+
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="九、车辆停运损失费："
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    因车辆事故、车辆损伤或因遗失证件等原因造成车辆无法正常运营的，将收取停运损失费。
+计费规则：租期内租金均价（不含基本保障服务费）×停运天数；"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    停运天数按车辆维修凭证、证件补办凭证或相关部门扣押时间等确认。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+
+                            android:layout_marginBottom="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="十、车辆折旧费："
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    租赁期间车辆严重损坏的，将收取车辆加速折旧费。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    收费标准为：维修费在0-3000元（不含）之间，不收加速折旧费。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    维修费在3000元（含）以上，收取维修费的30%作为折旧费。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    维修费用以定损金额或车辆维修凭证为准。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginBottom="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="十一、道路救援收费标准："
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    1）由于车辆本身故障引起的救援费用小豆租车门店承担。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    2）非车辆本身机械故障导致无法正常行驶时（包含且不限于人为操作失误、保险事故等），费用由客户承担，收费标准以第三方救援机构所示为准或客户与门店协商而定。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginBottom="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="十二、租车押金说明："
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    在您取车时，门店将以冻结信用卡预授权的方式支付租车押金。要求单信用卡的额度需高于租车押金金额，押金金额以页面披露金额为准："
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    1、押金退还方式："
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    1） 有车损，门店和客人共同确认后，先行扣除一定额度，若押金有剩余则通过解冻预授权的方式退还；"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    2） 无车损，还车时，门店解冻全部预授权"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    2、押金退还时间：还车时，门店操作解冻信用卡预授权；解冻金额到账时间以各银行为准，一般为即时解冻。"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginBottom="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="十三、其他特殊要求"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="    租赁车辆不允许进入泸沽湖景区以及不允许出境，如您执意进入泸沽湖景区或出境，产生相关损失由您自行承担，敬请谅解。"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+                </ScrollView>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

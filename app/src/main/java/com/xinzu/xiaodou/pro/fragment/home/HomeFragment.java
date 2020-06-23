@@ -86,7 +86,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public static final int PERMISSION_REQUESTCODE = 0x001;
     private AMap aMap;
     private boolean isShowPermission = true;
-
+    private String citys;
     private String Pickuplatitude;
     private String Pickuplongitude;
     private String Citycode;
@@ -99,6 +99,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private GeocodeSearch mGeocoderSearch;
 
     int context;
+    private String aoiName;
 
     public static HomeFragment newInstance(String title) {
 
@@ -142,6 +143,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         tv_pick_week.setText(Day.pickcar_date("week", true));
         tv_return_day.setText(Day.pickcar_date("day", false));
         tv_return_week.setText(Day.pickcar_date("week", false));
+
     }
 
     @Override
@@ -349,7 +351,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         checkPermissions();
         mGeocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
 
-            private String citys;
+
 
             @Override
             public void onGeocodeSearched(GeocodeResult result, int rCode) {
@@ -359,7 +361,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             @Override
             public void onRegeocodeSearched(final RegeocodeResult result, int rCode) {
                 if (rCode == 1000) {
-                    String aoiName = result.getRegeocodeAddress().getAois().get(context).getAoiName();
+                    aoiName = result.getRegeocodeAddress().getAois().get(context).getAoiName();
                     citys = result.getRegeocodeAddress().getCity();
                     mMaps.setText(citys);
                     Mapse.setText(aoiName);

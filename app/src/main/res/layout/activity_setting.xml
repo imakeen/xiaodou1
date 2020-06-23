@@ -1,0 +1,121 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="@dimen/dp10"
+        android:background="@color/colororange">
+
+
+        <ImageView
+
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/back_write"
+
+            android:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="设置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/lianxi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/lianxi"
+            android:drawablePadding="@dimen/dp10"
+            android:drawableTint="@color/colororange"
+            android:text="联系我们"
+            android:textColor="@color/colorblack3"
+            android:textSize="@dimen/sp14" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@mipmap/go_orange" />
+    </LinearLayout>
+
+    <include layout="@layout/view_item" />
+
+    <LinearLayout
+        android:id="@+id/my_opinion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/yijian"
+            android:drawablePadding="@dimen/dp10"
+            android:drawableTint="@color/colororange"
+            android:text="意见反馈"
+            android:textColor="@color/colorblack3"
+            android:textSize="@dimen/sp14" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@mipmap/go_orange" />
+    </LinearLayout>
+
+    <include layout="@layout/view_item" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/guanyu"
+            android:drawablePadding="@dimen/dp10"
+            android:drawableTint="@color/colororange"
+            android:text="关于我们"
+            android:textColor="@color/colorblack3"
+            android:textSize="@dimen/sp14" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@mipmap/go_orange" />
+    </LinearLayout>
+
+    <include layout="@layout/view_item" />
+</LinearLayout>

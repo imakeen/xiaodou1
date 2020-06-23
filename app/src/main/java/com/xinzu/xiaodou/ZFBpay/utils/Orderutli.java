@@ -11,7 +11,7 @@ import java.util.Random;
 public class Orderutli {
     // 商户PID
     //2019103168786214
-    public static final String PARTNER = "2088531464539710";
+    public static final String PARTNER = "2021001168653446";
     // 商户收款账号
     public static final String SELLER = "xinzuchuxing@126.com";
     /**
@@ -24,7 +24,7 @@ public class Orderutli {
         String orderInfo = "partner=" + "\"" + PARTNER + "\"";
 
         // 签约卖家支付宝账号
-        orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
+        orderInfo += "&seller_id=" + "\"" + PARTNER + "\"";
 
         // 商户网站唯一订单号
         orderInfo += "&out_trade_no=" + "\"" + orderCode+ "\"";

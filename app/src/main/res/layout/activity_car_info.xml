@@ -408,6 +408,7 @@
                     android:textSize="@dimen/sp14" />
 
                 <TextView
+                    android:id="@+id/tv_yuding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="预定条款丶预定须知"

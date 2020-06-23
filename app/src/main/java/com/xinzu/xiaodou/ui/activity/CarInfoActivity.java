@@ -142,7 +142,8 @@ public class CarInfoActivity extends BaseGActivity {
 
     }
 
-    @OnClick({R.id.ll_users, R.id.bt_usercar, R.id.tv_feiyong, R.id.back})
+    @OnClick({R.id.ll_users, R.id.tv_yuding,
+            R.id.bt_usercar, R.id.tv_feiyong, R.id.back})
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -192,6 +193,9 @@ public class CarInfoActivity extends BaseGActivity {
                 break;
             case R.id.back:
                 finish();
+                break;
+            case R.id.tv_yuding:
+                ActivityUtils.startActivity(YndingXuzhiActicity.class);
                 break;
         }
     }
