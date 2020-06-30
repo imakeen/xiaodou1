@@ -5,6 +5,7 @@ import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.util.ChineseNumToArabicNumUtil;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.text.SimpleDateFormat;
 
@@ -24,26 +25,18 @@ public class Day {
             calendar.set(Calendar.MINUTE, 0);
             calendar.add(Calendar.HOUR, 3);
         }
-        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE");
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE", Locale.CHINESE);
         String format = simpleDateFormat1.format(calendar.getTime());
         String subst = format.substring(0, 10);
         String sub = format.substring(10);
         String subs2 = sub.substring(1, 6);
         String substring = sub.substring(10, 13);
-        if (b_r) {
             if (dayofweek.equals("day")) {
                 return subst;
             } else {
                 return substring + subs2;
             }
 
-        } else {
-            if (dayofweek.equals("day")) {
-                return subst;
-            } else {
-                return substring + subs2;
-            }
-        }
     }
 
     public static String[] getTitles() {

@@ -116,7 +116,7 @@ public class SearchActivity extends BaseGActivity {
     }
 
     public void setselect(Slelect select) {
-        slelect = select;
+        this.slelect = select;
     }
 
     private void searchPoi(String key, int pageNum, String cityCode, boolean nearby) {
@@ -141,8 +141,12 @@ public class SearchActivity extends BaseGActivity {
                         cityAddapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                             @Override
                             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                                slelect.select( poiItemArrayList.get(position).getTitle(), city == null ? poiItemArrayList.get(position).getCityName() : city
-                                        , citycode, poiItemArrayList.get(position).getLatLonPoint().getLongitude() + ""
+                                slelect.select( poiItemArrayList.get(position).getProvinceName()+
+
+                                                poiItemArrayList.get(position).getTitle(), city == null ?
+                                                poiItemArrayList.get(position).getCityName() : city
+                                        , citycode,
+                                        poiItemArrayList.get(position).getLatLonPoint().getLongitude() + ""
                                         , poiItemArrayList.get(position).getLatLonPoint().getLatitude() + ""
                                 );
                                 finish();

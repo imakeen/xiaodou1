@@ -1,6 +1,7 @@
 package com.xinzu.xiaodou.wxapi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
@@ -11,8 +12,11 @@ import com.radish.baselibrary.utils.LogUtils;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.ZFBpay.utils.OrderInfoUtil2_0;
 import com.xinzu.xiaodou.pro.MainActivity;
+import com.xinzu.xiaodou.ui.activity.CarInfoActivity;
 
 import java.util.Map;
+
+import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 
 public class AliPay {
@@ -63,7 +67,9 @@ public class AliPay {
                                     LogUtils.e("handleMessage: 已经取消支付");
                                     ToastUtil.showShort("支付取消");
                                     ActivityCollector.finishAll();
-                                    IntentUtils.getInstance().with(activity, MainActivity.class).putInt("order", 1).start();
+                                    Intent intent = new Intent(activity, MainActivity.class);
+                                    intent.putExtra("order", 1);
+                                    startActivity(intent);
                                 } else {
                                     LogUtils.e("handleMessage: 未知状态");
                                     ToastUtil.showShort(resultStatus);

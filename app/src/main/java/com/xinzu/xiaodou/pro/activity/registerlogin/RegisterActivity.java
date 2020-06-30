@@ -17,6 +17,7 @@ import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
 import com.xinzu.xiaodou.pro.MainActivity;
+import com.xinzu.xiaodou.util.CountDownTimerUtils;
 import com.xinzu.xiaodou.util.RegexUtils;
 
 import org.json.JSONException;
@@ -41,6 +42,8 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     @BindView(R.id.bt_regist)
     Button bt_login;
+
+    private CountDownTimerUtils mCountDownTimerUtils = null;
 
     @Override
     protected void initInject() {
@@ -82,7 +85,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count > 0 && et_code.getText().toString().length() > 0) {
+                if (et_code.getText().toString().length()>0) {
                     bt_login.setEnabled(true);
                 } else {
                     bt_login.setEnabled(false);
@@ -102,7 +105,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (et_phone.getText().toString().length() > 0 && count > 0) {
+                if (et_code.getText().toString().length() > 0 ) {
                     bt_login.setEnabled(true);
                 } else {
                     bt_login.setEnabled(false);
@@ -129,19 +132,22 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
                     return;
                 }
                 mPresenter.getsendRegistSms(et_phone.getText().toString(), RegisterActivity.this);
-                CountDownTimer timer = new CountDownTimer(60 * 1000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        bt_getcode.setText(millisUntilFinished / 1000 + "秒");
-                        bt_getcode.setEnabled(false);
-                    }
 
-                    @Override
-                    public void onFinish() {
-                        bt_getcode.setText("点击重新获取");
-                        bt_getcode.setEnabled(true);
-                    }
-                }.start();
+                mCountDownTimerUtils = new CountDownTimerUtils(bt_getcode, 60 * 1000, 1000);
+                mCountDownTimerUtils.start();
+//                CountDownTimer timer = new CountDownTimer(60 * 1000, 1000) {
+//                    @Override
+//                    public void onTick(long millisUntilFinished) {
+//                        bt_getcode.setText(millisUntilFinished / 1000 + "秒");
+//                        bt_getcode.setEnabled(false);
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        bt_getcode.setText("点击重新获取");
+//                        bt_getcode.setEnabled(true);
+//                    }
+//                }.start();
                 break;
             case R.id.bt_regist:
                 if (TextUtils.isEmpty(et_phone.getText().toString())) {
@@ -192,6 +198,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
                 SPUtils.getInstance().put("userid", jsonObject.getString("userId"));
                 SPUtils.getInstance().put("phone", jsonObject.getString("phone"));
                 ActivityUtils.startActivity(MainActivity.class);
+                finish();
             } else if (4 == jsonObject.getInt("status")) {
                 ToastUtil.showShort("验证码错误");
             } else if (0 == jsonObject.getInt("status")) {
@@ -200,5 +207,14 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mCountDownTimerUtils != null) {
+            mCountDownTimerUtils.cancel();
+            mCountDownTimerUtils = null;
+        }
+        super.onDestroy();
     }
 }

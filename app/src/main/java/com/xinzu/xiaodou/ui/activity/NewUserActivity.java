@@ -29,6 +29,7 @@ import com.xinzu.xiaodou.http.RequestBodyUtil;
 import com.xinzu.xiaodou.http.RequestCallBack;
 import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.http.SuccessfulConsumer;
+import com.xinzu.xiaodou.util.RegexUtils;
 import com.xinzu.xiaodou.util.SignUtils;
 
 import org.json.JSONException;
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,7 +61,7 @@ public class NewUserActivity extends BaseGActivity {
     @BindView(R.id.new_phone)
     LinearLayout newPhone;
     private OptionsPickerView pvOptions;
-    private String type;
+    private String type="1";
     private CarUserBean.ConsumersBean bean;
 
     @Override
@@ -119,17 +121,21 @@ public class NewUserActivity extends BaseGActivity {
     private void carType() {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("appKey", ApiService.appKey);
-        hashMap.put("sign", "dbe41c5b394a2d47c0358bae016fb8f4");
-        hashMap.put("timeStamp", "1591693086937");
+        String temp=SignUtils.temp();
+        hashMap.put("sign",SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp",temp);
         LogUtils.e(SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()) + "+++++++" + SignUtils.temp());
         OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(this);
         okHttpRequestUtils.requestAsynjson("getCardType", new Gson().toJson(hashMap), new RequestCallBack() {
             @Override
             public void onRequestSuccess(Object result) {
                 cardTypeBean cardTypeBean = new Gson().fromJson(result.toString(), cardTypeBean.class);
-                List<cardTypeBean.CardTypeListBean> list = new ArrayList<>(cardTypeBean.getCardTypeList());
-                initOptionPicker(list, tvZjType);
-                pvOptions.show();
+                if (cardTypeBean.getStatus() == 1) {
+                    List<cardTypeBean.CardTypeListBean> list = new ArrayList<>(cardTypeBean.getCardTypeList());
+                    initOptionPicker(list, tvZjType);
+                    pvOptions.show();
+                }
+
             }
 
             @Override
@@ -182,10 +188,11 @@ public class NewUserActivity extends BaseGActivity {
     }
 
     private void submitUser() {
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
         hashMap.put("appKey", ApiService.appKey);
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233",temp));
+        hashMap.put("timeStamp",temp);
         hashMap.put("channelId", "4");
         hashMap.put("orderChannel", "1");
         hashMap.put("idNo", etZjCode.getText().toString());
@@ -197,7 +204,7 @@ public class NewUserActivity extends BaseGActivity {
         hashMap.put("userName", etShowName.getText().toString());
         hashMap.put("userid", SPUtils.getInstance().getString("userid"));
         MyApp.apiService(ApiService.class)
-                .editConsumers(RequestBodyUtil.jsonRequestBody(hashMap)).compose(RxSchedulers.io_main())
+                .editConsumers(RequestBodyUtil.hashtableRequestBody(hashMap)).compose(RxSchedulers.io_main())
                 .doOnSubscribe(disposable -> {
                     showLoading();
                 }).doFinally(() -> {
@@ -236,8 +243,16 @@ public class NewUserActivity extends BaseGActivity {
                     ToastUtil.showShort("请输入证件号");
                     return;
                 }
+                if (!RegexUtils.isIdCard(etZjCode.getText().toString())) {
+                    ToastUtils.showShort("请输入正确的证件号");
+                    return;
+                }
                 if (etPhone.getText().toString().isEmpty()) {
                     ToastUtil.showShort("请输入手机号");
+                    return;
+                }
+                if (!RegexUtils.isMobilePhoneNumber(etPhone.getText().toString())) {
+                    ToastUtils.showShort("请输入正确的手机号");
                     return;
                 }
                 submitUser();

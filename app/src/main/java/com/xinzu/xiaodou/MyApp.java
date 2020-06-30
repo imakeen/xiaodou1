@@ -1,7 +1,11 @@
 package com.xinzu.xiaodou;
 
+import android.content.Context;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.radish.baselibrary.base.BaseApplication;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xinzu.xiaodou.dragger.component.DaggerMyAppComponent;
@@ -16,16 +20,26 @@ import com.xinzu.xiaodou.util.CommonUtil;
 public class MyApp extends BaseApplication {
     private HttpManager mHttpManager = null;
     public static IWXAPI api;
-
+    private RefWatcher refWatcher;
     @Override
     protected void init() {
         //初始化网络
         mHttpManager = new HttpManager();
 
         initWechat();
-
+       // refWatcher= setupLeakCanary();
     }
-
+//    private RefWatcher setupLeakCanary() {
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return RefWatcher.DISABLED;
+//        }
+//        return LeakCanary.install(this);
+//    }
+//
+//    public static RefWatcher getRefWatcher(Context context) {
+//        MyApp leakApplication = (MyApp) context.getApplicationContext();
+//        return leakApplication.refWatcher;
+//    }
     /**
      * 注册微信
      */

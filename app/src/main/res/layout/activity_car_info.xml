@@ -325,7 +325,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_marginTop="@dimen/dp10"
                         android:text="@string/content1"
                         android:textColor="#ff666666"
                         android:textSize="14sp" />
@@ -335,15 +335,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp20"
-                        android:text="@string/becareful1"
+                        android:text="@string/becareful2"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp20"
-                        android:text="@string/content1"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:text="@string/content2"
                         android:textColor="#ff666666"
                         android:textSize="14sp" />
 
@@ -352,15 +352,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp20"
-                        android:text="@string/becareful1"
+                        android:text="@string/becareful3"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp20"
-                        android:text="@string/content1"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:text="@string/content3"
                         android:textColor="#ff666666"
                         android:textSize="14sp" />
 
@@ -369,15 +369,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp20"
-                        android:text="@string/becareful1"
+                        android:text="@string/becareful4"
                         android:textColor="#ff000000"
                         android:textSize="@dimen/sp14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp20"
-                        android:text="@string/content1"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:text="@string/content4"
                         android:textColor="#ff666666"
                         android:textSize="14sp" />
                 </LinearLayout>

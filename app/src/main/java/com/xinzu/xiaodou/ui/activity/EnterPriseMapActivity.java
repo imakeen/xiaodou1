@@ -87,11 +87,11 @@ public class EnterPriseMapActivity extends BaseGActivity implements
         citycode = intent.getStringExtra("citycode");
         cityExtra = intent.getStringExtra("city");
         if (city_title != null) {
-            searchPoi(city_title, 0, currentInfo.get("cityCode"), false);
+            searchPoi(city_title,  currentInfo.get("cityCode"), false);
             GeocodeSearch(city_title);
         }
         if (cityExtra != null) {
-            searchPoi(cityExtra, 0, currentInfo.get("cityCode"), false);
+            searchPoi(cityExtra, currentInfo.get("cityCode"), false);
             GeocodeSearch(cityExtra);
         }
     }
@@ -170,7 +170,7 @@ public class EnterPriseMapActivity extends BaseGActivity implements
                 aMap.animateCamera(CameraUpdateFactory.zoomTo(aMap.getMaxZoomLevel() - 1));
                 aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
                 myLocationStyle.interval(1500);
-                aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
+                aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
                 CameraUpdate cu = CameraUpdateFactory.newLatLng(ll);
                 aMap.animateCamera(cu);
                 aMap.addMarker(mk);
@@ -185,11 +185,11 @@ public class EnterPriseMapActivity extends BaseGActivity implements
         }
     }
 
-    void searchPoi(String key, int pageNum, String cityCode, boolean nearby) {
+    void searchPoi(String key, String cityCode, boolean nearby) {
         isPoiSearched = true;
         query = new PoiSearch.Query(key, "", cityCode);
         query.setPageSize(50);// 设置每页最多返回多少条poiitem
-        query.setPageNum(pageNum);//设置查询页码
+        query.setPageNum(0);//设置查询页码
         poiSearch = new PoiSearch(this, query);
         poiSearch.setOnPoiSearchListener((PoiSearch.OnPoiSearchListener) this);
         if (nearby)

@@ -19,6 +19,7 @@ import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.http.SuccessfulConsumer;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -34,10 +35,11 @@ public class RegisterPresenter extends BasePAV<RegisterContract.View> implements
 
     @Override
     public void getsendRegistSms(String mobile, Context context) {
-        HashMap<String, String> hashMap = new HashMap<String, String>();
+        Hashtable<String, String> hashMap = new Hashtable<String, String>();
         hashMap.put("phone", mobile);
+
         MyApp.apiService(ApiService.class)
-                .getMsgCode(RequestBodyUtil.jsonRequestBody(hashMap)
+                .getMsgCode(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {
@@ -76,11 +78,11 @@ public class RegisterPresenter extends BasePAV<RegisterContract.View> implements
 //                }
 //            });
 //        }).start();
-        HashMap<String, String> hashMap = new HashMap<String, String>();
+        Hashtable<String, String> hashMap = new Hashtable<String, String>();
         hashMap.put("phone", phone);
         hashMap.put("msgCode", msgcode);
         MyApp.apiService(ApiService.class)
-                .userLoginApp(RequestBodyUtil.jsonRequestBody(hashMap)
+                .userLoginApp(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {

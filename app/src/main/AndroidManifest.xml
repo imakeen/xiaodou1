@@ -63,7 +63,7 @@
         <activity
             android:name=".pro.MainActivity"
             android:screenOrientation="portrait"
-
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
@@ -106,15 +106,25 @@
         <activity
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.YndingXuzhiActicity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.YndingXuzhiActicity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.JoinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.TouSuActivity"
+            android:screenOrientation="portrait" />
 
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="af5a74d8f7f50250301014b33b3a9e74" />
+            android:value="f0b8225be20f43576a51bf6633ddb934" />
 
         <!--     笔记本   af5a74d8f7f50250301014b33b3a9e74-->
         <!--     公司   3712863bf475a1051242a984590d78eb-->

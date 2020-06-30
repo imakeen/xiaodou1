@@ -1,5 +1,7 @@
 package com.xinzu.xiaodou.pro.fragment.order;
 
+import android.content.Context;
+
 import com.xinzu.xiaodou.base.mvp.BasePersenter;
 import com.xinzu.xiaodou.base.mvp.BaseView;
 
@@ -16,8 +18,8 @@ public interface OrderContract {
 
     // 连接 数据
     interface Presenter extends BasePersenter<View> {
-        void userOrderList(String bean);
+        void userOrderList(String bean , Context context);
 
-        void userOrderDetails(String bean);
+        void userOrderDetails(String bean,Context context);
     }
 }

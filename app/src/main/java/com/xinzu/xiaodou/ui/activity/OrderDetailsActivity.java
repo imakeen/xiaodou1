@@ -3,6 +3,7 @@ package com.xinzu.xiaodou.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.lifecycle.LifecycleOwner;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.google.gson.Gson;
 import com.radish.baselibrary.Intent.IntentData;
 import com.radish.baselibrary.Intent.IntentUtils;
@@ -137,8 +139,11 @@ public class OrderDetailsActivity extends BaseGActivity {
                         btUsercar.setText("取消订单");
 
                         break;
-                    case 1:
                     case 6:
+                        tv_quxiao.setVisibility(View.GONE);
+                        btUsercar.setVisibility(View.GONE);
+                        break;
+                    case 1:
                         btUsercar.setText("删除订单");
                         tv_quxiao.setText("意见反馈");
                         break;
@@ -188,10 +193,7 @@ public class OrderDetailsActivity extends BaseGActivity {
                             cancls();
                             break;
                         case 3:
-                            delete();
-                            break;
                         case 1:
-                        case 6:
                             delete();
                             break;
 
@@ -203,12 +205,16 @@ public class OrderDetailsActivity extends BaseGActivity {
                 break;
             case R.id.tv_quxiao:
                 if (bean.getPayments() == 0) {
+                    showLoading();
                     cancl();
                 } else {
-                    switch (bean.getStatus()) {
+                    switch (bean.getOrderState()) {
                         case 1:
-                        case 6:
-                            //投诉
+                            IntentUtils.getInstance()
+                                    .with(OrderDetailsActivity.this
+                                            , TouSuActivity.class).
+                                    putString("orderCode", orderid).
+                                    start();
                             break;
                     }
                 }
@@ -217,16 +223,17 @@ public class OrderDetailsActivity extends BaseGActivity {
     }
 
     private void AppPay(String OddNumbers, int price) {
-        HashMap<String, String> hashMap = new HashMap<>();
+
+        Hashtable<String, String> hashMap = new Hashtable<>();
         hashMap.put("orderCodel", OddNumbers);
         hashMap.put("tradeNo", OddNumbers);
         hashMap.put("price", price + "");
         MyApp.apiService(ApiService.class)
-                .AppPay(RequestBodyUtil.jsonRequestBody(hashMap)
+                .AppPay(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {
-                    showLoading();
+
                 })
                 .doFinally(() -> {
                     closeLoading();
@@ -242,6 +249,10 @@ public class OrderDetailsActivity extends BaseGActivity {
                             switch (object.getInt("status")) {
                                 case 1:
                                     AliPay.pay(OrderDetailsActivity.this, orderid, String.valueOf(price), () -> {
+                                        IntentUtils.getInstance().with(OrderDetailsActivity.this, MainActivity.class).putInt("order", 1);
+                                        Intent intent = new Intent(OrderDetailsActivity.this, MainActivity.class);
+                                        intent.putExtra("order", 1);
+                                        startActivity(intent);
                                     });
                                     break;
                                 case 0:
@@ -260,23 +271,23 @@ public class OrderDetailsActivity extends BaseGActivity {
     }
 
     private void refundApp(String refundAmount) {
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
         hashMap.put("outTradeNo", orderid);
-        hashMap.put("refundAmount", refundAmount);
+        hashMap.put("refundAmount", "0.01");
         hashMap.put("appKey", "xzcxzfb");
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp", temp);
         hashMap.put("channelId", "4");
         hashMap.put("orderChannel", "1");
         MyApp.apiService(ApiService.class)
-                .refundApp(RequestBodyUtil.jsonRequestBody(hashMap)
+                .refundApp(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {
-                    showLoading();
+
                 })
                 .doFinally(() -> {
-                    closeLoading();
                 })
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
                 .subscribe(new SuccessfulConsumer() {
@@ -286,9 +297,9 @@ public class OrderDetailsActivity extends BaseGActivity {
                         try {
                             JSONObject jsonObject1 = new JSONObject(jsonObject);
                             if (jsonObject1.getInt("status") == 1) {
-                                ToastUtil.showShort(jsonObject1.getString("message"));
                                 cancl();
                             }
+                            ToastUtil.showShort(jsonObject1.getString("message"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -299,11 +310,13 @@ public class OrderDetailsActivity extends BaseGActivity {
     }
 
     private void cancls() {
+        showLoading();
         Hashtable<String, String> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
         hashMap.put("orderCode", orderid);
         hashMap.put("appKey", "xzcxzfb");
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp", temp);
         hashMap.put("channelId", "4");
         hashMap.put("orderChannel", "1");
         MyApp.apiService(ApiService.class)
@@ -311,10 +324,10 @@ public class OrderDetailsActivity extends BaseGActivity {
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {
-                    showLoading();
+
                 })
                 .doFinally(() -> {
-                    closeLoading();
+
                 })
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
                 .subscribe(new SuccessfulConsumer() {
@@ -324,7 +337,6 @@ public class OrderDetailsActivity extends BaseGActivity {
                         try {
                             JSONObject jsonObject1 = new JSONObject(jsonObject);
                             if (jsonObject1.getInt("status") == 1) {
-
                                 refundApp(jsonObject1.getInt("deduction") + "");
                             }
                         } catch (JSONException e) {
@@ -338,10 +350,11 @@ public class OrderDetailsActivity extends BaseGActivity {
 
     private void cancl() {
         Hashtable<String, String> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
         hashMap.put("orderCode", orderid);
         hashMap.put("appKey", "xzcxzfb");
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp", temp);
         hashMap.put("channelId", "4");
         hashMap.put("orderChannel", "1");
         MyApp.apiService(ApiService.class)
@@ -376,15 +389,16 @@ public class OrderDetailsActivity extends BaseGActivity {
 
     private void delete() {
         DialogUtil.showAlterDialog(this, "确认删除？", (dialog, view) -> {
-            HashMap<String, String> hashMap = new HashMap<>();
+            Hashtable<String, String> hashMap = new Hashtable<>();
             hashMap.put("appKey", ApiService.appKey);
-            hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-            hashMap.put("timeStamp", SignUtils.temp());
+            String temp = SignUtils.temp();
+            hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+            hashMap.put("timeStamp", temp);
             hashMap.put("orderCode", orderid);
             hashMap.put("channelId", "4");
             hashMap.put("orderChannel", "1");
             MyApp.apiService(ApiService.class)
-                    .deleteOrder(RequestBodyUtil.jsonRequestBody(hashMap)
+                    .deleteOrder(RequestBodyUtil.hashtableRequestBody(hashMap)
                     )
                     .compose(RxSchedulers.io_main())
                     .doOnSubscribe(d -> {
@@ -415,15 +429,16 @@ public class OrderDetailsActivity extends BaseGActivity {
     }
 
     private void feiyong() {
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
         hashMap.put("appKey", ApiService.appKey);
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp", temp);
         hashMap.put("channelId", "1");
         hashMap.put("orderCode", orderid);
         hashMap.put("orderChannel", "1");
         MyApp.apiService(ApiService.class)
-                .getOrPriceDetail(RequestBodyUtil.jsonRequestBody(hashMap)
+                .getOrPriceDetail(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {

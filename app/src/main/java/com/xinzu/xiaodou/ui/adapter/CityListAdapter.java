@@ -1,5 +1,6 @@
 package com.xinzu.xiaodou.ui.adapter;
 
+import android.Manifest;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,10 +11,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
+import com.radish.baselibrary.dialog.OnDialogViewClickListener;
+import com.radish.baselibrary.dialog.RadishDialog;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
+import com.xinzu.xiaodou.base.OnPermissionCallBack;
 import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.LocateState;
+import com.xinzu.xiaodou.pro.fragment.mine.MineFragment;
+import com.xinzu.xiaodou.util.CommonOperate;
 import com.xinzu.xiaodou.util.PinyinUtils;
 import com.xinzu.xiaodou.view.WrapHeightGridView;
 
@@ -127,20 +133,18 @@ public class CityListAdapter extends BaseAdapter {
                 view = inflater.inflate(R.layout.cp_view_locate_city, parent, false);
                 ViewGroup container = (ViewGroup) view.findViewById(R.id.layout_locate);
                 TextView state = (TextView) view.findViewById(R.id.tv_located_city);
-                switch (locateState) {
-                    case LocateState.SUCCESS:
-                        if (locatedCity.equals("请选择")) {
-                            state.setText("定位失败");
-                        } else {
-                            state.setText(locatedCity);
-                        }
-                        break;
+                if (locateState == LocateState.SUCCESS) {
+                    if (locatedCity.equals("请选择")) {
+                        state.setText("定位失败");
+                    } else {
+                        state.setText(locatedCity);
+                    }
                 }
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (state.getText().toString().equals("定位失败")) {
-                            ToastUtil.showShort("定位失败");
+                            onCityClickListener.onLocateClick();
                             return;
                         }
                         onCityClickListener.onCityClick(state.getText().toString(), code);

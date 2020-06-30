@@ -1,5 +1,6 @@
 package com.xinzu.xiaodou.ui.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -19,12 +20,28 @@ public class CarAdapter extends BaseQuickAdapter<CarBean.StoreListBean, BaseView
 
 
     public CarAdapter(ArrayList<CarBean.StoreListBean> data) {
-        super(R.layout.item_car,data);
+        super(R.layout.item_car, data);
     }
 
 
     @Override
     protected void convert(BaseViewHolder helper, CarBean.StoreListBean item) {
+
+        //芝麻双免(0.不支持，1.免租车押金、2.免租车和违章押金)3.免违章押金
+        switch (item.getSesametype()){
+            case 0:
+                helper.getView(R.id.tv_sesametype).setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                helper.setText(R.id.tv_sesametype,"免租车押金");
+                break;
+            case 2:
+                helper.setText(R.id.tv_sesametype,"免租车和违章押金");
+                break;
+            case 3:
+                helper.setText(R.id.tv_sesametype,"免违章押金");
+                break;
+        }
         helper.setText(R.id.tv_pickupStoreName, item.getPickupStoreName())
                 .setText(R.id.tv_vehicleName, item.getVehicleName())
                 .setText(R.id.tv_displacement, item.getDisplacement())

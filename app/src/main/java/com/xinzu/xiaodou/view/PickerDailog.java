@@ -156,12 +156,12 @@ public class PickerDailog extends Dialog {
         quDay = timeBean.getQu_day().substring(8, 10);
         String qu_month = timeBean.getQu_day().substring(5, 7);
         tv_qu_day.setText(Day.dialog_start(qu_month, quDay));
-        mQuTimeTv.setText(Integer.parseInt(timeBean.getQu_week_time().substring(3, 5)) + ":00");
+        mQuTimeTv.setText(timeBean.getQu_week_time().substring(3, timeBean.getQu_week_time().length()));
         //还车时间
         huanDay = timeBean.getBack_day().substring(8, 10);
         String huan_month = timeBean.getBack_day().substring(5, 7);
         tv_huan_day.setText(Day.dialog_start(huan_month, huanDay));
-        mHuanTimeTv.setText(Integer.parseInt(timeBean.getBack_week_time().substring(3, 5)) + ":00");
+        mHuanTimeTv.setText(timeBean.getBack_week_time().substring(3, timeBean.getBack_week_time().length()));
 
         updateQuDateControl();
         try {
@@ -318,7 +318,7 @@ public class PickerDailog extends Dialog {
             if (day.equals("-1")) {
                 ifday = "还车时间必须大于取车时间";
             } else {
-                ifday = "还车时间必须大于取车时间";
+                ifday = "还车时间必须大于等于2小时";
             }
             mSelectTv.setText("");
             ToastUtil.showShort(ifday);

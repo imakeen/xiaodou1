@@ -6,12 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.radish.baselibrary.Intent.IntentUtils;
-import com.radish.baselibrary.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -27,11 +27,8 @@ import com.xinzu.xiaodou.util.CommonUtil;
 import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.util.SpaceItemDecoration;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Hashtable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -53,7 +50,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
 
     private OrderAdapter orderAdapter;
     private String orderid;
-    private ArrayList<OrderBean.OrderListBean> arrayList = new ArrayList<>();
+
 
     public static OrderFragment newInstance(int title) {
         Bundle args = new Bundle();
@@ -71,6 +68,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
 
     @Override
     protected void initBundle() {
+
     }
 
     @Override
@@ -88,33 +86,36 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
 
     @Override
     protected void loadData() {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getOrderList();
     }
 
     private void getOrderList() {
-        HashMap<String, String> hashMap = new HashMap<>();
+
+        Hashtable<String, String> hashMap = new Hashtable<>();
         hashMap.put("appKey", ApiService.appKey);
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        String temp = SignUtils.temp();
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb112233", temp));
+        hashMap.put("timeStamp", temp);
         hashMap.put("channelId", "4");
         hashMap.put("endIndex", String.valueOf(endIndex));
         hashMap.put("orderChannel", "1");
         hashMap.put("orderState", String.valueOf(title));
         hashMap.put("startIndex", String.valueOf(startIndex));
         hashMap.put("userId", SPUtils.getInstance().getString("userid"));
-        mPresenter.userOrderList(new Gson().toJson(hashMap));
+        mPresenter.userOrderList(new Gson().toJson(hashMap), getActivity());
     }
 
-    @OnClick({})
-    public void onClick(View view) {
-
-    }
 
     @Override
     protected void initListener() {
         RefreshLayout();
     }
-
 
     /**
      * 上拉刷新下拉加载
@@ -137,23 +138,26 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 startIndex = 0;
                 endIndex = 9;
-                arrayList.clear();
+
                 getOrderList();
                 refreshLayout.finishRefresh(1000);
             }
         });
     }
-
     @Override
     public void getOrderList(String body) {
         OrderBean orderBean = new Gson().fromJson(body, OrderBean.class);
-        if (orderBean == null || orderBean.getOrderList() == null || orderBean.getStatus() == 0) {
-            ToastUtils.showShort("暂无更多数据");
-            recyclerView.setVisibility(View.GONE);
+        if (orderBean == null || orderBean.getOrderList() == null
+                || orderBean.getOrderList().size() == 0) {
+            if (startIndex == 0) {
+                recyclerView.setVisibility(View.GONE);
+
+            }else {
+                ToastUtils.showShort("暂无更多数据");
+            }
             return;
         }
         recyclerView.setVisibility(View.VISIBLE);
-        arrayList.addAll(orderBean.getOrderList());
         if (startIndex == 0) {
             orderAdapter.setNewData(orderBean.getOrderList());
         } else {
@@ -162,11 +166,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
         orderAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (orderBean.getStatus() == 0) {
-                    ToastUtils.showShort("暂无更多数据");
-                    return;
-                }
-                orderid = arrayList.get(position).getOrderId();
+                orderid = orderAdapter.getData().get(position).getOrderId();
                 OrderDetails(orderid);
             }
         });
@@ -176,22 +176,24 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
 
     @Override
     public void getOrderDetails(String body) {
+        LogUtils.e(body);
         if (!body.isEmpty()) {
             OrderdetailsBean bean = new Gson().fromJson(body, OrderdetailsBean.class);
             if (bean != null && bean.getIdNo() != null)
                 IntentUtils.getInstance().with(getActivity(), OrderDetailsActivity.class).putParcelable("bean", bean)
                         .putString("orderid", orderid)
                         .start();
-            else ToastUtil.showShort("签名错误，请重试");
+            else ToastUtils.showShort("签名错误，请重试");
         }
     }
 
     private void OrderDetails(String details) {
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
         hashMap.put("appKey", ApiService.appKey);
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        String temp = SignUtils.temp();
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp", temp);
         hashMap.put("orderCode", details);
-        mPresenter.userOrderDetails(new Gson().toJson(hashMap));
+        mPresenter.userOrderDetails(new Gson().toJson(hashMap), getActivity());
     }
 }

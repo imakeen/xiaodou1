@@ -42,6 +42,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -162,15 +163,16 @@ public class CaruserActivity extends BaseGActivity {
 
     private void getUserCar() {
 
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
         hashMap.put("appKey", ApiService.appKey);
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp",temp);
         hashMap.put("userCode", SPUtils.getInstance().getString("userid"));
         hashMap.put("orderChannel", "1");
 
         MyApp.apiService(ApiService.class)
-                .getConsumers(RequestBodyUtil.jsonRequestBody(hashMap)
+                .getConsumers(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {
@@ -235,15 +237,16 @@ public class CaruserActivity extends BaseGActivity {
     }
 
     private void deleteUser(String ConsumerId) {
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
         hashMap.put("appKey", ApiService.appKey);
-        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-        hashMap.put("timeStamp", SignUtils.temp());
+        String temp =  SignUtils.temp();
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("timeStamp",temp);
         hashMap.put("userid", SPUtils.getInstance().getString("userid"));
         hashMap.put("consumerId", ConsumerId);
         DialogUtil.showAlterDialog(this, "确认删除？", (dialog, view) -> {
             MyApp.apiService(ApiService.class)
-                    .deleteConsumers(RequestBodyUtil.jsonRequestBody(hashMap)
+                    .deleteConsumers(RequestBodyUtil.hashtableRequestBody(hashMap)
                     )
                     .compose(RxSchedulers.io_main())
                     .doOnSubscribe(d -> {

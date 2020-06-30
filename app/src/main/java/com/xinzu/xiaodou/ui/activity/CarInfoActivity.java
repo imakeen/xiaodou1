@@ -1,13 +1,17 @@
 package com.xinzu.xiaodou.ui.activity;
 
 
+import android.app.Dialog;
 import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -27,12 +31,14 @@ import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.bean.CarBean;
 import com.xinzu.xiaodou.bean.CarUserBean;
 import com.xinzu.xiaodou.bean.CreatOrderBean;
+import com.xinzu.xiaodou.bean.OrPriceDetailBean;
 import com.xinzu.xiaodou.bean.SuccessOrderBean;
 import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.http.RequestBodyUtil;
 import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.http.SuccessfulConsumer;
 import com.xinzu.xiaodou.pro.MainActivity;
+import com.xinzu.xiaodou.ui.adapter.FeiyongAdapter;
 import com.xinzu.xiaodou.util.GlideUtils;
 import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.wxapi.AliPay;
@@ -41,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -89,9 +96,8 @@ public class CarInfoActivity extends BaseGActivity {
     private String returntime;
     private CreatOrderBean creatOrderBean = new CreatOrderBean();
     private CreatOrderBean.UserInfoBean userInfoBean;
-    private CarUserBean.ConsumersBean consumersBean;
     private SuccessOrderBean successOrderBean;
-    ;
+
 
     @Override
     protected void initBundle() {
@@ -123,6 +129,7 @@ public class CarInfoActivity extends BaseGActivity {
         tvPickCityInfo.setText(cityinfo);
         tvReturnCityInfo.setText(cityinfo);
         tv_money.setText("￥" + bean.getAmount() + "元");
+        checkbox.setChecked(true);
         tvDay.setText(day);
     }
 
@@ -152,6 +159,11 @@ public class CarInfoActivity extends BaseGActivity {
                     ToastUtil.showShort("请选择司机");
                     return;
                 }
+                if (!checkbox.isChecked()) {
+                    ToastUtil.showShort("请勾选条约");
+                    return;
+                }
+
                 creatOrderBean.setAppKey(ApiService.appKey);
                 creatOrderBean.setChannelId(4);
                 creatOrderBean.setOrderChannel(1);
@@ -172,8 +184,9 @@ public class CarInfoActivity extends BaseGActivity {
                 creatOrderBean.setReturnCityCode(citywide);
                 creatOrderBean.setReturnDate(returntime);
                 creatOrderBean.setReturnStoreCode(bean.getReturnStoreCode());
-                creatOrderBean.setSign(SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp()));
-                creatOrderBean.setTimeStamp(SignUtils.temp());
+                String temp = SignUtils.temp();
+                creatOrderBean.setSign(SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+                creatOrderBean.setTimeStamp(temp);
                 creatOrderBean.setUserId(SPUtils.getInstance().getString("userid"));
                 creatOrderBean.setVehicleCode(bean.getVehicleCode());
                 creatOrderBean.setTotalDays(day);
@@ -189,7 +202,7 @@ public class CarInfoActivity extends BaseGActivity {
                 break;
 
             case R.id.tv_feiyong:
-
+                feiyong();
                 break;
             case R.id.back:
                 finish();
@@ -198,6 +211,76 @@ public class CarInfoActivity extends BaseGActivity {
                 ActivityUtils.startActivity(YndingXuzhiActicity.class);
                 break;
         }
+    }
+
+    private void feiyong() {
+        Hashtable<String, Object> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
+        hashMap.put("appKey", ApiService.appKey);
+        hashMap.put("timeStamp", temp);
+        hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
+        hashMap.put("vehicleCode", bean.getVehicleCode());
+        hashMap.put("pickupDate", picktime);
+        hashMap.put("returnDate", returntime);
+        hashMap.put("pickupStoreCode", bean.getPickupStoreCode());
+        hashMap.put("returnStoreCode", bean.getReturnStoreCode());
+        hashMap.put("pickupCityCode", citywide);
+        hashMap.put("returnCityCode", citywide);
+//        hashMap.put("couponCode",bean.get);
+//        hashMap.put("isPickupOndoor", bean.get);
+//        hashMap.put("pickupOndoorAddr", SignUtils.temp());
+//        hashMap.put("isPickoffOndoor", SignUtils.temp());
+//        hashMap.put("pickoffOndoorAddr", SignUtils.temp());
+
+        MyApp.apiService(ApiService.class)
+                .getPriceDetail(RequestBodyUtil.RequestBody(new Gson().toJson(hashMap))
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+                    showLoading();
+                })
+                .doFinally(() -> {
+                    closeLoading();
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
+                .subscribe(new SuccessfulConsumer() {
+                    @Override
+                    public void success(String jsonObject) {
+
+                        com.blankj.utilcode.util.LogUtils.e(jsonObject);
+                        OrPriceDetailBean orPriceDetailBean = new Gson().fromJson(jsonObject
+                                , OrPriceDetailBean.class);
+                        if (orPriceDetailBean.getStatus() == 1) {
+                            final Dialog dialog = new Dialog(CarInfoActivity.this, R.style.DialogTheme);
+                            View view = View.inflate(CarInfoActivity.this, R.layout.dialog_orderpay, null);
+                            TextView tvPay = view.findViewById(R.id.tv_zcf);
+                            TextView tv_zjc = view.findViewById(R.id.tv_zjc);
+                            LinearLayout ll = view.findViewById(R.id.ll_all);
+                            tv_zjc.setText("金额：" + orPriceDetailBean.getPayAmount());
+                            tvPay.setText(orPriceDetailBean.getPriceInfo().getQuantity() + "*" + orPriceDetailBean.getPriceInfo().getStandardUnitPrice());
+                            RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+                            FeiyongAdapter feiyongAdapter = new FeiyongAdapter();
+                            feiyongAdapter.addData(orPriceDetailBean.getAddedServiceList());
+                            feiyongAdapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(feiyongAdapter);
+                            dialog.setContentView(view);
+                            dialog.show();
+                            if (dialog.isShowing()) {
+                                ll.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+                        }
+
+                    }
+                }, throwable -> {
+                    LogUtils.e("联网失败：" + throwable.toString());
+                });
+
     }
 
 
@@ -224,6 +307,7 @@ public class CarInfoActivity extends BaseGActivity {
                                 successOrderBean = new Gson().fromJson(jsonObject, SuccessOrderBean.class);
                                 AppPay(successOrderBean.getOrderCode(), successOrderBean.getPayAmount());
                             }
+                            ToastUtil.showShort(object.getString("message"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -236,12 +320,12 @@ public class CarInfoActivity extends BaseGActivity {
     }
 
     private void AppPay(String OddNumbers, int price) {
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
         hashMap.put("orderCodel", OddNumbers);
         hashMap.put("tradeNo", OddNumbers);
         hashMap.put("price", price + "");
         MyApp.apiService(ApiService.class)
-                .AppPay(RequestBodyUtil.jsonRequestBody(hashMap)
+                .AppPay(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {
@@ -260,8 +344,10 @@ public class CarInfoActivity extends BaseGActivity {
                             switch (object.getInt("status")) {
                                 case 1:
                                     AliPay.pay(CarInfoActivity.this, successOrderBean.getOrderCode(), String.valueOf(successOrderBean.getPayAmount()), () -> {
-                                        ActivityCollector.finishAll();
                                         IntentUtils.getInstance().with(CarInfoActivity.this, MainActivity.class).putInt("order", 1);
+                                        Intent intent = new Intent(CarInfoActivity.this, MainActivity.class);
+                                        intent.putExtra("order", 1);
+                                        startActivity(intent);
                                     });
                                     break;
                                 case 0:
@@ -286,7 +372,7 @@ public class CarInfoActivity extends BaseGActivity {
         if (resultCode == 100) {
             // 地址列表 MyDizhi
             assert data != null;
-            consumersBean = data.getParcelableExtra("consumersBean");
+            CarUserBean.ConsumersBean consumersBean = data.getParcelableExtra("consumersBean");
             userInfoBean = new CreatOrderBean.UserInfoBean();
             userInfoBean.setIdNo(consumersBean.getIdNo());
             userInfoBean.setIdType(consumersBean.getType());

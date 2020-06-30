@@ -3,6 +3,7 @@ package com.radish.baselibrary.base;
 public abstract class BaseLazyFragment extends BaseFragment {
 
     protected boolean isVisible = false;
+
     @Override
     protected void initData() {
         //所以条件是view初始化完成并且对用户可见
@@ -14,6 +15,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
         }
     }
 
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -23,6 +25,11 @@ public abstract class BaseLazyFragment extends BaseFragment {
             initData();
         } else {
             isVisible = false;
+            onInvisible();
         }
+
+    }
+
+    protected void onInvisible() {
     }
 }

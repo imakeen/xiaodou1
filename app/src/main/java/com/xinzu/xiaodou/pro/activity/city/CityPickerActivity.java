@@ -104,10 +104,12 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
             @Override
             public void onLocateClick() {//点击定位按钮
 
+                ToastUtil.showShort("定位失败，请开启权限");
             }
         });
-        String sign = SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp());
-        mPresenter.getCity(ApiService.appKey, SignUtils.temp(), sign, this);
+        String temp =SignUtils.temp();
+        String sign = SignUtils.encodeSign("xzcxzfb" + "112233", temp);
+        mPresenter.getCity(ApiService.appKey, temp, sign, this);
 
     }
 

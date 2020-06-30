@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.radish.baselibrary.utils.LogUtils;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.uber.autodispose.AutoDispose;
@@ -17,13 +18,18 @@ import com.xinzu.xiaodou.MyApp;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.http.ApiService;
+import com.xinzu.xiaodou.http.HttpManager;
+import com.xinzu.xiaodou.http.OkHttpRequestUtils;
 import com.xinzu.xiaodou.http.RequestBodyUtil;
+import com.xinzu.xiaodou.http.RequestCallBack;
 import com.xinzu.xiaodou.http.RxSchedulers;
 import com.xinzu.xiaodou.util.SignUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -96,6 +102,7 @@ public class OpinionActivity extends BaseGActivity {
             case R.id.bt_submit:
                 if (!TextUtils.isEmpty(etContent.getText().toString())) {
                     submit();
+                    return;
                 }
                 ToastUtil.showShort("请输入意见");
                 break;
@@ -103,36 +110,61 @@ public class OpinionActivity extends BaseGActivity {
     }
 
     private void submit() {
-        HashMap<String, String> hashMap = new HashMap<String, String>();
-        String sign = SignUtils.encodeSign("xzcxzfb" + "112233", SignUtils.temp());
+        Hashtable<String, String> hashMap = new Hashtable<>();
+        String temp = SignUtils.temp();
+        String sign = SignUtils.encodeSign("xzcxzfb" + "112233", temp);
         hashMap.put("appKey", ApiService.appKey);
         hashMap.put("appSecret", "112233");
-        hashMap.put("timeStamp", SignUtils.temp());
+        hashMap.put("timeStamp", temp);
         hashMap.put("addressType", "0");
         hashMap.put("isSecret", "0");
         hashMap.put("sign", sign);
         hashMap.put("content", etContent.getText().toString());
-        MyApp.apiService(ApiService.class)
-                .saveFeedback(RequestBodyUtil.jsonRequestBody(hashMap)
-                )
-                .compose(RxSchedulers.io_main())
-                .doOnSubscribe(d -> {
-                    showLoading();
-                })
-                .doFinally(() -> {
-                    closeLoading();
-                })
-                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
-                .subscribe(bean -> {
-                    JSONObject jsonObject = new JSONObject(bean.string());
-                    if (1 == jsonObject.getInt("status")) {
-                        ToastUtil.showShort("提交成功");
-                        finish();
+        showLoading();
+        OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(this);
+        okHttpRequestUtils.requestAsynjson("saveFeedback", new Gson().toJson(hashMap)
+                , new RequestCallBack() {
+                    @Override
+                    public void onRequestSuccess(Object result) {
+                        closeLoading();
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(result.toString());
+                            if (1 == jsonObject.getInt("status")) {
+                                ToastUtil.showShort("提交成功");
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }, throwable -> {
-                    LogUtils.e("联网失败：" + throwable.toString());
-                    onFail();
+
+                    @Override
+                    public void onRequestFailed(String errorMsg) {
+                        closeLoading();
+                    }
                 });
+//        MyApp.apiService(ApiService.class)
+//                .saveFeedback(RequestBodyUtil.hashtableRequestBody(hashMap)
+//                )
+//                .compose(RxSchedulers.io_main())
+//                .doOnSubscribe(d -> {
+//                    showLoading();
+//                })
+//                .doFinally(() -> {
+//                    closeLoading();
+//                })
+//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) this)))
+//                .subscribe(bean -> {
+//                    JSONObject jsonObject = new JSONObject(bean.string());
+//                    if (1 == jsonObject.getInt("status")) {
+//                        ToastUtil.showShort("提交成功");
+//                        finish();
+//                    }
+//                }, throwable -> {
+//                    LogUtils.e("联网失败：" + throwable.toString());
+//                    onFail();
+//                });
 //        showLoading();
 //        new Thread(() -> {
 //

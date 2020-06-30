@@ -57,6 +57,7 @@ public abstract class BaseGActivity extends BaseActivity implements BaseView {
         }
         if (isImmersion) {
             mImmersionBar = ImmersionBar.with(this);
+            mImmersionBar.init();
             //防止设置状态栏后  软键盘怎么设置也不会把布局顶上去
             mImmersionBar.keyboardEnable(true, WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
                     | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN).navigationBarWithKitkatEnable(false).init();
@@ -174,9 +175,10 @@ public abstract class BaseGActivity extends BaseActivity implements BaseView {
         if (isEventBus) {
             EventBus.getDefault().unregister(this);
         }
-
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();
         super.onDestroy();
-
+       //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
     }
 
     @Override
@@ -218,4 +220,5 @@ public abstract class BaseGActivity extends BaseActivity implements BaseView {
     public void onReLoad() {
 
     }
+
 }

@@ -1,6 +1,7 @@
 package com.xinzu.xiaodou.pro.fragment.home;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,10 +31,11 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
+import com.xinzu.xiaodou.base.BaseGActivity;
+import com.xinzu.xiaodou.base.OnPermissionCallBack;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
 import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.bean.getCarttypeBean;
@@ -93,18 +95,22 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     private String names;
     AMapLocationClient mLocationClient = null;
-    //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
 
     private GeocodeSearch mGeocoderSearch;
 
     int context;
     private String aoiName;
-
+    String[] permissions = new String[]{
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE
+    };
     public static HomeFragment newInstance(String title) {
 
         Bundle args = new Bundle();
-
         HomeFragment fragment = new HomeFragment();
         fragment.title = title;
         fragment.setArguments(args);
@@ -119,7 +125,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     protected void initBundle() {
-        SPUtils.getInstance().put("userid", "503");
     }
 
     @Override
@@ -127,18 +132,29 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         return R.layout.fragment_homes;
     }
 
+
+
     @Override
     protected void initView() {
+        getPermission(new OnPermissionCallBack() {
+            @Override
+            public void permissionPass(String[] permissions) {
+
+            }
+
+            @Override
+            public void permissionRefuse(String[] permissions) {
+
+            }
+        }, permissions);
         if (aMap == null) {
             aMap = mMapView1.getMap();
-            if (!isShowPermission) {
-                Log.e("", "无权限  initMap: ");
-            } else {
-                permission();
-            }
+//            if (isShowPermission) {
+//                permission();
+//            }
         }
         myLocati();
-        banner();
+        // banner();
         tv_pick_day.setText(Day.pickcar_date("day", true));
         tv_pick_week.setText(Day.pickcar_date("week", true));
         tv_return_day.setText(Day.pickcar_date("day", false));
@@ -148,14 +164,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     protected void loadData() {
-        isVisible = false;
 
     }
 
 
     @Override
     protected void initListener() {
-
         SearchActivity searchActivity = new SearchActivity();
         searchActivity.setselect(new SearchActivity.Slelect() {
             @Override
@@ -243,7 +257,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         ArrayList<getCarttypeBean.StoreListBean> arrayList = new ArrayList<>();
         arrayList.add(storeListBean);
         bean.setStoreList(arrayList);
-        Intent intent = new Intent(getContext(), CarTypeAcitvity.class);
+        Intent intent = new Intent(getActivity(), CarTypeAcitvity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("cartype", bean);
         bundle.putString("city", mMaps.getText().toString());
@@ -332,7 +346,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         @Override
         public void UpdateUI(Context context, int position, String data) {
             //Glide框架
-            Glide.with(context).load(data).into(image_lv);
+            Glide.with(context.getApplicationContext()).load(data).into(image_lv);
         }
 
     }
@@ -348,9 +362,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//连续定位、且将视角移动到地图中心点，定位蓝点跟随设备移动。（1秒1次定位）
         mGeocoderSearch = new GeocodeSearch(getContext());
-        checkPermissions();
+       // checkPermissions();
         mGeocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
-
 
 
             @Override
@@ -427,13 +440,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         requestRunPermisssion(permissions, new PermissionListener() {
             @Override
             public void onGranted() {
-//                Log.e(TAG, " 权限  setUpMap: " );
             }
 
             @Override
             public void onDenied(List<String> deniedPermission) {
                 if (isShowPermission) {
-
                     isShowPermission = false;
                     for (int i = 0; i < deniedPermission.size(); i++) {
                         //  Log.e(TAG, " 无 权限  : "+deniedPermission.get(i) );
@@ -457,7 +468,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                     (Objects.requireNonNull(getActivity()), permissionLists.toArray
                             (new String[0]), PERMISSION_REQUESTCODE);
         } else {
-            //表示全都授权了
             mListener.onGranted();
         }
     }
@@ -467,28 +477,28 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         super.onResume();
     }
 
-    @Override
-    public void onRequestPermissionsResult
-            (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUESTCODE) {
-            if (grantResults.length > 0) {
-                //存放没授权的权限
-                List<String> deniedPermissions = new ArrayList<>();
-                for (int i = 0; i < grantResults.length; i++) {
-                    int grantResult = grantResults[i];
-                    String permission = permissions[i];
-                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                        deniedPermissions.add(permission);
-                    }
-                }
-                if (deniedPermissions.isEmpty()) {
-                    //说明都授权了
-                    mListener.onGranted();
-                } else {
-                    mListener.onDenied(deniedPermissions);
-                }
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult
+//            (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == PERMISSION_REQUESTCODE) {
+//            if (grantResults.length > 0) {
+//                //存放没授权的权限
+//                List<String> deniedPermissions = new ArrayList<>();
+//                for (int i = 0; i < grantResults.length; i++) {
+//                    int grantResult = grantResults[i];
+//                    String permission = permissions[i];
+//                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+//                        deniedPermissions.add(permission);
+//                    }
+//                }
+//                if (deniedPermissions.isEmpty()) {
+//                    //说明都授权了
+//                    mListener.onGranted();
+//                } else {
+//                    mListener.onDenied(deniedPermissions);
+//                }
+//            }
+//        }
+//    }
 }

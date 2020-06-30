@@ -39,7 +39,7 @@ public abstract class BaseGLFragment extends BaseLazyFragment implements BaseVie
         unbinder.unbind();
     }
 
-    protected void getPermission(final OnPermissionCallBack callBack, final String... permissions) {
+    public void getPermission(final OnPermissionCallBack callBack, final String... permissions) {
         Activity activity = getActivity();
         if (activity instanceof BaseGActivity) {
             ((BaseGActivity) activity).getPermission(callBack,permissions);

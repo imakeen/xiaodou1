@@ -8,7 +8,7 @@ public class OrderBean {
      * endIndex : 0
      * message : OK
      * orderChannel : 0
-     * orderList : [{"actualAmount":291,"channelId":4,"createTime":1592294504000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"504133dcVM","payAmount":291,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 18:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:80.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:176.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:176.0;","returnCityName":"安庆市","returnDate":"2020-06-18 18:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}},{"actualAmount":291,"channelId":4,"createTime":1592294491000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"491024epFB","payAmount":291,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 18:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:80.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:176.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:176.0;","returnCityName":"安庆市","returnDate":"2020-06-18 18:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}},{"actualAmount":291,"channelId":4,"createTime":1592293700000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"699827tfUD","payAmount":291,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 18:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:80.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:176.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:176.0;","returnCityName":"安庆市","returnDate":"2020-06-18 18:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}},{"actualAmount":411,"channelId":4,"createTime":1592293228000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"228401mzMQ","payAmount":411,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 18:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:100.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:276.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:276.0;","returnCityName":"安庆市","returnDate":"2020-06-18 18:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"大众","diffStoreFee":0,"displacement":"1.5L","image":"https://image.xiaodouzuche.com/5ce79e688f107.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"朗逸 2018款 风尚版","vipCar":false}},{"actualAmount":291,"channelId":4,"createTime":1592292089000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"089315noRH","payAmount":291,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 18:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:80.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:176.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:176.0;","returnCityName":"安庆市","returnDate":"2020-06-18 18:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}},{"actualAmount":291,"channelId":4,"createTime":1592290225000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"225040suHB","payAmount":291,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 17:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:80.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:176.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:176.0;","returnCityName":"安庆市","returnDate":"2020-06-18 17:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}},{"actualAmount":291,"channelId":1,"createTime":1592289883000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"883087yuIJ","payAmount":291,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 17:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:80.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:176.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:176.0;","returnCityName":"安庆市","returnDate":"2020-06-18 17:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}},{"actualAmount":291,"channelId":4,"createTime":1592289577000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"577174whYJ","payAmount":291,"payments":0,"pickoffOndoor":false,"pickupCityName":"安庆市","pickupDate":"2020-06-16 17:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:80.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:176.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:176.0;","returnCityName":"安庆市","returnDate":"2020-06-18 17:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}}]
+     * orderList : [{"actualAmount":2166,"channelId":4,"createTime":1592964703000,"days":4.6,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"702562wyUV","payAmount":2166,"payments":0,"pickoffOndoor":false,"pickupCityName":"北京市","pickupDate":"2020-06-24 13:30","pickupOndoor":false,"remark":"手续费:30.0;<\/br>基本保险费:300.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:1836.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:1836.0;","returnCityName":"北京市","returnDate":"2020-06-28 17:00","state":0,"totalDays":"4天3小时","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"英菲尼迪","diffStoreFee":0,"displacement":"2.5L","image":"https://image.xiaodouzuche.com/2019/10/dc3dc201910242425.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"QX50 2015款 2.5L 尊享版(北京专用)","vipCar":false}},{"actualAmount":1170,"channelId":4,"createTime":1592895210000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"209597peJK","payAmount":1170,"payments":0,"pickoffOndoor":false,"pickupCityName":"北京市","pickupDate":"2020-06-23 17:00","pickupOndoor":false,"remark":"手续费:30.0;<\/br>基本保险费:100.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:1040.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:1040.0;","returnCityName":"北京市","returnDate":"2020-06-25 17:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"别克","diffStoreFee":0,"displacement":"2.5L","image":"https://image.xiaodouzuche.com/2019/10/92daa201910245476.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":7,"serviceFee":0,"transmissionType":1,"vehicleName":"GL8 2017款 25S 豪华型（北京专用）","vipCar":false}},{"actualAmount":699,"channelId":4,"createTime":1592892204000,"days":7,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"203832weYD","payAmount":699,"payments":0,"pickoffOndoor":false,"pickupCityName":"石家庄市","pickupDate":"2020-06-23 23:00","pickupOndoor":false,"remark":"手续费:20.0;<\/br>基本保险费:350.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:329.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:329.0;","returnCityName":"石家庄市","returnDate":"2020-06-30 15:00","state":0,"totalDays":"6天16小时","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"比亚迪","diffStoreFee":0,"displacement":"1.5L","image":"https://image.xiaodouzuche.com/5d0467518ef98.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":2,"vehicleName":"F3 2015款 节能版舒适型","vipCar":false}},{"actualAmount":766,"channelId":4,"createTime":1592884059000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"058924pzYK","payAmount":766,"payments":0,"pickoffOndoor":false,"pickupCityName":"北京市","pickupDate":"2020-06-23 14:00","pickupOndoor":false,"remark":"手续费:30.0;<\/br>基本保险费:120.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:616.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:616.0;","returnCityName":"北京市","returnDate":"2020-06-25 14:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"大众","diffStoreFee":0,"displacement":"1.8T","image":"https://image.xiaodouzuche.com/2019/10/d16a6201910232956.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"帕萨特 2011款 自动尊荣(北京专用)","vipCar":false}},{"actualAmount":766,"channelId":4,"createTime":1592879822000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"821855eoXB","payAmount":766,"payments":0,"pickoffOndoor":false,"pickupCityName":"北京市","pickupDate":"2020-06-23 13:00","pickupOndoor":false,"remark":"手续费:30.0;<\/br>基本保险费:120.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:616.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:616.0;","returnCityName":"北京市","returnDate":"2020-06-25 13:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"大众","diffStoreFee":0,"displacement":"1.8T","image":"https://image.xiaodouzuche.com/2019/10/d16a6201910232956.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"帕萨特 2011款 自动尊荣(北京专用)","vipCar":false}},{"actualAmount":766,"channelId":4,"createTime":1592879819000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"818865rjLV","payAmount":766,"payments":0,"pickoffOndoor":false,"pickupCityName":"北京市","pickupDate":"2020-06-23 13:00","pickupOndoor":false,"remark":"手续费:30.0;<\/br>基本保险费:120.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:616.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:616.0;","returnCityName":"北京市","returnDate":"2020-06-25 13:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"大众","diffStoreFee":0,"displacement":"1.8T","image":"https://image.xiaodouzuche.com/2019/10/d16a6201910232956.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"帕萨特 2011款 自动尊荣(北京专用)","vipCar":false}},{"actualAmount":200,"channelId":4,"createTime":1592822316000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"315565mmBT","payAmount":200,"payments":0,"pickoffOndoor":false,"pickupCityName":"石家庄市","pickupDate":"2020-06-22 21:00","pickupOndoor":false,"remark":"手续费:20.0;<\/br>基本保险费:100.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:80.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:80.0;","returnCityName":"石家庄市","returnDate":"2020-06-24 21:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"比亚迪","diffStoreFee":0,"displacement":"1.5L","image":"https://image.xiaodouzuche.com/5d0467518ef98.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":2,"vehicleName":"F3 2015款 节能版舒适型","vipCar":false}},{"actualAmount":555,"channelId":4,"createTime":1592821722000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"722006qgPF","payAmount":555,"payments":0,"pickoffOndoor":false,"pickupCityName":"石家庄市","pickupDate":"2020-06-22 21:00","pickupOndoor":false,"remark":"手续费:35.0;<\/br>基本保险费:100.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:420.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:420.0;","returnCityName":"石家庄市","returnDate":"2020-06-24 21:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"启辰","diffStoreFee":0,"displacement":"1.6L","image":"https://image.xiaodouzuche.com/5ce8ddea8b422.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":7,"serviceFee":0,"transmissionType":1,"vehicleName":"M50V 2017款 豪华版","vipCar":false}},{"actualAmount":200,"channelId":4,"createTime":1592807175000,"days":2,"isAppend":1,"isPickoffOndoor":false,"isPickupOndoor":false,"orderId":"175357gsJY","payAmount":200,"payments":0,"pickoffOndoor":false,"pickupCityName":"石家庄市","pickupDate":"2020-06-22 17:00","pickupOndoor":false,"remark":"手续费:20.0;<\/br>基本保险费:100.0;<\/br>取车夜间服务费:0.0;<\/br>还车夜间服务费:0.0;<\/br>增值服务费:0.0;<\/br>租金费用:80.0;<\/br>活动优惠金额:0.0;<\/br>门店优惠金额:0.0;<\/br>租金费用优惠后金额:80.0;","returnCityName":"石家庄市","returnDate":"2020-06-24 17:00","state":0,"totalDays":"共2天","vehicleOrInfoDTO":{"basicInsuranceFee":0,"brand":"比亚迪","diffStoreFee":0,"displacement":"1.5L","image":"https://image.xiaodouzuche.com/5d0467518ef98.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":2,"vehicleName":"F3 2015款 节能版舒适型","vipCar":false}}]
      * orderState : 0
      * startIndex : 0
      * status : 1
@@ -80,32 +80,32 @@ public class OrderBean {
 
     public static class OrderListBean {
         /**
-         * actualAmount : 291.0
+         * actualAmount : 2166.0
          * channelId : 4
-         * createTime : 1592294504000
-         * days : 2
+         * createTime : 1592964703000
+         * days : 4.6
          * isAppend : 1
          * isPickoffOndoor : false
          * isPickupOndoor : false
-         * orderId : 504133dcVM
-         * payAmount : 291
+         * orderId : 702562wyUV
+         * payAmount : 2166
          * payments : 0
          * pickoffOndoor : false
-         * pickupCityName : 安庆市
-         * pickupDate : 2020-06-16 18:00
+         * pickupCityName : 北京市
+         * pickupDate : 2020-06-24 13:30
          * pickupOndoor : false
-         * remark : 手续费:35.0;</br>基本保险费:80.0;</br>取车夜间服务费:0.0;</br>还车夜间服务费:0.0;</br>增值服务费:0.0;</br>租金费用:176.0;</br>活动优惠金额:0.0;</br>门店优惠金额:0.0;</br>租金费用优惠后金额:176.0;
-         * returnCityName : 安庆市
-         * returnDate : 2020-06-18 18:00
+         * remark : 手续费:30.0;</br>基本保险费:300.0;</br>取车夜间服务费:0.0;</br>还车夜间服务费:0.0;</br>增值服务费:0.0;</br>租金费用:1836.0;</br>活动优惠金额:0.0;</br>门店优惠金额:0.0;</br>租金费用优惠后金额:1836.0;
+         * returnCityName : 北京市
+         * returnDate : 2020-06-28 17:00
          * state : 0
-         * totalDays : 共2天
-         * vehicleOrInfoDTO : {"basicInsuranceFee":0,"brand":"丰田","diffStoreFee":0,"displacement":"1.8L ","image":"https://image.xiaodouzuche.com/5ce79b09ad950.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"卡罗拉 2012款 炫装版","vipCar":false}
+         * totalDays : 4天3小时
+         * vehicleOrInfoDTO : {"basicInsuranceFee":0,"brand":"英菲尼迪","diffStoreFee":0,"displacement":"2.5L","image":"https://image.xiaodouzuche.com/2019/10/dc3dc201910242425.jpg","isVipCar":false,"nightServiceFee":0,"passengerNumber":5,"serviceFee":0,"transmissionType":1,"vehicleName":"QX50 2015款 2.5L 尊享版(北京专用)","vipCar":false}
          */
 
         private double actualAmount;
         private int channelId;
         private long createTime;
-        private int days;
+        private double days;
         private int isAppend;
         private boolean isPickoffOndoor;
         private boolean isPickupOndoor;
@@ -147,11 +147,11 @@ public class OrderBean {
             this.createTime = createTime;
         }
 
-        public int getDays() {
+        public double getDays() {
             return days;
         }
 
-        public void setDays(int days) {
+        public void setDays(double days) {
             this.days = days;
         }
 
@@ -286,16 +286,16 @@ public class OrderBean {
         public static class VehicleOrInfoDTOBean {
             /**
              * basicInsuranceFee : 0
-             * brand : 丰田
+             * brand : 英菲尼迪
              * diffStoreFee : 0
-             * displacement : 1.8L
-             * image : https://image.xiaodouzuche.com/5ce79b09ad950.jpg
+             * displacement : 2.5L
+             * image : https://image.xiaodouzuche.com/2019/10/dc3dc201910242425.jpg
              * isVipCar : false
              * nightServiceFee : 0
              * passengerNumber : 5
              * serviceFee : 0
              * transmissionType : 1
-             * vehicleName : 卡罗拉 2012款 炫装版
+             * vehicleName : QX50 2015款 2.5L 尊享版(北京专用)
              * vipCar : false
              */
 

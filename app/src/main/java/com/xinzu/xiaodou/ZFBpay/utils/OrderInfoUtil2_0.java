@@ -60,17 +60,17 @@ public class OrderInfoUtil2_0 {
 
                 "{\"timeout_express\":\"30m\"," +
                         "\"product_code\":\"QUICK_MSECURITY_PAY\"" +
-                        ",\"total_amount\":\"0.01\"," +
+                        ",\"total_amount\":\"" + price + "\"," +
                         "\"subject\":\"小豆租车\"," +
 
                         "\"body\":\"小豆租车\"," +
-                        "\"out_trade_no\":\""
-                        + order + "\"}");
+                        "\"out_trade_no\":\"" + order + "\"}");
         keyValues.put("charset", "utf-8");
         keyValues.put("method", "alipay.trade.app.pay");
         keyValues.put("notify_url", "http://39.105.178.240:8080/xinzuinterface/answerApp");
         keyValues.put("sign_type", rsa2 ? "RSA2" : "RSA");//是rsa2私钥还是rsa私钥
-        keyValues.put("timestamp", "2016-07-29 16:55:53");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        keyValues.put("timestamp", simpleDateFormat.format(new Date()));
         keyValues.put("version", "1.0");
 
         return keyValues;

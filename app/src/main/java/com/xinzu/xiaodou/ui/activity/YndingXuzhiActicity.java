@@ -41,11 +41,8 @@ public class YndingXuzhiActicity extends BaseGActivity {
     @OnClick({R.id.back})
     public void onClick(View view) {
 
-        switch (view.getId()) {
-
-            case R.id.back:
-                finish();
-                break;
+        if (view.getId() == R.id.back) {
+            finish();
         }
     }
 }

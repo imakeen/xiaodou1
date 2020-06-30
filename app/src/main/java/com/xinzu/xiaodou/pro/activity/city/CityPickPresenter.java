@@ -19,6 +19,7 @@ import com.xinzu.xiaodou.pro.activity.login.LoginContract;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 
 import javax.inject.Inject;
 
@@ -33,12 +34,12 @@ public class CityPickPresenter extends BasePAV<CityPickContract.View> implements
     @Override
     public void getCity(String appKey, String timeStamp, String sign, Context context) {
         mView.showLoading();
-        HashMap<String, String> hashMap = new HashMap<>();
+        Hashtable<String, String> hashMap = new Hashtable<>();
         hashMap.put("appKey", appKey);
         hashMap.put("timeStamp", timeStamp);
         hashMap.put("sign", sign);
         MyApp.apiService(ApiService.class)
-                .collectCityInfo(RequestBodyUtil.jsonRequestBody(hashMap)
+                .collectCityInfo(RequestBodyUtil.hashtableRequestBody(hashMap)
                 )
                 .compose(RxSchedulers.io_main())
                 .doOnSubscribe(d -> {

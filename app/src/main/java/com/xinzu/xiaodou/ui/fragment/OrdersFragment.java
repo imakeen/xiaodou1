@@ -16,6 +16,7 @@ import com.xinzu.xiaodou.ui.adapter.MyFragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -51,7 +52,6 @@ public class OrdersFragment extends BaseGLFragment {
     protected void initView() {
         fragmentList = new Fragment[]{OrderFragment.newInstance(0), OrderFragment.newInstance(1), OrderFragment.newInstance(2),
                 OrderFragment.newInstance(3)};
-
         myViewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -68,17 +68,21 @@ public class OrdersFragment extends BaseGLFragment {
             public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             }
         });
-
         tabLayout.setupWithViewPager(myViewPager);
         String[] string = {"全部", "预约中", "行程中", "已完成"};
         myTitle = new ArrayList<>();
         for (int i = 0; i < string.length; i++) {
             tabLayout.getTabAt(i).setText(string[i]);
         }
+    }
+
+    @Override
+    protected void loadData() {
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 OrderFragment.newInstance(tab.getPosition());
             }
 
@@ -92,12 +96,8 @@ public class OrdersFragment extends BaseGLFragment {
 
             }
         });
-        tabLayout.getTabAt(0).select();
+        Objects.requireNonNull(tabLayout.getTabAt(0)).select();
         myViewPager.setCurrentItem(0);
-    }
-
-    @Override
-    protected void loadData() {
 
     }
 

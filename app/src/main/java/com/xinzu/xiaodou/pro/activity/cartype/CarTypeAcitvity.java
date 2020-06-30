@@ -124,6 +124,7 @@ public class CarTypeAcitvity extends BaseMvpActivity<CarTypePresenter> implement
                 mPresenter.getcar(gson.toJson(carttypeBean), CarTypeAcitvity.this);
             }
         });
+     ;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.xinzu.xiaodou.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +14,7 @@ import com.xinzu.xiaodou.R;
 
 
 public class SideLetterBar extends View {
-    private static final String[] b = {"定位", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    private static final String[] b = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     private int choose = -1;
     private Paint paint = new Paint();
     private boolean showBg = false;
@@ -121,6 +122,7 @@ public class SideLetterBar extends View {
         return true;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
