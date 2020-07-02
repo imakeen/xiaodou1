@@ -54,7 +54,7 @@ public class NoScrollViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item) {
-        super.setCurrentItem(item);
+        super.setCurrentItem(item,true);
     }
 
 }

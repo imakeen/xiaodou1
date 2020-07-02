@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class CommonUtil {
 
-    public static final String WECHAT_APPID = "";
+    public static final String WECHAT_APPID = "wx021b610238ce96b7";
     public static final String WECHAT_APPSECRET = "";
 
 

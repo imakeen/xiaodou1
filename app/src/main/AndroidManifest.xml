@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.xinzu.xiaodou">
 
+
     <uses-permission android:name="android.permission.CAMERA" />
+
     <permission
         android:name="com.example.carrental.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /><!-- Required  一些系统要求的权限，如访问网络等 -->
@@ -19,7 +20,6 @@
     <!--允许程序读写手机状态和身份-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--用于访问GPS定位-->
@@ -62,8 +62,8 @@
 
         <activity
             android:name=".pro.MainActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
@@ -118,7 +118,16 @@
         <activity
             android:name=".ui.activity.TouSuActivity"
             android:screenOrientation="portrait" />
-
+        <!--微信-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- ###################高德地图###################-->
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" />

@@ -1,25 +1,33 @@
 package com.xinzu.xiaodou.pro.activity.registerlogin;
 
 
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.radish.baselibrary.utils.ToastUtil;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.xinzu.xiaodou.MyApp;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
 import com.xinzu.xiaodou.pro.MainActivity;
 import com.xinzu.xiaodou.util.CountDownTimerUtils;
 import com.xinzu.xiaodou.util.RegexUtils;
+import com.xinzu.xiaodou.wxapi.WxEvent;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +51,9 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     @BindView(R.id.bt_regist)
     Button bt_login;
 
+
+    @BindView(R.id.bt_wx_login)
+    Button bt_wx;
     private CountDownTimerUtils mCountDownTimerUtils = null;
 
     @Override
@@ -85,7 +96,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (et_code.getText().toString().length()>0) {
+                if (et_code.getText().toString().length() > 0) {
                     bt_login.setEnabled(true);
                 } else {
                     bt_login.setEnabled(false);
@@ -105,7 +116,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (et_code.getText().toString().length() > 0 ) {
+                if (et_code.getText().toString().length() > 0) {
                     bt_login.setEnabled(true);
                 } else {
                     bt_login.setEnabled(false);
@@ -119,7 +130,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         });
     }
 
-    @OnClick({R.id.bt_getcode, R.id.bt_regist, R.id.back})
+    @OnClick({R.id.bt_getcode, R.id.bt_regist, R.id.back, R.id.bt_wx_login})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_getcode:
@@ -172,6 +183,18 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
                 KeyboardUtils.hideSoftInput(this);
                 finish();
                 break;
+
+            //微信登陆
+            case R.id.bt_wx_login:
+                if (!MyApp.api.isWXAppInstalled()) {
+                    ToastUtils.showShort("您的设备未安装微信客户端");
+                } else {
+                    final SendAuth.Req req = new SendAuth.Req();
+                    req.scope = "snsapi_userinfo";
+                    req.state = "wechat_sdk_demo_test";
+                    MyApp.api.sendReq(req);
+                }
+                break;
         }
     }
 
@@ -210,6 +233,12 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        bt_wx.setText(SPUtils.getInstance().getString("wxinfo"));
+    }
+
+    @Override
     protected void onDestroy() {
         if (mCountDownTimerUtils != null) {
             mCountDownTimerUtils.cancel();
@@ -217,4 +246,11 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         }
         super.onDestroy();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void WxEvent(WxEvent event) {
+        bt_wx.setText(event.getOpenid() + event.getNickname()+"-----"
+        +SPUtils.getInstance());
+    }
+
 }

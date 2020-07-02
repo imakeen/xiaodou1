@@ -42,7 +42,7 @@ public class OkHttpRequestUtils {
     private OkHttpRequestUtils(Context context) {
 
         // 请求接口根地址
-        BASE_URL = "http://192.168.0.141:8080/AdminConsult/insert";
+        BASE_URL = "https://a.xinzuchuxing.com/AdminConsult/insert";
 
         // 初始化OkHttpClient
         mOkHttpClient = new OkHttpClient().newBuilder().connectTimeout(100, TimeUnit.SECONDS)// 设置超时时间

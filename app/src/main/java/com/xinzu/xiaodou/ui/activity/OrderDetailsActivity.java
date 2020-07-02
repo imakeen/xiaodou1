@@ -274,7 +274,7 @@ public class OrderDetailsActivity extends BaseGActivity {
         Hashtable<String, String> hashMap = new Hashtable<>();
         String temp = SignUtils.temp();
         hashMap.put("outTradeNo", orderid);
-        hashMap.put("refundAmount", "0.01");
+        hashMap.put("refundAmount", refundAmount);
         hashMap.put("appKey", "xzcxzfb");
         hashMap.put("sign", SignUtils.encodeSign("xzcxzfb" + "112233", temp));
         hashMap.put("timeStamp", temp);
@@ -298,6 +298,8 @@ public class OrderDetailsActivity extends BaseGActivity {
                             JSONObject jsonObject1 = new JSONObject(jsonObject);
                             if (jsonObject1.getInt("status") == 1) {
                                 cancl();
+                            } else {
+                                closeLoading();
                             }
                             ToastUtil.showShort(jsonObject1.getString("message"));
                         } catch (JSONException e) {
@@ -337,7 +339,7 @@ public class OrderDetailsActivity extends BaseGActivity {
                         try {
                             JSONObject jsonObject1 = new JSONObject(jsonObject);
                             if (jsonObject1.getInt("status") == 1) {
-                                refundApp(jsonObject1.getInt("deduction") + "");
+                                refundApp(jsonObject1.getInt("returnAmount") + "");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -40,9 +40,7 @@ public class MainActivity extends BaseGActivity {
     BottomNavigationView bottomNavigation;
     private ViewPagerAdapter mViewPagerAdapter;
     List<Fragment> fragments = new ArrayList<>();
-
     int order = 0;
-
     @Override
     protected void initBundle() {
         if (getIntent() != null) {
@@ -151,7 +149,7 @@ public class MainActivity extends BaseGActivity {
      * @param position tab下标
      */
     private void naviTab(int position) {
-        mVpMain.setCurrentItem(position, true);
+        mVpMain.setCurrentItem(position, false);
     }
 
 

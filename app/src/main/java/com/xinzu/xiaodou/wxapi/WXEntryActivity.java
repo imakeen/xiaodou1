@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -57,6 +58,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         wechatLogin(resp, (json, openid, access_token) -> {
             try {
                 LogUtils.e("json:" + json);
+                SPUtils.getInstance().put("wxinfo", json);
                 JSONObject object = new JSONObject(json);
                 nickname = object.getString("nickname");
                 int sex = Integer.parseInt(object.get("sex").toString());

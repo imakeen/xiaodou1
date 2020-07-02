@@ -5,11 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/**
- * @ Create_time: 2018/5/22 on 8:35.
- * @ description：
- * @ author: xman  15703379121@163.com
- */
+
 public class NoScrollViewPager extends ViewPager {
     private boolean noScroll = false;
 
@@ -54,7 +50,7 @@ public class NoScrollViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item) {
-        super.setCurrentItem(item);
+        super.setCurrentItem(item, false);
     }
 
 }

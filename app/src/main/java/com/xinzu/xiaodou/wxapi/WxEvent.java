@@ -1,11 +1,6 @@
 package com.xinzu.xiaodou.wxapi;
 
-/**
- * author : radish
- * e-mail : 15703379121@163.com
- * time   : 2019/09/12
- * desc   : xxxx 描述
- */
+
 public class WxEvent {
     private int type;
     private String headimgurl;

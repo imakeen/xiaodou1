@@ -27,7 +27,7 @@ public class MyApp extends BaseApplication {
         mHttpManager = new HttpManager();
 
         initWechat();
-       // refWatcher= setupLeakCanary();
+    //   refWatcher= setupLeakCanary();
     }
 //    private RefWatcher setupLeakCanary() {
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -35,11 +35,8 @@ public class MyApp extends BaseApplication {
 //        }
 //        return LeakCanary.install(this);
 //    }
-//
-//    public static RefWatcher getRefWatcher(Context context) {
-//        MyApp leakApplication = (MyApp) context.getApplicationContext();
-//        return leakApplication.refWatcher;
-//    }
+
+
     /**
      * 注册微信
      */
@@ -78,8 +75,4 @@ public class MyApp extends BaseApplication {
                 .myAppModule(new MyAppModule(getInstance()))
                 .build();
     }
-
-
-
-
 }

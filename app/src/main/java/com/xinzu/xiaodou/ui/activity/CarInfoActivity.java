@@ -149,11 +149,14 @@ public class CarInfoActivity extends BaseGActivity {
 
     }
 
-    @OnClick({R.id.ll_users, R.id.tv_yuding,
+    @OnClick({R.id.ll_users, R.id.tv_yuding, R.id.tv_youhui,
             R.id.bt_usercar, R.id.tv_feiyong, R.id.back})
     public void onClick(View view) {
 
         switch (view.getId()) {
+            case R.id.tv_youhui:
+                ToastUtil.showShort("该版本暂不支持优惠功能，更多功能正在开发中");
+                break;
             case R.id.bt_usercar:
                 if (tvUser.getText().toString().isEmpty()) {
                     ToastUtil.showShort("请选择司机");

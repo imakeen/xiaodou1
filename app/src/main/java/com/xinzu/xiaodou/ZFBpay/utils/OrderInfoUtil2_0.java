@@ -67,7 +67,8 @@ public class OrderInfoUtil2_0 {
                         "\"out_trade_no\":\"" + order + "\"}");
         keyValues.put("charset", "utf-8");
         keyValues.put("method", "alipay.trade.app.pay");
-        keyValues.put("notify_url", "http://39.105.178.240:8080/xinzuinterface/answerApp");
+        //keyValues.put("notify_url", "http://39.105.178.240:8080/xinzuinterface/answerApp");
+        keyValues.put("notify_url", "https://zfb.xinzuchuxing.com/xinzuinterface/answerApp");
         keyValues.put("sign_type", rsa2 ? "RSA2" : "RSA");//是rsa2私钥还是rsa私钥
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         keyValues.put("timestamp", simpleDateFormat.format(new Date()));
