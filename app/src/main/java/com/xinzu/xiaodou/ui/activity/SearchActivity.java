@@ -1,5 +1,6 @@
 package com.xinzu.xiaodou.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +17,12 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.radish.baselibrary.utils.ActivityCollector;
 import com.xinzu.xiaodou.R;
+import com.xinzu.xiaodou.pro.activity.city.CityListenter;
+import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
 import com.xinzu.xiaodou.ui.adapter.CityAddapter;
 import com.xinzu.xiaodou.base.BaseGActivity;
 
@@ -45,7 +50,7 @@ public class SearchActivity extends BaseGActivity {
     CityAddapter cityAddapter;
     @BindView(R.id.et_seach)
     EditText et_serch;
-    private static Slelect slelect;
+
     private String city;
     private String citycode;
 
@@ -106,7 +111,10 @@ public class SearchActivity extends BaseGActivity {
     public void onClick(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
+        Intent intent = new Intent(SearchActivity.this, SelectmapActivity.class);
+        intent.putExtra("city", city);
+        intent.putExtra("citycode", citycode);
+        ActivityUtils.startActivity(intent);
         finish();
     }
 
@@ -115,9 +123,6 @@ public class SearchActivity extends BaseGActivity {
 
     }
 
-    public void setselect(Slelect select) {
-        this.slelect = select;
-    }
 
     private void searchPoi(String key, int pageNum, String cityCode, boolean nearby) {
         isPoiSearched = true;
@@ -141,13 +146,15 @@ public class SearchActivity extends BaseGActivity {
                         cityAddapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                             @Override
                             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                                slelect.select( poiItemArrayList.get(position).getProvinceName()+
+                                CityListenter cityListenter = new CityListenter();
+                                cityListenter.listener.select(poiItemArrayList.get(position).getProvinceName() +
 
                                                 poiItemArrayList.get(position).getTitle(), city == null ?
                                                 poiItemArrayList.get(position).getCityName() : city
                                         , citycode,
                                         poiItemArrayList.get(position).getLatLonPoint().getLongitude() + ""
                                         , poiItemArrayList.get(position).getLatLonPoint().getLatitude() + ""
+
                                 );
                                 finish();
                             }
@@ -168,9 +175,4 @@ public class SearchActivity extends BaseGActivity {
     }
 
 
-    public interface Slelect {
-        void select(String city_title, String city, String citycode,
-                    String pickuplongitude,
-                    String pickuplatitude);
-    }
 }

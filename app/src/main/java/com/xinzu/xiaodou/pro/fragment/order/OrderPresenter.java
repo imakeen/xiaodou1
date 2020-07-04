@@ -36,13 +36,12 @@ public class OrderPresenter extends BasePAV<OrderContract.View> implements Order
 
     @Override
     public void userOrderList(String bean, Context context) {
-        mView.showLoading();
+
         OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(context.getApplicationContext());
         okHttpRequestUtils.requestAsynjson("userOrderList", bean, new RequestCallBack() {
             @Override
             public void onRequestSuccess(Object result) {
 
-                mView.closeLoading();
                 mView.getOrderList(result.toString());
             }
 
@@ -76,12 +75,12 @@ public class OrderPresenter extends BasePAV<OrderContract.View> implements Order
     @Override
     public void userOrderDetails(String bean, Context context) {
         LogUtils.e(bean);
-        mView.showLoading();
+
         OkHttpRequestUtils okHttpRequestUtils = OkHttpRequestUtils.getInstance(context.getApplicationContext());
         okHttpRequestUtils.requestAsynjson("orderDetail", bean, new RequestCallBack() {
             @Override
             public void onRequestSuccess(Object result) {
-                mView.closeLoading();
+
                 mView.getOrderDetails(result.toString());
             }
 

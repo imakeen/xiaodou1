@@ -1,7 +1,6 @@
 package com.xinzu.xiaodou.pro.fragment.home;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,35 +29,50 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.radish.baselibrary.utils.LogUtils;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
-import com.xinzu.xiaodou.base.BaseGActivity;
 import com.xinzu.xiaodou.base.OnPermissionCallBack;
 import com.xinzu.xiaodou.base.mvp.BaseMvpFragment;
 import com.xinzu.xiaodou.bean.backTimeBean;
 import com.xinzu.xiaodou.bean.getCarttypeBean;
 import com.xinzu.xiaodou.http.ApiService;
 import com.xinzu.xiaodou.pro.activity.cartype.CarTypeAcitvity;
+import com.xinzu.xiaodou.pro.activity.city.CityListenter;
 import com.xinzu.xiaodou.pro.activity.city.CityPickerActivity;
-import com.xinzu.xiaodou.ui.activity.EnterPriseMapActivity;
+import com.xinzu.xiaodou.pro.activity.registerlogin.RegisterActivity;
 import com.xinzu.xiaodou.ui.activity.SearchActivity;
+import com.xinzu.xiaodou.ui.activity.SelectmapActivity;
 import com.xinzu.xiaodou.util.Day;
+import com.xinzu.xiaodou.util.DialogUtil;
+import com.xinzu.xiaodou.util.DownLoadApk;
 import com.xinzu.xiaodou.util.SignUtils;
+import com.xinzu.xiaodou.util.VersionUtils;
 import com.xinzu.xiaodou.view.PickerDailog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+
 /**
  * <pre>  *     author : radish  *     e-mail : 15703379121@163.com  *     time   : 2019/4/16  *     desc   :  * </pre>
  */
 public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View {
+
     @BindView(R.id.Maps)
     TextView mMaps;
     @BindView(R.id.Mapse)
@@ -82,10 +95,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     @BindView(R.id.Imge)
     ConvenientBanner convenientBanner;//轮播图组件
     PickerDailog pickerDailog;
-    private static final int PERMISSON_REQUESTCODE = 0;
+
     private String title = "";
-    private PermissionListener mListener;
-    public static final int PERMISSION_REQUESTCODE = 0x001;
+
+
     private AMap aMap;
     private boolean isShowPermission = true;
     private String citys;
@@ -108,6 +121,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE
     };
+
     public static HomeFragment newInstance(String title) {
 
         Bundle args = new Bundle();
@@ -125,13 +139,13 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     protected void initBundle() {
+
     }
 
     @Override
     protected int initLayout() {
         return R.layout.fragment_homes;
     }
-
 
 
     @Override
@@ -144,14 +158,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
             @Override
             public void permissionRefuse(String[] permissions) {
-
             }
         }, permissions);
         if (aMap == null) {
             aMap = mMapView1.getMap();
-//            if (isShowPermission) {
-//                permission();
-//            }
         }
         myLocati();
         // banner();
@@ -159,19 +169,43 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         tv_pick_week.setText(Day.pickcar_date("week", true));
         tv_return_day.setText(Day.pickcar_date("day", false));
         tv_return_week.setText(Day.pickcar_date("week", false));
+    }
 
+    //检测版本
+    private void update() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("version", VersionUtils.versionCode(getActivity()));
+        mPresenter.update(new Gson().toJson(map));
+    }
+
+    @Override
+    public void update(String body) {
+        LogUtils.e(body);
+        try {
+            JSONObject jsonObject = new JSONObject(body);
+            if (jsonObject.getString("code").equals("1")) {
+                ToastUtils.showShort(jsonObject.getString("message"));
+                String url = jsonObject.getString("url");
+                DownLoadApk downLoadApk = new DownLoadApk(getActivity(), url);
+                DialogUtil.showAlterDialog(getActivity(), "检测到有新版本，马上更新", (dialog, view1) -> {
+                    SPUtils.getInstance().clear();
+                    downLoadApk.downLoadApk();
+                });
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void loadData() {
-
+        update();
     }
-
 
     @Override
     protected void initListener() {
-        SearchActivity searchActivity = new SearchActivity();
-        searchActivity.setselect(new SearchActivity.Slelect() {
+        CityListenter cityListenter = new CityListenter();
+        cityListenter.setonListener(new CityListenter.onListener() {
             @Override
             public void select(String city_title, String city, String citycode, String pickuplongitude, String pickuplatitude) {
                 Mapse.setText(city_title);
@@ -190,7 +224,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         });
     }
 
-
     @OnClick({R.id.Lease_immediately, R.id.Mapse, R.id.Ri_Qu,
             R.id.ll_qu, R.id.ll_huan, R.id.Maps})
     public void onClieck(View view) {
@@ -203,17 +236,16 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 bundle.putString("Citycode", Citycode);
                 ActivityUtils.startActivity(intent);
                 break;
-
             case R.id.ll_qu:
                 startPickDailog(true);
-
                 break;
             case R.id.ll_huan:
                 startPickDailog(false);
                 break;
             case R.id.Mapse:
                 if (!"请选择".equals(Mapse.getText().toString())) {
-                    Intent intent1 = new Intent(getContext(), EnterPriseMapActivity.class);
+                    Intent intent1 = new Intent(getContext(), SelectmapActivity.class);
+                    intent1.putExtra("city", mMaps.getText().toString());
                     intent1.putExtra("city_title", Mapse.getText().toString());
                     startActivity(intent1);
                 }
@@ -299,7 +331,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     /**
      * 轮播图
      */
-    public void banner() {
+/*    public void banner() {
         List<String> list;
         String[] images = new String[2];
         images[0] = ApiService.image1;
@@ -324,15 +356,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
             }
         });
-    }
+    }*/
 
 
-    @Override
-    public void updateUI(String body) {
-
-    }
-
-    public class NetImageLoadHolder implements Holder<String> {
+ /*   public class NetImageLoadHolder implements Holder<String> {
         private ImageView image_lv;
 
         //可以是一个布局也可以是一个Imageview
@@ -342,17 +369,14 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             image_lv.setScaleType(ImageView.ScaleType.FIT_XY);
             return image_lv;
         }
-
         @Override
         public void UpdateUI(Context context, int position, String data) {
             //Glide框架
             Glide.with(context.getApplicationContext()).load(data).into(image_lv);
         }
 
-    }
-
+    }*/
     private void myLocati() {
-
 
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
@@ -362,13 +386,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//连续定位、且将视角移动到地图中心点，定位蓝点跟随设备移动。（1秒1次定位）
         mGeocoderSearch = new GeocodeSearch(getContext());
-       // checkPermissions();
+        // checkPermissions();
         mGeocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
-
 
             @Override
             public void onGeocodeSearched(GeocodeResult result, int rCode) {
-
             }
 
             @Override
@@ -387,7 +409,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             }
         });
 
-
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
@@ -403,102 +424,9 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         });
     }
 
-    private void checkPermissions(String... permissions) {
-        //获取权限列表
-        List<String> needRequestPermissonList = findDeniedPermissions(permissions);
-        if (needRequestPermissonList.size() > 0) {
-            //list.toarray将集合转化为数组
-            ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
-                    needRequestPermissonList.toArray(new String[0]),
-                    PERMISSON_REQUESTCODE);
-        }
-    }
-
-    private List<String> findDeniedPermissions(String[] permissions) {
-        List<String> needRequestPermissonList = new ArrayList<String>();
-        //for (循环变量类型 循环变量名称 : 要被遍历的对象)
-        for (String perm : permissions) {
-            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
-                    perm) != PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.shouldShowRequestPermissionRationale(
-                    Objects.requireNonNull(getActivity()), perm)) {
-                needRequestPermissonList.add(perm);
-            }
-        }
-        return needRequestPermissonList;
-
-    }
-
-    private void permission() {
-        String[] permissions = new String[]{
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.READ_PHONE_STATE
-        };
-        requestRunPermisssion(permissions, new PermissionListener() {
-            @Override
-            public void onGranted() {
-            }
-
-            @Override
-            public void onDenied(List<String> deniedPermission) {
-                if (isShowPermission) {
-                    isShowPermission = false;
-                    for (int i = 0; i < deniedPermission.size(); i++) {
-                        //  Log.e(TAG, " 无 权限  : "+deniedPermission.get(i) );
-                    }
-
-                }
-            }
-        });
-    }
-
-    public void requestRunPermisssion(String[] permissions, PermissionListener listener) {
-        mListener = listener;
-        List<String> permissionLists = new ArrayList<>();
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), permission) != PackageManager.PERMISSION_GRANTED) {
-                permissionLists.add(permission);
-            }
-        }
-        if (!permissionLists.isEmpty()) {
-            ActivityCompat.requestPermissions
-                    (Objects.requireNonNull(getActivity()), permissionLists.toArray
-                            (new String[0]), PERMISSION_REQUESTCODE);
-        } else {
-            mListener.onGranted();
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
     }
 
-//    @Override
-//    public void onRequestPermissionsResult
-//            (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == PERMISSION_REQUESTCODE) {
-//            if (grantResults.length > 0) {
-//                //存放没授权的权限
-//                List<String> deniedPermissions = new ArrayList<>();
-//                for (int i = 0; i < grantResults.length; i++) {
-//                    int grantResult = grantResults[i];
-//                    String permission = permissions[i];
-//                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
-//                        deniedPermissions.add(permission);
-//                    }
-//                }
-//                if (deniedPermissions.isEmpty()) {
-//                    //说明都授权了
-//                    mListener.onGranted();
-//                } else {
-//                    mListener.onDenied(deniedPermissions);
-//                }
-//            }
-//        }
-//    }
 }

@@ -144,6 +144,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
             }
         });
     }
+
     @Override
     public void getOrderList(String body) {
         OrderBean orderBean = new Gson().fromJson(body, OrderBean.class);
@@ -152,7 +153,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter> implements Or
             if (startIndex == 0) {
                 recyclerView.setVisibility(View.GONE);
 
-            }else {
+            } else {
                 ToastUtils.showShort("暂无更多数据");
             }
             return;

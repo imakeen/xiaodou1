@@ -8,6 +8,6 @@
     <!-- stroke主要设置组件的边框。width为边框宽度，color为边框颜色 -->
 
     <!-- corners 设置边框四角弧度 -->
-    <corners android:radius="@dimen/dp5" />
+    <corners android:radius="@dimen/dp8" />
     <!-- padding主要设置组件里内容距离组件内边框的间距 -->
 </shape>

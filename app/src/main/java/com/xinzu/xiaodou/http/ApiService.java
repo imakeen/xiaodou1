@@ -17,11 +17,11 @@ public interface ApiService {
     String appKey = "xzcxzfb";
 
     // 测试
-    //  String ServiceUrl = "http://39.105.178.240:8080/xinzuinterface/";
-    //  String ServiceUrl = "http://192.168.0.141:8080/";
+    //String ServiceUrl = "http://39.105.178.240:8080/xinzuinterface/";
+    // String ServiceUrl = "http://192.168.0.141:8080/";
 
     //正式
-    String ServiceUrl = "https://zfb.xinzuchuxing.com/xinzuinterface/";
+     String ServiceUrl = "https://zfb.xinzuchuxing.com/xinzuinterface/";
 
     String image1 = "https://7869-xiaodou-1301502367.tcb.qcloud.la/banner-3.jpg?sign=ec3c10493095e35e19e41901c0010532&t=1583749209";
     String image2 = "https://7869-xiaodou-1301502367.tcb.qcloud.la/banner-2.jpg?sign=db2c68808d293088dff25e175eb4200a&t=1583749228";
@@ -122,4 +122,9 @@ public interface ApiService {
     //支付宝退单
     @POST("refundApp")
     Observable<ResponseBody> refundApp(@Body RequestBody body);
+
+
+    //版本更新
+    @POST("app/versionUp")
+    Observable<ResponseBody> versionUp(@Body RequestBody body);
 }

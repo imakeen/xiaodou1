@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -130,6 +131,7 @@ public class OrderDetailsActivity extends BaseGActivity {
                 } else {
                     btUsercar.setText("支付订单");
                     tv_quxiao.setText("取消订单");
+                    tv_quxiao.setTextColor(getResources().getColor(R.color.gray6));
                 }
             } else if (bean.getPayments() == 1) {
                 switch (bean.getOrderState()) {
@@ -137,7 +139,7 @@ public class OrderDetailsActivity extends BaseGActivity {
                     case 2:
                         tv_quxiao.setVisibility(View.GONE);
                         btUsercar.setText("取消订单");
-
+                        tv_quxiao.setTextColor(getResources().getColor(R.color.gray6));
                         break;
                     case 6:
                         tv_quxiao.setVisibility(View.GONE);

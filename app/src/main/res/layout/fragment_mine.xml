@@ -3,9 +3,11 @@
     android:layout_height="match_parent"
     android:background="@color/colorNo"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp220"
@@ -15,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp170"
+            android:layout_marginTop="@dimen/dp164"
             android:orientation="vertical">
 
             <LinearLayout
@@ -198,10 +200,9 @@
                         android:layout_weight="1"
                         android:drawableLeft="@mipmap/lianxi"
                         android:drawablePadding="@dimen/dp10"
-                        android:drawableTint="@color/colororange"
                         android:text="联系我们"
-                        android:textColor="@color/colorblack3"
-                        android:textSize="@dimen/sp14" />
+                        android:textColor="@color/colororange"
+                        android:textSize="@dimen/sp16" />
 
 
                     <ImageView
@@ -228,10 +229,10 @@
                         android:layout_weight="1"
                         android:drawableLeft="@mipmap/yijian"
                         android:drawablePadding="@dimen/dp10"
-                        android:drawableTint="@color/colororange"
+
                         android:text="意见反馈"
-                        android:textColor="@color/colorblack3"
-                        android:textSize="@dimen/sp14" />
+                        android:textColor="@color/colororange"
+                        android:textSize="@dimen/sp16" />
 
 
                     <ImageView
@@ -258,10 +259,9 @@
                         android:layout_weight="1"
                         android:drawableLeft="@mipmap/guanyu"
                         android:drawablePadding="@dimen/dp10"
-                        android:drawableTint="@color/colororange"
                         android:text="关于我们"
-                        android:textColor="@color/colorblack3"
-                        android:textSize="@dimen/sp14" />
+                        android:textColor="@color/colororange"
+                        android:textSize="@dimen/sp16" />
 
 
                     <ImageView
@@ -288,14 +288,14 @@
                         android:layout_weight="1"
                         android:drawableLeft="@mipmap/jiameng"
                         android:drawablePadding="@dimen/dp10"
-                        android:drawableTint="@color/colororange"
                         android:text="加盟小豆"
-                        android:textColor="@color/colorblack3"
-                        android:textSize="@dimen/sp14" />
+                        android:textColor="@color/colororange"
+                        android:textSize="@dimen/sp16" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp10"
                         android:src="@mipmap/go_orange" />
                 </LinearLayout>
 

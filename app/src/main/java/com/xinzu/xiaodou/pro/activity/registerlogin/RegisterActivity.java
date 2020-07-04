@@ -236,6 +236,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     protected void onResume() {
         super.onResume();
         bt_wx.setText(SPUtils.getInstance().getString("wxinfo"));
+
     }
 
     @Override

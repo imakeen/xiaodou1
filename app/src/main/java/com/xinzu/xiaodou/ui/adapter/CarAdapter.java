@@ -28,22 +28,22 @@ public class CarAdapter extends BaseQuickAdapter<CarBean.StoreListBean, BaseView
     protected void convert(BaseViewHolder helper, CarBean.StoreListBean item) {
 
         //芝麻双免(0.不支持，1.免租车押金、2.免租车和违章押金)3.免违章押金
-        switch (item.getSesametype()){
+        switch (item.getSesametype()) {
             case 0:
                 helper.getView(R.id.tv_sesametype).setVisibility(View.INVISIBLE);
                 break;
             case 1:
-                helper.setText(R.id.tv_sesametype,"免租车押金");
+                helper.setText(R.id.tv_sesametype, "免租车押金");
                 break;
             case 2:
-                helper.setText(R.id.tv_sesametype,"免租车和违章押金");
+                helper.setText(R.id.tv_sesametype, "免租车和违章押金");
                 break;
             case 3:
-                helper.setText(R.id.tv_sesametype,"免违章押金");
+                helper.setText(R.id.tv_sesametype, "免违章押金");
                 break;
         }
         helper.setText(R.id.tv_pickupStoreName, item.getPickupStoreName())
-                .setText(R.id.tv_vehicleName, item.getVehicleName())
+                .setText(R.id.tv_vehicleName, item.getBrand() + item.getVehicleName())
                 .setText(R.id.tv_displacement, item.getDisplacement())
                 .setText(R.id.amount, "￥" + item.getAmount() + "元")
                 .setText(R.id.distance, "距离您当前所在位置" + item.getDistance() + "公里")

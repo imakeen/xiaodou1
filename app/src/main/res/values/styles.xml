@@ -63,6 +63,6 @@
     </style>
 
     <style name="myNavigationDrawerStyle">
-        <item name="android:textSize">@dimen/sp16</item>
+        <item name="android:textSize">@dimen/sp10</item>
     </style>
 </resources>

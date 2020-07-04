@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_margin="@dimen/dp20"
-                    android:background="#999999" />
+                    android:background="@color/linecolor" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -313,7 +313,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/dp20"
-                        android:background="#999999" />
+                        android:background="@color/linecolor" />
 
                     <TextView
                         android:layout_width="wrap_content"

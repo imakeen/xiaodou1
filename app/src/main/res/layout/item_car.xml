@@ -60,8 +60,7 @@
             android:id="@+id/car_image"
             android:layout_width="@dimen/dp120"
             android:layout_height="@dimen/dp100"
-            android:scaleType="centerCrop"
-
+            android:scaleType="fitXY"
             android:src="@mipmap/banner" />
 
         <LinearLayout

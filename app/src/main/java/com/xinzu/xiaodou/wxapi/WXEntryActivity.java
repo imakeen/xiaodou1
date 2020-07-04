@@ -63,7 +63,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 nickname = object.getString("nickname");
                 int sex = Integer.parseInt(object.get("sex").toString());
                 headimgurl = object.getString("headimgurl");
-                EventBus.getDefault().post(new WxEvent(openid, nickname, headimgurl));
+                EventBus.getDefault().postSticky(new WxEvent(openid, nickname, headimgurl));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -150,4 +150,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     LogUtils.e("异常：" + throwable.toString());
                 }));
     }
+
+
 }

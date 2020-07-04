@@ -65,16 +65,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initListener();
 
-    protected void startActivity(Class<?> clazz) {
-        intent = new Intent(this, clazz);
-        startActivity(intent);
-    }
-
-    protected void startActivity(Class<?> clazz, Bundle bundle, int requestCode) {
-        intent = new Intent(this, clazz);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, requestCode);
-    }
+//    protected void startActivity(Class<?> clazz) {
+//        intent = new Intent(this, clazz);
+//        startActivity(intent);
+//    }
+//
+//    protected void startActivity(Class<?> clazz, Bundle bundle, int requestCode) {
+//        intent = new Intent(this, clazz);
+//        intent.putExtras(bundle);
+//        startActivityForResult(intent, requestCode);
+//    }
 
     protected <T extends View> T findView(@IdRes int viewId) {
         return findViewById(viewId);

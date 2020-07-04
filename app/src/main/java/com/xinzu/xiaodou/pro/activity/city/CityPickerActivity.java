@@ -9,17 +9,16 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 import com.radish.baselibrary.utils.ToastUtil;
 import com.xinzu.xiaodou.R;
+import com.xinzu.xiaodou.ui.activity.SelectmapActivity;
 import com.xinzu.xiaodou.ui.adapter.CityListAdapter;
 import com.xinzu.xiaodou.base.mvp.BaseMvpActivity;
 import com.xinzu.xiaodou.bean.City;
 import com.xinzu.xiaodou.bean.CityPickerBean;
 import com.xinzu.xiaodou.bean.LocateState;
 import com.xinzu.xiaodou.http.ApiService;
-import com.xinzu.xiaodou.ui.activity.EnterPriseMapActivity;
 import com.xinzu.xiaodou.util.PinyinUtils;
 import com.xinzu.xiaodou.util.SignUtils;
 import com.xinzu.xiaodou.view.SideLetterBar;
@@ -94,7 +93,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
             @Override
             public void onCityClick(String name, String citycode) {//选择城市
                 Toast.makeText(CityPickerActivity.this, name, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(CityPickerActivity.this, EnterPriseMapActivity.class);
+                Intent intent = new Intent(CityPickerActivity.this, SelectmapActivity.class);
                 intent.putExtra("city", name);
                 intent.putExtra("citycode", citycode);
                 startActivity(intent);
@@ -107,7 +106,7 @@ public class CityPickerActivity extends BaseMvpActivity<CityPickPresenter> imple
                 ToastUtil.showShort("定位失败，请开启权限");
             }
         });
-        String temp =SignUtils.temp();
+        String temp = SignUtils.temp();
         String sign = SignUtils.encodeSign("xzcxzfb" + "112233", temp);
         mPresenter.getCity(ApiService.appKey, temp, sign, this);
 

@@ -9,7 +9,9 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xinzu.xiaodou.MyApp;
 import com.xinzu.xiaodou.base.mvp.BasePAV;
 import com.xinzu.xiaodou.http.ApiService;
+import com.xinzu.xiaodou.http.RequestBodyUtil;
 import com.xinzu.xiaodou.http.RxSchedulers;
+import com.xinzu.xiaodou.http.SuccessfulConsumer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,4 +31,27 @@ public class HomePresenter extends BasePAV<HomeContract.View> implements HomeCon
     }
 
 
+    @Override
+    public void update(String json) {
+        MyApp.apiService(ApiService.class)
+                .versionUp(RequestBodyUtil.RequestBody(json)
+                )
+                .compose(RxSchedulers.io_main())
+                .doOnSubscribe(d -> {
+
+                })
+                .doFinally(() -> {
+
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from((LifecycleOwner) mView)))
+                .subscribe(new SuccessfulConsumer() {
+                    @Override
+                    public void success(String jsonObject) {
+                        com.blankj.utilcode.util.LogUtils.e(jsonObject);
+                        mView.update(jsonObject);
+                    }
+                }, throwable -> {
+                    LogUtils.e("联网失败：" + throwable.toString());
+                });
+    }
 }

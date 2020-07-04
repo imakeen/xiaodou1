@@ -1,9 +1,5 @@
 package com.xinzu.xiaodou.pro;
 
-import android.Manifest;
-import android.content.Intent;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,19 +8,12 @@ import android.support.v4.view.PagerAdapter;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.radish.baselibrary.Intent.IntentData;
-import com.radish.baselibrary.utils.PermissionsUtils;
 import com.xinzu.xiaodou.R;
 import com.xinzu.xiaodou.base.BaseGActivity;
-import com.xinzu.xiaodou.base.OnPermissionCallBack;
-import com.xinzu.xiaodou.http.OkHttpRequestUtils;
-import com.xinzu.xiaodou.pro.activity.login.LoginActivity;
 import com.xinzu.xiaodou.pro.activity.registerlogin.RegisterActivity;
 import com.xinzu.xiaodou.pro.fragment.home.HomeFragment;
 import com.xinzu.xiaodou.pro.fragment.mine.MineFragment;
-import com.xinzu.xiaodou.pro.fragment.order.OrderFragment;
 import com.xinzu.xiaodou.ui.fragment.OrdersFragment;
-import com.xinzu.xiaodou.util.CommonUtil;
 import com.xinzu.xiaodou.view.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -41,6 +30,7 @@ public class MainActivity extends BaseGActivity {
     private ViewPagerAdapter mViewPagerAdapter;
     List<Fragment> fragments = new ArrayList<>();
     int order = 0;
+
     @Override
     protected void initBundle() {
         if (getIntent() != null) {
@@ -51,19 +41,23 @@ public class MainActivity extends BaseGActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (order == 0) {
-            naviTab(0);
-            bottomNavigation.setSelectedItemId(R.id.action_home);
-        } else if (order == 3) {
-            naviTab(2);
-            bottomNavigation.setSelectedItemId(R.id.action_mine);
-        } else {
-            naviTab(1);
-            bottomNavigation.setSelectedItemId(R.id.action_order);
+        switch (order) {
+            case 0:
+                naviTab(0);
+                bottomNavigation.setSelectedItemId(R.id.action_home);
+                break;
+            case 3:
+                naviTab(2);
+                bottomNavigation.setSelectedItemId(R.id.action_mine);
+                break;
+            default:
+                naviTab(1);
+                bottomNavigation.setSelectedItemId(R.id.action_order);
+                break;
         }
-
     }
 
+/*
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -74,6 +68,7 @@ public class MainActivity extends BaseGActivity {
             bottomNavigation.setSelectedItemId(R.id.action_order);
         }
     }
+*/
 
     @Override
     protected int initLayout() {

@@ -1,21 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-//    signingConfigs {
-//        config {
-//            storeFile file('F:\\XDapp.jks')
-//            storePassword "123456"
-//            keyAlias "XDapp"
-//            keyPassword "123456"
-//        }
-//    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.xinzu.xiaodou"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 3
-        versionName "1.0.2"
+        versionName "1.0.3"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -150,5 +142,4 @@ dependencies {
     //拼音
     implementation 'com.belerweb:pinyin4j:2.5.0'
 
-    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
 }
